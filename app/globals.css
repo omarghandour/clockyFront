@@ -1,0 +1,301 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html {
+  scroll-behavior: smooth;
+}
+/* Style the entire scrollbar track */
+::-webkit-scrollbar {
+  width: 7px; /* Width of the scrollbar */
+}
+
+/* Style the scrollbar track (background area) */
+::-webkit-scrollbar-track {
+  background: #414b43; /* Light gray background for the track */
+  border-radius: 7px;
+}
+
+/* Style the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: #e3c578; /* Green color for the thumb */
+  border-radius: 7px; /* Rounded corners */
+  /* border: 2px solid #f0f0f0; Adds space around the thumb */
+}
+
+/* Hover effect for the scrollbar thumb */
+::-webkit-scrollbar-thumb:hover {
+  background: #e3c578; /* Darker green when hovered */
+}
+/* custom scrollbar */
+/* Hide horizontal scrollbar only */
+.custom-scroll-hide {
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.custom-scroll-hide::-webkit-scrollbar:horizontal {
+  display: none;
+}
+
+.custom-scroll-hide::-webkit-scrollbar {
+  width: 8px; /* Keep the vertical scrollbar visible */
+}
+
+.custom-scroll-hide::-webkit-scrollbar-thumb {
+  background: #ccc; /* Style the vertical scrollbar thumb */
+  border-radius: 4px;
+}
+
+.custom-scroll-hide::-webkit-scrollbar-track {
+  background: transparent; /* Style the vertical scrollbar track */
+}
+
+/*  */
+@font-face {
+  font-family: "Kenjo";
+  src: local("Kenjo II"), local("Kenjo-II"),
+    url("../public/fonts/KenjoII.woff2") format("woff2"),
+    url("../public/fonts/KenjoII.woff") format("woff"),
+    url("../public/fonts/KenjoII.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+/* @font-face {
+  font-family: "Kenjo";
+  src: url("../public/fonts/KenjoII.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+} */
+* {
+  font-family: "Kenjo II", sans-serif;
+}
+.mainFont {
+  font-family: "Kenjo", sans-serif !important;
+}
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+.center {
+  @apply flex justify-center items-center;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+.home {
+  background-image: url("../public/home.png");
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+.hero {
+  background-image: url("../public/hero.png");
+}
+.idara {
+  @apply font-normal text-base leading-8 text-[#595959];
+}
+.mejor {
+  @apply text-[#2E2E2E] font-medium text-xl mb-3;
+}
+.hoverr {
+  @apply hover:bg-[#414B434D];
+}
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+/* Hide scrollbar for Chrome, Safari, and Edge
+::-webkit-scrollbar {
+  display: none;
+} */
+
+/* General styling for the element */
+.your-element {
+  overflow: -moz-scrollbars-none; /* Firefox specific */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+/* Hide scrollbar for Firefox */
+.your-element {
+  scrollbar-width: none; /* Firefox 64 */
+}
+
+.backgroundd {
+  background-image: url("../public/clockyyyy.png");
+}
+
+.card-img-background {
+  background-image: url("../public/clockyyyy.png");
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 50%;
+}
+.text-lines-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -webkit-word-break: break-word;
+  word-break: break-word;
+}
+
+.text-lines-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  -webkit-word-break: break-word;
+  word-break: break-word;
+}
+
+@media (min-width: 1280px) and (max-width: 1415px) {
+  .media {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 0) and (max-width: 720px) {
+  .hide {
+    display: none !important;
+  }
+}
+
+/* loading */
+.clock-loader {
+  --clock-color: #fff !important;
+  --clock-width: 12rem;
+  --clock-radius: calc(var(--clock-width) / 2);
+  --clock-minute-length: calc(var(--clock-width) * 0.4);
+  --clock-hour-length: calc(var(--clock-width) * 0.2);
+  --clock-thickness: 0.2rem;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--clock-width);
+  height: var(--clock-width);
+  border: 3px solid var(--clock-color);
+  border-radius: 50%;
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+    top: calc(var(--clock-radius) * 0.25);
+    width: var(--clock-thickness);
+    background: var(--clock-color);
+    border-radius: 10px;
+    transform-origin: center calc(100% - calc(var(--clock-thickness) / 2));
+    animation: spin infinite linear;
+  }
+
+  &::before {
+    height: var(--clock-minute-length);
+    animation-duration: 2s;
+  }
+
+  &::after {
+    top: calc(var(--clock-radius) * 0.25 + var(--clock-hour-length));
+    height: var(--clock-hour-length);
+    animation-duration: 15s;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+li {
+  margin: 0 !important;
+}
+
+.paddingX {
+  @apply px-4 md:px-32 xl:px-40;
+}

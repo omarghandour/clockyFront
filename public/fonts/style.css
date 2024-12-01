@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "Kenjo";
+  src: local("Kenjo II"), local("Kenjo-II"),
+    url("KenjoII.woff2") format("woff2"), url("KenjoII.woff") format("woff"),
+    url("KenjoII.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: "Kenjo", sans-serif;
+}
+
+/* loading */
+.pendulum {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ball {
+  position: relative;
+  transform-origin: 50% -300%;
+}
+
+.ball::before {
+  content: "";
+  width: 2px;
+  height: 120px;
+  background-color: #fffeff;
+  left: 18px;
+  top: -120px;
+  position: absolute;
+}
+
+.ball.first {
+  animation: firstball 0.9s alternate ease-in infinite;
+}
+
+@keyframes firstball {
+  0% {
+    transform: rotate(35deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+}
+
+.ball.last {
+  animation: lastball 0.9s alternate ease-out infinite;
+}
+
+@keyframes lastball {
+  50% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-35deg);
+  }
+}
