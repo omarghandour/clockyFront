@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     loader: "default", // Use the default loader
-    unoptimized: true, // Disable optimization for static hosting
+    // unoptimized: true, // Disable optimization for static hosting
     remotePatterns: [
       {
         protocol: "https",
