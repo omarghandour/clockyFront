@@ -20,21 +20,21 @@ const mockSlides: SlideData[] = [
   {
     id: 1,
     image:
-      "https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/673d5edb001a2b24bb10/view?project=67130d070031ae19004c&project=67130d070031ae19004c&mode=admin",
+      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.collectorsquare.com%2Fuploads%2Fdc%2F4c%2Frolex-daytona-item-6b3786dd.png&f=1&nofb=1&ipt=0354339fd31be2a89b3b7c3351a1d75b830f4506cfba8741017091d212263fda&ipo=images",
     title: "Welcome to Our Platform",
     description: "Discover amazing features and services.",
   },
   {
     id: 2,
     image:
-      "https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/673d5ee60028e63eec16/view?project=67130d070031ae19004c&project=67130d070031ae19004c&mode=admin",
+      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.collectorsquare.com%2Fuploads%2Fdc%2F4c%2Frolex-daytona-item-6b3786dd.png&f=1&nofb=1&ipt=0354339fd31be2a89b3b7c3351a1d75b830f4506cfba8741017091d212263fda&ipo=images",
     title: "Innovative Solutions",
     description: "We provide cutting-edge technology for your needs.",
   },
   {
     id: 3,
     image:
-      "https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/673d5f37003a35f9d8d0/view?project=67130d070031ae19004c&project=67130d070031ae19004c&mode=admin",
+      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.collectorsquare.com%2Fuploads%2Fdc%2F4c%2Frolex-daytona-item-6b3786dd.png&f=1&nofb=1&ipt=0354339fd31be2a89b3b7c3351a1d75b830f4506cfba8741017091d212263fda&ipo=images",
     title: "Customer Satisfaction",
     description: "Our top priority is your happiness and success.",
   },
