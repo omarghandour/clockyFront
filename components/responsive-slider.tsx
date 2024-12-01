@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -99,13 +100,12 @@ export function ResponsiveSliderComponent() {
       <Slider {...settings} arrows={false}>
         {slides.map((slide) => (
           <div key={slide.id} className="relative w-full h-[50vh] md:h-[50vh]">
-            <Image
+            <img
               src={slide.image}
               alt={slide.title}
-              layout="fill"
-              objectFit="contain"
-              priority
+              className="w-full h-full object-contain"
             />
+
             <div className="absolute inset-0 flex flex-col md:justify-center justify-end md:items-start items-center md:px-8  md:py-8 pt-8 ">
               <h2 className="text-3xl md:text-4xl font-bold text-two  ">
                 {slide.title}
