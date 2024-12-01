@@ -3,7 +3,7 @@ import ContactForm from "../components/ContactForm";
 
 const page: React.FC = () => {
   return (
-    <div className="min-h-screen rounded paddingX flex flex-col mx-auto md:47flex justify-around mt-20 bg-gray-100 p-6">
+    <div className="min-h-dvh rounded paddingX flex flex-col mx-auto md:47flex justify-around mt-20 bg-gray-100 p-6">
       <div className="">
         <p className="w-full text-main text-pretty font-bold">
           The interests of our customers are always the top priority for us, so

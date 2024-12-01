@@ -160,7 +160,7 @@ const Products = () => {
   };
 
   return (
-    <div className="min-h-screen pb-14 text-white flex flex-col  items-start w-full bg-white  text-center mx-auto xl:w-full">
+    <div className="min-h-dvh pb-14 text-white flex flex-col  items-start w-full bg-white  text-center mx-auto xl:w-full">
       {/* Sidebar Toggle Button */}
 
       <div className="text-white md:pl-5 md:text-left backgroundd md:bg-right bg-main bg-contain bg-no-repeat bg-center w-full flex flex-col justify-end md:gap-12 h-[300px] ">

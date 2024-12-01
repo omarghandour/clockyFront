@@ -78,7 +78,7 @@ const Login = () => {
   return (
     <div
       className={`${
-        url === "/login" ? "min-h-screen bg-white" : ""
+        url === "/login" ? "min-h-dvh bg-white" : ""
       } flex items-center justify-center mt-20  text-white p-4`}
     >
       <div className="bg-main shadow-lg rounded-lg p-6 w-full max-w-md">

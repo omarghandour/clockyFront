@@ -3,7 +3,7 @@ import Checkout from "../components/checkout";
 
 const page = () => {
   return (
-    <div className="center min-h-screen">
+    <div className="center min-h-dvh">
       <Checkout />
     </div>
   );
