@@ -4,6 +4,7 @@ import axiosInstance from "@/lib/axiosConfig";
 import Orders from "./Orders";
 import AddEditProductForm from "./AddEditProductForm";
 import { Client, ID, Storage } from "node-appwrite";
+
 type Product = {
   _id: string;
   name?: string;
@@ -25,6 +26,7 @@ type ProductFormData = Omit<Product, "_id">;
 const AdminDashboard = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [images, setImages] = useState<string[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeSection, setActiveSection] = useState<"products" | "orders">(
     "products"
@@ -37,10 +39,7 @@ const AdminDashboard = () => {
   // Initialize Appwrite Client
   client
     .setEndpoint("https://cloud.appwrite.io/v1") // Replace with your Appwrite endpoint
-    .setProject("67130d070031ae19004c"), // Replace with your Project ID
-    client.setKey(
-      "standard_de2f7c0b928559ad83209ee3d68098bc8ec5554199d3cfc09957cb45b9f007c907be76035b8f43ec7e8e4c0f724f291daff49744d6c6fdbdd8ee535de2c737702058844f1b1c25a95da777429539a8b98096420a1de785c6635fa177ca96849747ae7f93c652a6711b4e112257e19dc249da70a0b0d51777a88e3991d273c70b"
-    ); // Replace with your API key
+    .setProject("67130d070031ae19004c"); // Replace with your Project ID
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -60,8 +59,24 @@ const AdminDashboard = () => {
     }
   };
 
+  const fetchImages = async () => {
+    try {
+      const response = await storage.listFiles("67130d23001000917f00"); // Replace with your Appwrite bucket ID
+      const imageUrls = response.files.map(
+        (file) =>
+          `https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/${file.$id}/view?project=67130d070031ae19004c&mode=admin`
+      );
+      setImages(imageUrls);
+    } catch (error) {
+      console.error("Failed to fetch images from Appwrite", error);
+    }
+  };
+
   useEffect(() => {
-    if (activeSection === "products") fetchProducts();
+    if (activeSection === "products") {
+      fetchProducts();
+      fetchImages();
+    }
   }, [activeSection]);
 
   const handleSaveProduct = async (productData: ProductFormData) => {
@@ -105,6 +120,7 @@ const AdminDashboard = () => {
       console.error("Failed to delete product", error);
     }
   };
+
   const uploadImageToAppwrite = async (file: any) => {
     setLoading(true);
 
@@ -116,9 +132,7 @@ const AdminDashboard = () => {
       );
 
       // Generate the file's URL
-      const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/${response.$id}/view?project=67130d070031ae19004c&project=67130d070031ae19004c&mode=admin`;
-      console.log(fileUrl);
-
+      const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/${response.$id}/view?project=67130d070031ae19004c&mode=admin`;
       return fileUrl;
     } catch (error) {
       setLoading(false); // Set loading to false
@@ -165,6 +179,7 @@ const AdminDashboard = () => {
                 onSave={handleSaveProduct}
                 editingProduct={editingProduct || undefined}
                 uploadImageToAppwrite={uploadImageToAppwrite}
+                availableImages={images} // Pass fetched images
               />
               <div className="bg-white p-4 rounded shadow-md mt-4 overflow-x-auto">
                 <h2 className="text-lg sm:text-xl font-semibold mb-3">

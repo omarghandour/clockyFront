@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from "react";
 
 type ProductFormData = {
@@ -16,16 +17,16 @@ type ProductFormData = {
 type ProductFormProps = {
   onSave: (productData: ProductFormData) => void;
   editingProduct?: ProductFormData;
-  uploadImageToAppwrite: any;
+  uploadImageToAppwrite: (file: File) => Promise<string>;
+  availableImages: string[];
 };
 
 const AddEditProductForm: React.FC<ProductFormProps> = ({
   onSave,
   editingProduct,
   uploadImageToAppwrite,
+  availableImages,
 }) => {
-  const [formData, setFormData] = useState(editingProduct || {});
-  const [imageFile, setImageFile] = useState(null);
   const [form, setForm] = useState<ProductFormData>({
     name: "",
     price: "",
@@ -38,10 +39,15 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
     movmentType: "",
     img: "",
   });
+  const [selectedImage, setSelectedImage] = useState<string | undefined>(
+    undefined
+  );
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (editingProduct) {
       setForm(editingProduct);
+      setSelectedImage(editingProduct.img);
     }
   }, [editingProduct]);
 
@@ -56,11 +62,13 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let imageUrl = formData.img;
+    let imageUrl = selectedImage;
+
     if (imageFile) {
       imageUrl = await uploadImageToAppwrite(imageFile);
     }
-    onSave({ ...form, img: imageUrl }); // Update form with imageUrl
+
+    onSave({ ...form, img: imageUrl });
     setForm({
       name: "",
       price: "",
@@ -73,6 +81,20 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
       movmentType: "",
       img: "",
     });
+    setSelectedImage(undefined);
+    setImageFile(null);
+  };
+
+  const handleImageSelect = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+    setImageFile(null); // Clear file input if an image is selected
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+      setSelectedImage(undefined); // Clear selected image if a file is uploaded
+    }
   };
 
   return (
@@ -80,12 +102,53 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
       <h2 className="text-xl font-semibold mb-3">
         {editingProduct ? "Edit Product" : "Add Product"}
       </h2>
+      <div className="mb-3">
+        <label className="block text-gray-700 mb-2">Select an Image:</label>
+        <div className="grid grid-cols-3 gap-3">
+          {availableImages.map((imageUrl) => (
+            <div
+              key={imageUrl}
+              className={`cursor-pointer p-1 border ${
+                selectedImage === imageUrl
+                  ? "border-blue-500"
+                  : "border-gray-300"
+              }`}
+              onClick={() => handleImageSelect(imageUrl)}
+            >
+              <img
+                src={imageUrl}
+                alt="Product"
+                className="w-full h-24 object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-3">
+        <label className="block text-gray-700 mb-2">Upload a New Image:</label>
+        <input type="file" accept="image/*" onChange={handleFileChange} />
+      </div>
+
+      {selectedImage && (
+        <div className="mb-3">
+          <label className="block text-gray-700">Selected Image:</label>
+          <img
+            src={selectedImage}
+            alt="Selected"
+            className="w-24 h-24 object-cover border border-blue-500 mt-2"
+          />
+        </div>
+      )}
+
+      {imageFile && (
+        <div className="mb-3">
+          <label className="block text-gray-700">Uploaded File:</label>
+          <p className="mt-1 text-gray-600">{imageFile.name}</p>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e: any) => setImageFile(e.target.files[0])}
-        />
         <div className="mb-3">
           <label className="block text-gray-700">Product Name</label>
           <input
