@@ -296,9 +296,10 @@ const ProductById = () => {
               {results.map((product) => (
                 <div
                   key={product._id}
-                  className="max-w-[170px] md:max-w-[190px] flex-shrink-0 bg-white shadow rounded-md"
+                  className="max-w-[170px] md:max-w-[190px] flex-shrink-0 bg-white rounded-md"
                 >
                   <Card product={product} />
+                  zz
                 </div>
               ))}
             </div>
