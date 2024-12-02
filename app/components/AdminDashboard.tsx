@@ -39,8 +39,10 @@ const AdminDashboard = () => {
   // Initialize Appwrite Client
   client
     .setEndpoint("https://cloud.appwrite.io/v1") // Replace with your Appwrite endpoint
-    .setProject("67130d070031ae19004c"); // Replace with your Project ID
-
+    .setProject("67130d070031ae19004c"), // Replace with your Project ID
+    client.setKey(
+      "standard_de2f7c0b928559ad83209ee3d68098bc8ec5554199d3cfc09957cb45b9f007c907be76035b8f43ec7e8e4c0f724f291daff49744d6c6fdbdd8ee535de2c737702058844f1b1c25a95da777429539a8b98096420a1de785c6635fa177ca96849747ae7f93c652a6711b4e112257e19dc249da70a0b0d51777a88e3991d273c70b"
+    ); // Replace with your API key
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) setIsAuthenticated(true);
