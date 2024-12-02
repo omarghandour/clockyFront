@@ -29,6 +29,8 @@ const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState<"products" | "orders">(
     "products"
   );
+  const [loading, setLoading] = useState(false); // Loading state
+
   const client = new Client();
   const storage = new Storage(client);
 
@@ -46,11 +48,15 @@ const AdminDashboard = () => {
   }, []);
 
   const fetchProducts = async () => {
+    setLoading(true); // Set loading to true
+
     try {
       const response = await axiosInstance.get("products/dashboard");
       setProducts(response.data);
     } catch (error) {
       console.error("Failed to fetch products", error);
+    } finally {
+      setLoading(false); // Set loading to false
     }
   };
 
@@ -59,6 +65,8 @@ const AdminDashboard = () => {
   }, [activeSection]);
 
   const handleSaveProduct = async (productData: ProductFormData) => {
+    setLoading(true);
+
     try {
       if (editingProduct) {
         // Update product
@@ -80,6 +88,8 @@ const AdminDashboard = () => {
       fetchProducts();
     } catch (error) {
       console.error("Failed to save product", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,6 +106,8 @@ const AdminDashboard = () => {
     }
   };
   const uploadImageToAppwrite = async (file: any) => {
+    setLoading(true);
+
     try {
       const response = await storage.createFile(
         "67130d23001000917f00", // Replace with your Appwrite bucket ID
@@ -109,8 +121,12 @@ const AdminDashboard = () => {
 
       return fileUrl;
     } catch (error) {
+      setLoading(false); // Set loading to false
+
       console.error("Error uploading image to Appwrite", error);
       throw error;
+    } finally {
+      setLoading(false); // Set loading to false
     }
   };
 
@@ -122,7 +138,6 @@ const AdminDashboard = () => {
             Admin Dashboard
           </h1>
 
-          {/* Navigation */}
           <div className="mb-4 flex flex-col sm:flex-row gap-2">
             <button
               onClick={() => setActiveSection("products")}
@@ -142,17 +157,15 @@ const AdminDashboard = () => {
             </button>
           </div>
 
-          {/* Conditional Rendering */}
-          {activeSection === "products" ? (
+          {loading ? (
+            <div className="text-center text-white">Loading...</div>
+          ) : activeSection === "products" ? (
             <div>
-              {/* Add/Edit Product Form */}
               <AddEditProductForm
                 onSave={handleSaveProduct}
                 editingProduct={editingProduct || undefined}
                 uploadImageToAppwrite={uploadImageToAppwrite}
               />
-
-              {/* Product List */}
               <div className="bg-white p-4 rounded shadow-md mt-4 overflow-x-auto">
                 <h2 className="text-lg sm:text-xl font-semibold mb-3">
                   Product List
@@ -188,7 +201,7 @@ const AdminDashboard = () => {
                         </td>
                         <td className="border-b p-2 flex gap-2 text-sm sm:text-base">
                           <button
-                            onClick={() => handleEditProduct(product)}
+                            onClick={() => setEditingProduct(product)}
                             className="bg-yellow-500 text-white px-2 py-1 rounded"
                           >
                             Edit
@@ -207,7 +220,7 @@ const AdminDashboard = () => {
               </div>
             </div>
           ) : (
-            <Orders /> // Render Orders component when "Orders" is selected
+            <Orders />
           )}
         </div>
       ) : (
