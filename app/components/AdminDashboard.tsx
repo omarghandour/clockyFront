@@ -201,7 +201,7 @@ const AdminDashboard = () => {
                         </td>
                         <td className="border-b p-2 flex gap-2 text-sm sm:text-base">
                           <button
-                            onClick={() => setEditingProduct(product)}
+                            onClick={() => handleEditProduct(product)}
                             className="bg-yellow-500 text-white px-2 py-1 rounded"
                           >
                             Edit
