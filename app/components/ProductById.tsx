@@ -299,7 +299,6 @@ const ProductById = () => {
                   className="max-w-[170px] md:max-w-[190px] flex-shrink-0 bg-white rounded-md"
                 >
                   <Card product={product} />
-                  zz
                 </div>
               ))}
             </div>
