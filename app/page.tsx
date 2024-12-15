@@ -17,7 +17,7 @@ type Product = {
     img: string;
   };
 };
-const api = "https://clockyexpress.vercel.app/api";
+const api = "https://express.clockyeg.com/api";
 export default async function Home() {
   const { data } = await axios.get(`${api}/products/newArrival`, {
     withCredentials: true,

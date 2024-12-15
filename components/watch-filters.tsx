@@ -85,7 +85,7 @@ export function WatchFiltersComponent({
     const fetchFilters = async () => {
       try {
         const response = await axios.get(
-          "https://clockyexpress.vercel.app/api/products/unique-filters"
+          "https://express.clockyeg.com/api/products/unique-filters"
         );
         const {
           brands: fetchedBrands,

@@ -3,7 +3,7 @@ import axios from "axios";
 // Create an instance of axios
 const axiosInstance = axios.create({
   baseURL:
-    process.env.NEXT_PUBLIC_API_URL || "https://clockyexpress.vercel.app/api",
+    process.env.NEXT_PUBLIC_API_URL || "https://express.clockyeg.com/api",
   withCredentials: true, // Add this if you need to send credentials with the request
 });
 

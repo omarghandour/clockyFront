@@ -29,7 +29,7 @@ const BrandProducts: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `https://clockyexpress.vercel.app/api/products/brand/${brand}`, // Replace with the brand-specific API endpoint
+          `https://express.clockyeg.com/api/products/brand/${brand}`, // Replace with the brand-specific API endpoint
           {
             withCredentials: true,
           }

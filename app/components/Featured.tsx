@@ -13,7 +13,7 @@ type Product = {
   countInStock: number;
   img: string;
 };
-const api = "https://clockyexpress.vercel.app/api";
+const api = "https://express.clockyeg.com/api";
 let isLoading = false;
 const Featured = async () => {
   let data;

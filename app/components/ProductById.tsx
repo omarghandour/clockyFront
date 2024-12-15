@@ -52,7 +52,7 @@ const ProductById = () => {
   const fetchRatings = async () => {
     try {
       const res = await axios.get(
-        `https://clockyexpress.vercel.app/api/products/${id}/ratings`,
+        `https://express.clockyeg.com/api/products/${id}/ratings`,
         {
           withCredentials: true,
         }
@@ -76,7 +76,7 @@ const ProductById = () => {
 
     try {
       await axios.patch(
-        `https://clockyexpress.vercel.app/api/products/${id}/ratings`,
+        `https://express.clockyeg.com/api/products/${id}/ratings`,
         { rating },
         { withCredentials: true }
       );
@@ -98,7 +98,7 @@ const ProductById = () => {
   const fetchUserRating = async () => {
     try {
       const { data } = await axios.get(
-        `https://clockyexpress.vercel.app/api/products/${id}/rating`,
+        `https://express.clockyeg.com/api/products/${id}/rating`,
         { withCredentials: true }
       );
       // console.log(data.rating.rating);
@@ -130,7 +130,7 @@ const ProductById = () => {
   const fetchProduct = async () => {
     try {
       const res = await axios.get(
-        `https://clockyexpress.vercel.app/api/products/${id}`,
+        `https://express.clockyeg.com/api/products/${id}`,
         { withCredentials: true }
       );
       setProduct(res.data);
@@ -144,7 +144,7 @@ const ProductById = () => {
   const checkIfFavorite = async (userId: string) => {
     try {
       const res = await axios.post(
-        `https://clockyexpress.vercel.app/api/products/isFavorite/${userId}`,
+        `https://express.clockyeg.com/api/products/isFavorite/${userId}`,
         { ProductId: id },
         { withCredentials: true }
       );
@@ -302,7 +302,7 @@ const ProductById = () => {
       try {
         if (searchTerm.trim()) {
           const response = await axios.get(
-            `https://clockyexpress.vercel.app/api/products/search?keyword=${searchTerm}`
+            `https://express.clockyeg.com/api/products/search?keyword=${searchTerm}`
           );
           setResults(response.data);
         } else {

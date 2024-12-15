@@ -23,7 +23,7 @@ const Search = () => {
     try {
       if (searchTerm.trim()) {
         const response = await axios.get(
-          `https://clockyexpress.vercel.app/api/products/search?keyword=${searchTerm}`
+          `https://express.clockyeg.com/api/products/search?keyword=${searchTerm}`
         );
         setResults(response.data);
       } else {

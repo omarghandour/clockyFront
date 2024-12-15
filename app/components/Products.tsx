@@ -87,7 +87,7 @@ const Products = () => {
         };
 
         const response = await axios.get(
-          "https://clockyexpress.vercel.app/api/products",
+          "https://express.clockyeg.com/api/products",
           {
             params: query,
             withCredentials: true,

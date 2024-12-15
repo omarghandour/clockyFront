@@ -128,7 +128,7 @@ const Card = ({ product }: { product: Product }) => {
   const checkIfFavorite = async (userId: string) => {
     try {
       const res = await axios.post(
-        `https://clockyexpress.vercel.app/api/products/isFavorite/${userId}`,
+        `https://express.clockyeg.com/api/products/isFavorite/${userId}`,
         {
           ProductId: product._id,
         }

@@ -28,7 +28,7 @@ const Unisex = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "https://clockyexpress.vercel.app/api/products/gender",
+          "https://express.clockyeg.com/api/products/gender",
           {
             params: { gender: "men" },
             withCredentials: true,

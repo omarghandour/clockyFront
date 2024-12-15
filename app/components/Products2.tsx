@@ -59,7 +59,7 @@ const syncCartWithServer = async (products: Product[]) => {
     const token = localStorage.getItem("userId");
     if (token) {
       await axios.post(
-        `https://clockyexpress.vercel.app/api/products/cart/${token}`,
+        `https://express.clockyeg.com/api/products/cart/${token}`,
         {
           products,
         }
@@ -79,7 +79,7 @@ const Products2 = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "https://clockyexpress.vercel.app/api/products"
+          "https://express.clockyeg.com/api/products"
         );
         setProducts(response.data);
       } catch (error) {
