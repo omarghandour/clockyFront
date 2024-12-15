@@ -1,28 +1,42 @@
-import Image from "next/image";
-import Nav from "../app/components/Nav";
-import Hero from "./components/Hero";
-import Products from "./components/Products";
 import Recommended from "./components/Recomended";
-// import Products2 from "./components/Products2";
-// import One from "./components/One";
 import Arrivals from "./components/Arrivals";
-import Footer from "./components/Footer";
 import Featured from "./components/Featured";
 import Brands from "./components/Brands";
-import { AppSidebar } from "@/components/app-sidebar";
-export default function Home() {
-  // const hosary: number = 0;
+import FullWidthCarousel from "@/components/full-width-carousel";
+import axios from "axios";
+import { Suspense } from "react";
+import Loading from "./components/Loading";
+type Product = {
+  data: {
+    _id: string;
+    name: string;
+    before: number; // Original price
+    price: number;
+    description: string;
+    countInStock: number;
+    img: string;
+  };
+};
+const api = "https://clockyexpress.vercel.app/api";
+export default async function Home() {
+  const { data } = await axios.get(`${api}/products/newArrival`, {
+    withCredentials: true,
+  });
   return (
     <main className="h-auto bg-[#FCFCFC]">
       {/* <Nav /> */}
-      <Hero />
+      {/* <Hero /> */}
+      {/* <ResponsiveSliderComponent /> */}
+      <FullWidthCarousel />
       <Brands />
-      <Featured />
+      <Suspense fallback={<Loading />}>
+        <Featured />
+      </Suspense>
       {/* <Products /> */}
       <Recommended />
       {/* <Products2 /> */}
       {/* <One /> */}
-      <Arrivals />
+      <Arrivals data={data} />
       {/* <Footer /> */}
       {/* <AppSidebar /> */}
       {/* <Payment /> */}

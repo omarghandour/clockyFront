@@ -6,7 +6,7 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AccessibleDropdown } from "./accessible-dropdown";
 import { AccessibleCollapse } from "./AccessibleCollapse";
 import { useToast } from "@/hooks/use-toast";
@@ -39,7 +39,13 @@ const NavbarSide = () => {
     setStorageValue(null);
     toast({ title: "Logged Out successfully" });
   };
-
+  useEffect(() => {
+    // Check local storage for token on mount
+    if (typeof window !== "undefined") {
+      const value = localStorage.getItem("token");
+      setStorageValue(value);
+    }
+  }, []);
   return (
     <div className="flex flex-row-reverse center gap-5">
       <button onClick={() => setIsOpen(true)} className="flex text-two rounded">
@@ -124,7 +130,7 @@ const NavbarSide = () => {
             <Link
               href="/"
               onClick={handleClick}
-              className={`block px-4 py-2 text-two hover:bg-gray-700 bg-[#0000004d] ${
+              className={`text-center block px-4 py-2 text-two hover:bg-gray-700 bg-[#0000004d] ${
                 storageValue ? "" : "hidden"
               }`}
             >

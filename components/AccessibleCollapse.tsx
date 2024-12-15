@@ -68,7 +68,7 @@ export function AccessibleCollapse() {
         <div
           id="collapse-menu"
           className={`overflow-hidden transition-max-height duration-300 ease-in-out ${
-            isOpen ? "max-h-screen" : "max-h-0"
+            isOpen ? "max-h-dvh" : "max-h-0"
           }`}
           role="region"
           onKeyDown={handleKeyDown}

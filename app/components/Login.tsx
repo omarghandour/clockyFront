@@ -58,6 +58,7 @@ const Login = () => {
       }
 
       const { token, ...userData } = response.data;
+      console.log(response);
 
       // Save token in local storage
       localStorage.setItem("token", token);

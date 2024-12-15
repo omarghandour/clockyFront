@@ -7,10 +7,12 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import im1 from "../public/home.png";
+import im1 from "../public/cover1.jpg";
+import im2 from "../public/cover2.jpg";
+import im3 from "../public/cover3.jpg";
 interface SlideData {
   id: number;
-  image: string;
+  image: any;
   title: string;
   description: string;
 }
@@ -19,22 +21,19 @@ interface SlideData {
 const mockSlides: SlideData[] = [
   {
     id: 1,
-    image:
-      "https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/673d5ee60028e63eec16/view?project=67130d070031ae19004c&project=67130d070031ae19004c&mode=admin",
+    image: "/cover1.jpg",
     title: "Welcome to Our Platform",
     description: "Discover amazing features and services.",
   },
   {
     id: 2,
-    image:
-      "https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/673d5ee60028e63eec16/view?project=67130d070031ae19004c&project=67130d070031ae19004c&mode=admin",
+    image: "/cover2.jpg",
     title: "Innovative Solutions",
     description: "We provide cutting-edge technology for your needs.",
   },
   {
     id: 3,
-    image:
-      "https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/673d5ee60028e63eec16/view?project=67130d070031ae19004c&project=67130d070031ae19004c&mode=admin",
+    image: "/cover3.jpg",
     title: "Customer Satisfaction",
     description: "Our top priority is your happiness and success.",
   },
@@ -69,7 +68,7 @@ export function ResponsiveSliderComponent() {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 200,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -96,26 +95,34 @@ export function ResponsiveSliderComponent() {
   };
 
   return (
-    <div className="w-full text-center">
-      <Slider {...settings} arrows={false}>
+    <div className="w-full text-center h-full mt-20">
+      <Slider {...settings} arrows={false} className="h-full w-full">
         {slides.map((slide) => (
-          <div key={slide.id} className="relative w-full h-[50vh] md:h-[50vh]">
-            <Image
+          <div
+            key={slide.id}
+            className="flex justify-start h-[488px] md:h-[600px] bg-cover  w-full  "
+          >
+            <div
+              className={` w-full h-full xl:bg-cover md:bg-contain bg-no-repeat bg-center`}
+              style={{ backgroundImage: `url(${slide?.image})` }}
+            ></div>
+            {/* <Image
               src={slide.image}
               alt={slide.title}
-              layout="fill"
-              objectFit="contain"
+              // layout="fill"
+              // objectFit="cover"
+              className="w-full"
               priority
-            />
+            /> */}
 
-            <div className="absolute inset-0 flex flex-col md:justify-center justify-end md:items-start items-center md:px-8  md:py-8 pt-8 ">
+            {/* <div className="absolute inset-0 flex flex-col md:justify-center justify-end md:items-start items-center md:px-8  md:py-8 pt-8 ">
               <h2 className="text-3xl md:text-4xl font-bold text-two  ">
                 {slide.title}
               </h2>
               <p className="text-lg md:text-xl text-two ">
                 {slide.description}
               </p>
-            </div>
+            </div> */}
           </div>
         ))}
       </Slider>

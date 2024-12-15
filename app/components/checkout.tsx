@@ -125,7 +125,7 @@ const Checkout = () => {
   };
 
   return (
-    <div className="p-4 w-full max-w-md mx-auto bg-white shadow-lg rounded-lg text-main mt-12 md:mt-0">
+    <div className="p-4 w-full max-w-md mx-auto bg-white shadow-lg rounded-lg text-main mt-20 md:mt-0">
       {token ? (
         <div>
           <h2 className="text-2xl font-bold mb-4">Checkout</h2>

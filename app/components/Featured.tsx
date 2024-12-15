@@ -1,14 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-"use client";
-import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useToast } from "@/hooks/use-toast";
-import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
 import Card from "./Card";
-// import { useRouter } from "next/router";
 
 type Product = {
   _id: string;
@@ -19,88 +13,21 @@ type Product = {
   countInStock: number;
   img: string;
 };
-
-const Featured = () => {
-  // const router = useRouter();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { toast } = useToast();
-  const [activeProductId, setActiveProductId] = useState<string | null>(null);
-  const [isInView, setIsInView] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(
-          "https://clockyexpress.vercel.app/api/products/featured",
-          { withCredentials: true }
-        );
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Failed to fetch products", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
-
-  const addToCart = (product: Product) => {
-    setActiveProductId(product._id);
-    setTimeout(() => {
-      setActiveProductId(null);
-    }, 1000);
-
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingProduct = cart.find((item: any) => item._id === product._id);
-
-    if (existingProduct) {
-      existingProduct.quantity += 1;
-    } else {
-      cart.push({ ...product, quantity: 1 });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    toast({
-      title: product.name,
-      description: "added to cart",
-      action: (
-        <Link href="/cart" className="p-[10px]">
-          Go to cart
-        </Link>
-      ),
+const api = "https://clockyexpress.vercel.app/api";
+let isLoading = false;
+const Featured = async () => {
+  let data;
+  try {
+    const res = await axios.get(`${api}/products/featured`, {
+      withCredentials: true,
     });
-  };
-  {
-    /* ${
-                     isInView
-                       ? "motion-scale-in-[0.5] motion-translate-x-in-[-199%] motion-translate-y-in-[-17%] motion-opacity-in-[0%] motion-rotate-in-[-10deg] motion-blur-in-[5px] motion-duration-[0.00s] motion-duration-[0.70s]/translate"
-                       : ""
-                   } */
+    data = res.data;
+  } catch (error) {
+    console.error("Failed to fetch products", error);
   }
-  const toLink = (id: string) => {};
+
   return (
-    <div ref={sectionRef} className="paddingX mx-auto my-8 py-10 px-5">
+    <div className="paddingX mx-auto my-8 py-10 px-5">
       <div className="flex flex-col items-center w-full bg-[#FCFCFC] ">
         {/* <div className=""></div> */}
         <h2 className="text-main font-bold text-xl md:text-3xl ">FEATURED</h2>
@@ -118,7 +45,7 @@ const Featured = () => {
                   <Skeleton className="w-full h-10" />
                 </div>
               ))
-            : products.map((product) => (
+            : data.map((product: Product) => (
                 <Card product={product} key={product._id} />
               ))}
         </div>

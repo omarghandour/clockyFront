@@ -10,7 +10,10 @@ import Mytable from "./Mytable";
 import axiosInstance from "@/lib/axiosConfig";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import {
+  faStar,
+  faHeart as regularHeart,
+} from "@fortawesome/free-regular-svg-icons";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Loading from "./Loading";
 import { CarouselDApiDemo } from "@/components/imagesSlider";
@@ -29,9 +32,13 @@ const ProductById = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [userRating, setUserRating] = useState<number>(0);
+  const [averageRating, setAverageRating] = useState<number>(0);
+
   const { toast } = useToast();
 
   useEffect(() => {
+    fetchUserRating();
     const userID = localStorage.getItem("userId");
     setUserId(userID);
 
@@ -39,12 +46,92 @@ const ProductById = () => {
       checkIfFavorite(userID);
     }
     fetchProduct();
+    fetchRatings();
   }, [id]);
+
+  const fetchRatings = async () => {
+    try {
+      const res = await axios.get(
+        `https://clockyexpress.vercel.app/api/products/${id}/ratings`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      setAverageRating(res.data.averageRating);
+    } catch (error) {
+      console.error("Error fetching ratings:", error);
+    }
+  };
+  const submitRating = async (rating: number) => {
+    if (!userId) {
+      toast({
+        title: "Not logged in",
+        description: "Please log in to rate this product.",
+        variant: "destructive",
+        action: <Link href="/login">Go to login</Link>,
+      });
+      return;
+    }
+
+    try {
+      await axios.patch(
+        `https://clockyexpress.vercel.app/api/products/${id}/ratings`,
+        { rating },
+        { withCredentials: true }
+      );
+      toast({
+        title: "Rating submitted",
+        description: `You rated this product ${rating} stars.`,
+      });
+      setUserRating(rating);
+      fetchRatings(); // Update the average rating after submission
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+      toast({
+        title: "Error",
+        description: "Could not submit your rating. Please try again later.",
+        variant: "destructive",
+      });
+    }
+  };
+  const fetchUserRating = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://clockyexpress.vercel.app/api/products/${id}/rating`,
+        { withCredentials: true }
+      );
+      // console.log(data.rating.rating);
+
+      setUserRating(data.rating.rating);
+      // fetchRatings(); // Update the average rating after submission
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+      // toast({
+      //   title: "Error",
+      //   description: "Could not submit your rating. Please try again later.",
+      //   variant: "destructive",
+      // });
+    }
+  };
+  const renderStars = (count: number, onClick?: (index: number) => void) => {
+    return Array.from({ length: 5 }, (_, index) => (
+      <FontAwesomeIcon
+        key={index}
+        icon={faStar}
+        className={`cursor-pointer ${
+          index < count ? "text-yellow-500" : "text-gray-300"
+        }`}
+        onClick={() => onClick && onClick(index + 1)}
+      />
+    ));
+  };
 
   const fetchProduct = async () => {
     try {
       const res = await axios.get(
-        `https://clockyexpress.vercel.app/api/products/${id}`
+        `https://clockyexpress.vercel.app/api/products/${id}`,
+        { withCredentials: true }
       );
       setProduct(res.data);
       setLoading(false);
@@ -58,7 +145,8 @@ const ProductById = () => {
     try {
       const res = await axios.post(
         `https://clockyexpress.vercel.app/api/products/isFavorite/${userId}`,
-        { ProductId: id }
+        { ProductId: id },
+        { withCredentials: true }
       );
       setIsFavorite(res.data.isFavorite);
     } catch (error: any) {
@@ -148,11 +236,17 @@ const ProductById = () => {
     // }, 1000);
 
     try {
-      const response = await axiosInstance.post("/products/cart/add/one", {
-        userId,
-        productId: product._id,
-        quantity: quantity || 1,
-      });
+      const response = await axiosInstance.post(
+        "/products/cart/add/one",
+        {
+          userId,
+          productId: product._id,
+          quantity: quantity || 1,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         toast({
@@ -241,11 +335,17 @@ const ProductById = () => {
       }, 1000);
 
       try {
-        const response = await axiosInstance.post("/products/cart/add/one", {
-          userId,
-          productId: product._id,
-          quantity: 1,
-        });
+        const response = await axiosInstance.post(
+          "/products/cart/add/one",
+          {
+            userId,
+            productId: product._id,
+            quantity: 1,
+          },
+          {
+            withCredentials: true,
+          }
+        );
 
         if (response.status === 200) {
           toast({
@@ -376,6 +476,16 @@ const ProductById = () => {
                   {isFavorite ? "REMOVE FROM FAVORITES" : "ADD TO FAVORITES"}
                 </span>
               </button>
+            </div>
+            <div className="center flex-col">
+              <h2 className="text-lg font-semibold">Average Rating</h2>
+              <div className="flex">{renderStars(averageRating)}</div>
+            </div>
+            <div className="center flex-col">
+              <h2 className="text-lg font-semibold">Your Rating</h2>
+              <div className="flex">
+                {renderStars(userRating, (rating) => submitRating(rating))}
+              </div>
             </div>
           </div>
         </div>

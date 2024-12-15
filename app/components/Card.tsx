@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
 import { toast, useToast } from "@/hooks/use-toast";
 import axiosInstance from "@/lib/axiosConfig";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -28,60 +29,92 @@ const Card = ({ product }: { product: Product }) => {
   const { toast } = useToast();
   const [activeProductId, setActiveProductId] = useState<string | null>(null);
   const router = useRouter();
+
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     setUserId(storedUserId);
     if (storedUserId && product._id) {
       checkIfFavorite(storedUserId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product._id]);
-  const addToCart = async (product: Product) => {
-    if (!userId) {
-      toast({
-        title: "Not logged in",
-        description: "Please log in to add items to your cart.",
-        variant: "destructive",
-        action: <Link href="/login">Go to login</Link>,
-      });
-      return;
-    }
 
+  const addToCart = (product: Product) => {
+    // Highlight the active product for a short animation
     setActiveProductId(product._id);
     setTimeout(() => {
       setActiveProductId(null);
     }, 1000);
 
+    if (!userId) {
+      // Handle local storage cart logic
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+      // Check if the product is already in the cart
+      const existingProductIndex = cart.findIndex(
+        (item: { product: Product }) => item.product._id === product._id
+      );
+
+      if (existingProductIndex !== -1) {
+        // Increment quantity if the product is already in the cart
+        cart[existingProductIndex].quantity += 1;
+      } else {
+        // Add new product to the cart
+        cart.push({ product, quantity: 1 });
+      }
+
+      // Save updated cart back to local storage
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      // Show success toast
+      toast({
+        title: "Success!",
+        description: <p className="text-two">Successfully added to cart! 🎉</p>,
+        action: (
+          <Link
+            href="/cart"
+            className="bg-two hover:bg-green-600 text-main text-sm px-5 py-2 rounded shadow transition duration-200"
+          >
+            Go to Cart
+          </Link>
+        ),
+        style: {
+          backgroundColor: "#414B43", // Soft yellow background
+          color: "#e3c578", // Deep green text color
+          borderRadius: "7px",
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+          border: "none",
+        },
+      });
+      return;
+    }
+
+    // If logged in, make the backend request
     try {
-      const response = await axiosInstance.post("/products/cart/add/one", {
+      axiosInstance.post("/products/cart/add/one", {
         userId,
         productId: product._id,
         quantity: 1,
       });
 
-      if (response.status === 200) {
-        toast({
-          title: "Success!",
-          description: (
-            <p className="text-two">Successfully added to cart! 🎉</p>
-          ),
-          action: (
-            <Link
-              href="/cart"
-              className="bg-two hover:bg-green-600 text-main text-sm px-5 py-2 rounded shadow transition duration-200"
-            >
-              Go to Cart
-            </Link>
-          ),
-          style: {
-            backgroundColor: "#414B43", // Soft yellow background
-            color: "#e3c578", // Deep green text color
-            borderRadius: "7px",
-            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-            border: "none",
-          },
-        });
-      }
+      toast({
+        title: "Success!",
+        description: <p className="text-two">Successfully added to cart! 🎉</p>,
+        action: (
+          <Link
+            href="/cart"
+            className="bg-two hover:bg-main text-main text-sm px-5 py-2 rounded shadow transition duration-200"
+          >
+            Go to Cart
+          </Link>
+        ),
+        style: {
+          backgroundColor: "#414B43", // Soft yellow background
+          color: "#e3c578", // Deep green text color
+          borderRadius: "7px",
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+          border: "none",
+        },
+      });
     } catch (error) {
       console.error("Error adding to cart:", error);
       toast({
@@ -92,7 +125,6 @@ const Card = ({ product }: { product: Product }) => {
     }
   };
 
-  // Check if the product is in the user's favorite list
   const checkIfFavorite = async (userId: string) => {
     try {
       const res = await axios.post(
@@ -106,43 +138,37 @@ const Card = ({ product }: { product: Product }) => {
       console.error("Error checking favorite:", error);
     }
   };
-  // Add to Favorites functionality
+
   const handleAddToFavorites = async () => {
     setFavoriteLoading(true);
     try {
       if (isFavorite) {
-        // Remove from favorites
         await axiosInstance.delete(`/products/favorites/${userId}`, {
           data: { ProductId: product._id },
         });
         setIsFavorite(false);
-        toast({
-          title: "Removed from favorites",
-        });
+        toast({ title: "Removed from favorites" });
       } else {
-        // Add to favorites
         await axiosInstance.post(`/products/favorites/${userId}`, {
           ProductId: product._id,
         });
         setIsFavorite(true);
-        toast({
-          title: "Added to favorites",
-        });
+        toast({ title: "Added to favorites" });
       }
     } catch (error: any) {
       console.error("Error updating favorite status:", error);
       toast({
-        title: "error",
-        description: "You are not logged in please login and try again",
+        title: "Error",
+        description: "You are not logged in. Please login and try again.",
         variant: "destructive",
         action: <Link href="/login">Go to login page</Link>,
       });
-      setFavoriteLoading(false);
     } finally {
       setFavoriteLoading(false);
     }
   };
-  const images = [product.img, ...(product.otherImages || [])]; // Fallback if `otherImages` is undefined or empty
+
+  const images = [product.img, ...(product.otherImages || [])];
   return (
     <div
       className={`
