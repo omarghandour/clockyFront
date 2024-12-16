@@ -6,7 +6,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons"; // Solid heart for favorite
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons"; // Outline heart for not favorite
@@ -29,7 +29,7 @@ const Card = ({ product }: { product: Product }) => {
   const { toast } = useToast();
   const [activeProductId, setActiveProductId] = useState<string | null>(null);
   const router = useRouter();
-
+  const pathname = usePathname();
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     setUserId(storedUserId);
@@ -203,7 +203,9 @@ const Card = ({ product }: { product: Product }) => {
       </button>
       <div
         onClick={() => {
-          router.push(`product/${product._id}`);
+          router.push(
+            `${pathname.includes("/product") ? "" : "product/"}${product._id}`
+          );
         }}
         className="flex w-full flex-col h-full cursor-pointer"
       >

@@ -72,12 +72,7 @@ const Services: React.FC = () => {
         </h2> */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 transition-all gap-6">
           {brands.map((brand) => (
-            <Link
-              key={brand.name}
-              href={brand.route}
-              passHref
-              className="transition-all"
-            >
+            <div key={brand.name} className="transition-all">
               <div
                 className={`cursor-pointer hover:shadow-lg transition-all transform hover:scale-105 flex flex-col justify-center items-center  p-4 rounded-md
                   {//  ${
@@ -101,7 +96,7 @@ const Services: React.FC = () => {
                   {brand.p}
                 </p>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
