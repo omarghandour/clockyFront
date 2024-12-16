@@ -7,6 +7,7 @@ import axios from "axios";
 import { Suspense } from "react";
 import Loading from "./components/Loading";
 import Services from "./components/Services";
+import PaymentIcons from "./components/PaymentIcons";
 type Product = {
   data: {
     _id: string;
@@ -39,6 +40,7 @@ export default async function Home() {
       {/* <One /> */}
       <Arrivals data={data} />
       <Services />
+      <PaymentIcons />
       {/* <Footer /> */}
       {/* <AppSidebar /> */}
       {/* <Payment /> */}

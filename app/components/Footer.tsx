@@ -4,6 +4,7 @@ import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import PaymentIcons from "./PaymentIcons";
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState("");
