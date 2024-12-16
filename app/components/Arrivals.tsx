@@ -26,9 +26,7 @@ const Arrivals = ({ data }: any) => {
   return (
     <section
       id="newarraival"
-      className={
-        "paddingX mx-auto my-8 py-10 px-5  border-b-4 border-two w-full "
-      }
+      className={"paddingX mx-auto my-8 py-10 px-5  w-full "}
     >
       {/* <div className="border-t-2 mx-auto border-two w-20 p-1 font-medium"></div> */}
       <h2 className="text-[#2E2E2E] text-center font-bold text-xl md:text-3xl">

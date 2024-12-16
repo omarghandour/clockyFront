@@ -6,6 +6,7 @@ import FullWidthCarousel from "@/components/full-width-carousel";
 import axios from "axios";
 import { Suspense } from "react";
 import Loading from "./components/Loading";
+import Services from "./components/Services";
 type Product = {
   data: {
     _id: string;
@@ -37,6 +38,7 @@ export default async function Home() {
       {/* <Products2 /> */}
       {/* <One /> */}
       <Arrivals data={data} />
+      <Services />
       {/* <Footer /> */}
       {/* <AppSidebar /> */}
       {/* <Payment /> */}
