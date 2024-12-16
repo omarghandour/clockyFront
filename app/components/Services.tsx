@@ -4,10 +4,10 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import rolex from "../../public/icon1.png";
-import casio from "../../public/icon2.png";
-import omega from "../../public/icon3.png";
-import Cartier from "../../public/icon4.png";
+import rolex from "../../public/fast-delivery-svgrepo-com.svg";
+import casio from "../../public/money-bag-svgrepo-com.svg";
+import omega from "../../public/money-cash-svgrepo-com.svg";
+import Cartier from "../../public/medal-svgrepo-com.svg";
 import Image from "next/image";
 
 const brands = [
@@ -89,10 +89,10 @@ const Services: React.FC = () => {
                   height={48}
                   className="h-12 object-contain"
                 />
-                <h4 className="mt-1 text-[12px] md:text-[16px]">
+                <h4 className="mt-1 text-[12px] md:text-[16px] text-main">
                   {brand.name}
                 </h4>
-                <p className="text-lines-2 text-center text-[10px] text-slate-600">
+                <p className="text-lines-2 text-center text-[10px] text-main">
                   {brand.p}
                 </p>
               </div>
