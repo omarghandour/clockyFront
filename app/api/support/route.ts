@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     // Prepare email with attachment
     const mailOptions: any = {
       from: "Andrew Clocky",
-      to: email,
+      to: "omarghandour556@gmail.com",
       subject: "Contact Form Submission with Attachment",
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
       attachments: [
