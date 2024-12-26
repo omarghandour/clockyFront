@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axiosConfig";
+import Image from "next/image";
 
 type Product = {
   _id: string;
@@ -30,12 +31,13 @@ const Cart = () => {
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
 
-    if (userId && token) {
+    if (userId) {
       syncLocalCartWithBackend();
       fetchCartFromBackend();
     } else {
       fetchLocalCart();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchLocalCart = () => {
@@ -50,19 +52,24 @@ const Cart = () => {
       const token = localStorage.getItem("token");
       // if (!userId || !token) return;
 
-      const { data } = await axiosInstance.get(`/products/cart/${userId}`, {
+      const res = await axiosInstance.get(`/products/cart/${userId}`, {
         withCredentials: true,
       });
 
-      const updatedCart = data.map((item: any) => ({
+      const updatedCart = res.data.map((item: any) => ({
         product: { ...item.product },
         quantity: item.quantity,
       }));
 
       setCartItems(updatedCart || []);
       updateTotalPrice(updatedCart || []);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to fetch cart from backend:", error);
+      if (error?.response?.status === 401) {
+        localStorage.removeItem("userId");
+        localStorage.removeItem("token");
+        router.push("/login");
+      }
     }
   };
 
@@ -177,10 +184,12 @@ const Cart = () => {
                 key={product?._id}
                 className="bg-white shadow-md rounded-lg p-2 flex justify-between items-start"
               >
-                <img
+                <Image
                   src={product?.img}
                   alt={product?.name}
-                  className="w-32 h-32 object-cover rounded-md mb-2"
+                  width={128}
+                  height={128}
+                  className="object-cover rounded-md mb-2"
                 />
                 <div className="flex flex-col w-full justify-between h-full">
                   <h2 className="text-[1.5rem] font-medium text-main mb-1">
