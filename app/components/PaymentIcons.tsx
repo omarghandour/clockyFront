@@ -4,35 +4,77 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import rolex from "../../public/apple-pay-svgrepo-com.svg";
-import casio from "../../public/mastercard-svgrepo-com.svg";
-import omega from "../../public/paypal-svgrepo-com.svg";
-import Cartier from "../../public/visa-svgrepo-com.svg";
+import one from "../../public/1.png";
+import two from "../../public/2.png";
+import three from "../../public/3.png";
+import four from "../../public/4.png";
+import five from "../../public/5.png";
+import six from "../../public/6.png";
+import seven from "../../public/7.png";
+import eight from "../../public/8.png";
+import nine from "../../public/9.png";
+import ten from "../../public/10.png";
 import Image from "next/image";
 
 const brands = [
   {
     name: "FAST SHIPPING",
     route: "/brands/rolex",
-    logoUrl: rolex,
+    logoUrl: one,
     p: "Order will be shipped to your doorstep within 22-days",
   },
   {
     name: "FREE RETURNS",
     route: "/brands/casio",
-    logoUrl: casio,
+    logoUrl: two,
     p: "Order will be shipped to your doorstep within 22-days",
   },
   {
     name: "CASH ON DELIVERY",
     route: "/brands/omega",
-    logoUrl: omega,
+    logoUrl: three,
     p: "Order will be shipped to your doorstep within 22-days",
   },
   {
     name: "LOCAL WARRANTY",
     route: "/brands/cartier",
-    logoUrl: Cartier,
+    logoUrl: four,
+    p: "Order will be shipped to your doorstep within 22-days",
+  },
+  {
+    name: "EXCHANGE & RETURN",
+    route: "/brands/seiko",
+    logoUrl: five,
+    p: "Order will be shipped to your doorstep within 22-days",
+  },
+  {
+    name: "24/7 SUPPORT",
+    route: "/brands/rolex",
+    logoUrl: six,
+    p: "Order will be shipped to your doorstep within 22-days",
+  },
+  {
+    name: "CUSTOMER SERVICE",
+    route: "/brands/casio",
+    logoUrl: seven,
+    p: "Order will be shipped to your doorstep within 22-days",
+  },
+  {
+    name: "RETURN POLICY",
+    route: "/brands/omega",
+    logoUrl: eight,
+    p: "Order will be shipped to your doorstep within 22-days",
+  },
+  {
+    name: "SECURE PAYMENT",
+    route: "/brands/cartier",
+    logoUrl: nine,
+    p: "Order will be shipped to your doorstep within 22-days",
+  },
+  {
+    name: "100% ORIGINAL",
+    route: "/brands/seiko",
+    logoUrl: ten,
     p: "Order will be shipped to your doorstep within 22-days",
   },
   //   { name: "Seiko", route: "/brands/seiko", logoUrl: Seiko, p: "" },
@@ -70,7 +112,7 @@ const PaymentIcons: React.FC = () => {
         {/* <h2 className="md:text-3xl text-xl text-main font-bold text-center mb-8">
           OUR WATCH BRANDS
         </h2> */}
-        <div className="flex gap-5 md:gap-10 center transition-all">
+        <div className="grid grid-cols-5 lg:grid-cols-10 md:gap-10  transition-all">
           {brands.map((brand) => (
             <div key={brand.name} className="transition-all">
               <div
@@ -85,7 +127,7 @@ const PaymentIcons: React.FC = () => {
                 <Image
                   src={brand.logoUrl}
                   alt={`${brand.name} logo`}
-                  width={60}
+                  width={100}
                   height={60}
                   className=" object-contain"
                 />
