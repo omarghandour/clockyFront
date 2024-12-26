@@ -48,10 +48,10 @@ const Cart = () => {
     try {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
-      // if (!userId || !token) return;
+      if (!userId || !token) return;
 
       const { data } = await axiosInstance.get(`/products/cart/${userId}`, {
-        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       const updatedCart = data.map((item: any) => ({
