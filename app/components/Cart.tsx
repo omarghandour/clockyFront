@@ -174,12 +174,12 @@ const Cart = () => {
           {cartItems.length > 0 ? (
             cartItems.map(({ product, quantity }) => (
               <div
-                key={product._id}
+                key={product?._id}
                 className="bg-white shadow-md rounded-lg p-2 flex justify-between items-start"
               >
                 <img
-                  src={product.img}
-                  alt={product.name}
+                  src={product?.img}
+                  alt={product?.name}
                   className="w-32 h-32 object-cover rounded-md mb-2"
                 />
                 <div className="flex flex-col w-full justify-between h-full">
@@ -188,14 +188,14 @@ const Cart = () => {
                   </h2>
                   <p className="text-two">
                     <span className="text-main">Price:</span> $
-                    {product.price.toFixed(2)}
+                    {product?.price?.toFixed(2)}
                   </p>
                   <div className="flex space-x-2 mt-2 items-center justify-around">
                     <button
-                      disabled={loading[product._id]}
-                      onClick={() => handleQuantityChange(product._id, 1)}
+                      disabled={loading[product?._id]}
+                      onClick={() => handleQuantityChange(product?._id, 1)}
                       className={`px-4 py-2 ${
-                        loading[product._id]
+                        loading[product?._id]
                           ? "bg-gray-300 text-gray-500"
                           : "bg-main text-two"
                       } md:hover:bg-gray-300 text-sm font-bold`}
@@ -203,18 +203,18 @@ const Cart = () => {
                       {loading[product._id] ? "..." : "+"}
                     </button>
                     <p className="text-xs text-main">
-                      Quantity: {loading[product._id] ? "..." : quantity}
+                      Quantity: {loading[product?._id] ? "..." : quantity}
                     </p>
                     <button
-                      disabled={loading[product._id]}
-                      onClick={() => handleQuantityChange(product._id, -1)}
+                      disabled={loading[product?._id]}
+                      onClick={() => handleQuantityChange(product?._id, -1)}
                       className={`px-4 py-2 ${
-                        loading[product._id]
+                        loading[product?._id]
                           ? "bg-gray-300 text-gray-500"
                           : "bg-main text-two"
                       } md:hover:bg-gray-300 text-sm font-bold`}
                     >
-                      {loading[product._id] ? "..." : "-"}
+                      {loading[product?._id] ? "..." : "-"}
                     </button>
                   </div>
                 </div>
@@ -254,8 +254,8 @@ const Cart = () => {
             <h3 className="text-lg font-semibold text-main mb-2">Receipt</h3>
             <ul className="text-sm text-main">
               {cartItems.map(({ product, quantity }) => (
-                <li key={product._id}>
-                  {quantity}x {product.name} (${product.price.toFixed(2)})
+                <li key={product?._id}>
+                  {quantity}x {product?.name} (${product?.price?.toFixed(2)})
                 </li>
               ))}
             </ul>
