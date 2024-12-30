@@ -7,10 +7,9 @@ const Page = () => {
   const toggleLanguage = () => {
     setIsEnglish(!isEnglish);
   };
-
   return (
-    <div className="min-h-dvh bg-main paddingX flex flex-col items-center text-pretty p-6 w-full mt-20 md:mt-12 shadow-md rounded-lg text-main paddingX mx-auto md:p-8 ">
-      <div className="w-full flex flex-col items-end bg-white shadow-md rounded-lg md:p-8 mt-10">
+    <div className="min-h-dvh bg-white paddingX flex flex-col items-center text-pretty p-6 w-full mt-20 md:mt-18  rounded-lg text-main mx-auto md:p-8 ">
+      <div className="w-full flex flex-col items-end bg-white  rounded-lg md:p-8 mt-10">
         {/* Language Toggle Button */}
         <button
           onClick={toggleLanguage}

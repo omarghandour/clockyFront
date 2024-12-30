@@ -250,9 +250,25 @@ const ProductById = () => {
 
       if (response.status === 200) {
         toast({
-          title: product.name,
-          description: "Added to cart successfully!",
-          action: <Link href="/cart">Go to cart</Link>,
+          title: "Success!",
+          description: (
+            <p className="text-two">Successfully added to cart! 🎉</p>
+          ),
+          action: (
+            <Link
+              href="/cart"
+              className="bg-two hover:bg-main text-main text-sm px-5 py-2 rounded shadow transition duration-200"
+            >
+              Go to Cart
+            </Link>
+          ),
+          style: {
+            backgroundColor: "#414B43", // Soft yellow background
+            color: "#e3c578", // Deep green text color
+            borderRadius: "7px",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+            border: "none",
+          },
         });
       }
     } catch (error) {

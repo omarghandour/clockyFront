@@ -36,6 +36,7 @@ const Card = ({ product }: { product: Product }) => {
     if (storedUserId && product._id) {
       checkIfFavorite(storedUserId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product._id]);
 
   const addToCart = (product: Product) => {
@@ -147,13 +148,13 @@ const Card = ({ product }: { product: Product }) => {
           data: { ProductId: product._id },
         });
         setIsFavorite(false);
-        toast({ title: "Removed from favorites" });
+        // toast({ title: "Removed from favorites" });
       } else {
         await axiosInstance.post(`/products/favorites/${userId}`, {
           ProductId: product._id,
         });
         setIsFavorite(true);
-        toast({ title: "Added to favorites" });
+        // toast({ title: "Added to favorites" });
       }
     } catch (error: any) {
       console.error("Error updating favorite status:", error);

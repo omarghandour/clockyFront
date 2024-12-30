@@ -6,7 +6,7 @@ const PrivacyPolicy: React.FC = () => {
   const [language, setLanguage] = useState<"en" | "ar">("en");
 
   return (
-    <div className="p-6  w-full mt-20 md:mt-12 flex flex-col items-end bg-white shadow-md rounded-lg text-main">
+    <div className="p-6  w-full mt-20 md:mt-12 flex flex-col items-end bg-white  rounded-lg text-main">
       <button
         onClick={() => setLanguage(language === "en" ? "ar" : "en")}
         className="px-4 py-2 bg-main text-two rounded hover:bg-two hover:text-main"
