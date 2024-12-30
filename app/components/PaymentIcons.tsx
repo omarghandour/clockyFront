@@ -4,16 +4,16 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import one from "../../public/1.png";
+import one from "../../public/apple-pay-svgrepo-com.svg";
 import two from "../../public/2.png";
 import three from "../../public/3.png";
-import four from "../../public/4.png";
-import five from "../../public/5.png";
-import six from "../../public/6.png";
-import seven from "../../public/7.png";
-import eight from "../../public/8.png";
-import nine from "../../public/9.png";
-import ten from "../../public/10.png";
+import four from "../../public/mastercard-svgrepo-com.svg";
+import five from "../../public/valu.webp";
+import six from "../../public/aman.png";
+// import seven from "../../public/7.png";
+// import eight from "../../public/8.png";
+// import nine from "../../public/9.png";
+// import ten from "../../public/10.png";
 import Image from "next/image";
 
 const brands = [
@@ -53,30 +53,30 @@ const brands = [
     logoUrl: six,
     p: "Order will be shipped to your doorstep within 22-days",
   },
-  {
-    name: "CUSTOMER SERVICE",
-    route: "/brands/casio",
-    logoUrl: seven,
-    p: "Order will be shipped to your doorstep within 22-days",
-  },
-  {
-    name: "RETURN POLICY",
-    route: "/brands/omega",
-    logoUrl: eight,
-    p: "Order will be shipped to your doorstep within 22-days",
-  },
-  {
-    name: "SECURE PAYMENT",
-    route: "/brands/cartier",
-    logoUrl: nine,
-    p: "Order will be shipped to your doorstep within 22-days",
-  },
-  {
-    name: "100% ORIGINAL",
-    route: "/brands/seiko",
-    logoUrl: ten,
-    p: "Order will be shipped to your doorstep within 22-days",
-  },
+  // {
+  //   name: "CUSTOMER SERVICE",
+  //   route: "/brands/casio",
+  //   logoUrl: seven,
+  //   p: "Order will be shipped to your doorstep within 22-days",
+  // },
+  // {
+  //   name: "RETURN POLICY",
+  //   route: "/brands/omega",
+  //   logoUrl: eight,
+  //   p: "Order will be shipped to your doorstep within 22-days",
+  // },
+  // {
+  //   name: "SECURE PAYMENT",
+  //   route: "/brands/cartier",
+  //   logoUrl: nine,
+  //   p: "Order will be shipped to your doorstep within 22-days",
+  // },
+  // {
+  //   name: "100% ORIGINAL",
+  //   route: "/brands/seiko",
+  //   logoUrl: ten,
+  //   p: "Order will be shipped to your doorstep within 22-days",
+  // },
   //   { name: "Seiko", route: "/brands/seiko", logoUrl: Seiko, p: "" },
   // Add more brands here as needed
 ];
@@ -106,17 +106,17 @@ const PaymentIcons: React.FC = () => {
     <section
       id="brands"
       ref={sectionRef}
-      className="paddingX mx-auto pb-5 md:py-8 mb-4 md:my-8  w-full shadow transition-all"
+      className="paddingX mx-auto pb-5 md:py-8 mb-4 md:my-8  w-full"
     >
-      <div className="transition-all mx-auto">
+      <div className=" mx-auto">
         {/* <h2 className="md:text-3xl text-xl text-main font-bold text-center mb-8">
           OUR WATCH BRANDS
         </h2> */}
-        <div className="grid grid-cols-5 lg:grid-cols-10 md:gap-10  transition-all">
+        <div className="grid grid-cols-3 lg:grid-cols-6 md:gap-10">
           {brands.map((brand) => (
-            <div key={brand.name} className="transition-all">
+            <div key={brand.name} className="transition-all flex">
               <div
-                className={`cursor-pointer hover:shadow-lg transition-all transform hover:scale-105 flex flex-col justify-center items-center rounded-md
+                className={`cursor-pointer flex flex-col justify-center items-center rounded-md mx-auto
                   {//  ${
                     isInView
                     //     ? "motion-scale-in-[0.5] motion-translate-x-in-[-199%] motion-translate-y-in-[-17%] motion-opacity-in-[0%] motion-rotate-in-[-10deg] motion-blur-in-[5px] motion-duration-[0.00s] motion-duration-[0.70s]/translate"
@@ -127,7 +127,7 @@ const PaymentIcons: React.FC = () => {
                 <Image
                   src={brand.logoUrl}
                   alt={`${brand.name} logo`}
-                  width={100}
+                  width={60}
                   height={60}
                   className=" object-contain"
                 />
