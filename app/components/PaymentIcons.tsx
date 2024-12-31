@@ -10,7 +10,7 @@ import three from "../../public/3.png";
 import four from "../../public/mastercard-svgrepo-com.svg";
 import five from "../../public/valu.webp";
 import six from "../../public/aman.png";
-import logo from "../../public/logo1.png";
+import logo from "../../public/logo.png";
 // import eight from "../../public/8.png";
 // import nine from "../../public/9.png";
 // import ten from "../../public/10.png";
@@ -112,11 +112,19 @@ const PaymentIcons: React.FC = () => {
         <Image
           src={logo}
           alt="logo"
-          width={500}
-          height={500}
-          className="mix-blend-multiply"
+          width={200}
+          height={200}
+          className=" mb-5"
         />
-        <div className="center gap-4">
+        <p className="text-pretty text-center text-[13px] w-full md:w-2/5 mb-3">
+          Clocky offers a carefully curated collection of premium watches that
+          blend elegance and quality. We strive to provide unique timepieces
+          that suit diverse tastes and occasions at competitive prices. Our
+          focus is on delivering a seamless shopping experience and exceptional
+          customer service. With Clocky, find the perfect gift or add a touch of
+          sophistication to your everyday style.
+        </p>
+        <div className="center gap-4 mb-5">
           <span className="bg-main w-5 rounded-full h-5"></span>
           <span className="bg-two w-5 rounded-full h-5"></span>
           <span className="bg-black w-5 rounded-full h-5"></span>
@@ -126,7 +134,7 @@ const PaymentIcons: React.FC = () => {
         {/* <h2 className="md:text-3xl text-xl text-main font-bold text-center mb-8">
           OUR WATCH BRANDS
         </h2> */}
-        <div className="grid grid-cols-3 lg:grid-cols-6 md:gap-10">
+        <div className="grid grid-cols-3 lg:grid-cols-6 md:w-1/2 mx-auto">
           {brands.map((brand) => (
             <div key={brand.name} className="transition-all flex">
               <div
@@ -145,6 +153,7 @@ const PaymentIcons: React.FC = () => {
                   height={60}
                   className=" object-contain"
                 />
+
                 {/* <h4 className="mt-1 text-[12px] md:text-[16px] text-main">
                   {brand.name}
                 </h4>
