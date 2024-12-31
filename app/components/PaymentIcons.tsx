@@ -10,7 +10,7 @@ import three from "../../public/3.png";
 import four from "../../public/mastercard-svgrepo-com.svg";
 import five from "../../public/valu.webp";
 import six from "../../public/aman.png";
-// import seven from "../../public/7.png";
+import logo from "../../public/logo1.png";
 // import eight from "../../public/8.png";
 // import nine from "../../public/9.png";
 // import ten from "../../public/10.png";
@@ -108,6 +108,20 @@ const PaymentIcons: React.FC = () => {
       ref={sectionRef}
       className="paddingX mx-auto pb-5 md:py-8 mb-4 md:my-8  w-full"
     >
+      <div className="w-full center flex-col">
+        <Image
+          src={logo}
+          alt="logo"
+          width={500}
+          height={500}
+          className="mix-blend-multiply"
+        />
+        <div className="center gap-4">
+          <span className="bg-main w-5 rounded-full h-5"></span>
+          <span className="bg-two w-5 rounded-full h-5"></span>
+          <span className="bg-black w-5 rounded-full h-5"></span>
+        </div>
+      </div>
       <div className=" mx-auto">
         {/* <h2 className="md:text-3xl text-xl text-main font-bold text-center mb-8">
           OUR WATCH BRANDS
