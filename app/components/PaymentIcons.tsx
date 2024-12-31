@@ -117,12 +117,9 @@ const PaymentIcons: React.FC = () => {
           className=" mb-5"
         />
         <p className="text-pretty text-center text-[13px] w-full md:w-2/5 mb-3">
-          Clocky offers a carefully curated collection of premium watches that
-          blend elegance and quality. We strive to provide unique timepieces
-          that suit diverse tastes and occasions at competitive prices. Our
-          focus is on delivering a seamless shopping experience and exceptional
-          customer service. With Clocky, find the perfect gift or add a touch of
-          sophistication to your everyday style.
+          Clocky offers premium, elegant watches with diverse styles,
+          competitive prices, and exceptional customer service, providing a
+          seamless shopping experience for gifts or everyday sophistication.
         </p>
         <div className="center gap-4 mb-5">
           <span className="bg-main w-5 rounded-full h-5"></span>
