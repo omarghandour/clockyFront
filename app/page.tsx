@@ -19,11 +19,17 @@ type Product = {
     img: string;
   };
 };
-const api = "https://express.clockyeg.com/api";
+// const api = "https://express.clockyeg.com/api";
 export default async function Home() {
-  const { data } = await axios.get(`${api}/products/newArrival`, {
-    withCredentials: true,
-  });
+  // let data;
+  // try {
+  //   const res = await axios.get(`${api}/products/newArrival`, {
+  //     withCredentials: true,
+  //   });
+  //   data = res.data;
+  // } catch (error) {
+  //   console.error("Failed to fetch products", error);
+  // }
   return (
     <main className="h-auto bg-[#FCFCFC]">
       {/* <Nav /> */}
@@ -38,7 +44,7 @@ export default async function Home() {
       <Recommended />
       {/* <Products2 /> */}
       {/* <One /> */}
-      <Arrivals data={data} />
+      <Arrivals />
       <Services />
       <PaymentIcons />
       {/* <Footer /> */}

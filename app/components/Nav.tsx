@@ -89,7 +89,7 @@ const Nav = () => {
         <div className="hover:text-white">
           <AccessibleDropdown />
         </div>
-        <Link className="hover:text-white px-2" href="#contactus">
+        <Link className="hover:text-white px-2" href="/support">
           CONTACT US
         </Link>
         {/* <Link className="hover:text-white px-2" href="/policy">

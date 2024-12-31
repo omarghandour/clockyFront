@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton"; // Import Skeleton from ShadCN UI
 import Card from "./Card";
-
+import { fetchNewArrivals } from "@/utils/apis";
 type Product = {
   _id: string;
   name: string;
@@ -14,14 +14,18 @@ type Product = {
   img: string;
 };
 
-const Arrivals = ({ data }: any) => {
+const Arrivals = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true); // Loading state
   // const { toast } = useToast();
-  useEffect(() => {
+  const api = async () => {
+    const data = await fetchNewArrivals();
     setProducts(data);
     setLoading(false); // Set loading to false after fetching data
-  }, [data]);
+  };
+  useEffect(() => {
+    api();
+  }, []);
 
   return (
     <section

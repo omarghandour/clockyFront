@@ -64,17 +64,17 @@ const Services: React.FC = () => {
     <section
       id="brands"
       ref={sectionRef}
-      className="paddingX mx-auto pb-2 md:py-8 mb-8 md:my-8  w-full  transition-all"
+      className="paddingX mx-auto pb-2 md:py-8 mb-8 md:my-8  w-full"
     >
       <div className="transition-all mx-auto">
         {/* <h2 className="md:text-3xl text-xl text-main font-bold text-center mb-8">
           OUR WATCH BRANDS
         </h2> */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 transition-all gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
           {brands.map((brand) => (
             <div key={brand.name} className="transition-all">
               <div
-                className={`cursor-pointer hover:shadow-lg transition-all transform hover:scale-105 flex flex-col justify-center items-center  p-4 rounded-md
+                className={`cursor-pointer  flex flex-col justify-center items-center  p-4 rounded-md
                   {//  ${
                     isInView
                     //     ? "motion-scale-in-[0.5] motion-translate-x-in-[-199%] motion-translate-y-in-[-17%] motion-opacity-in-[0%] motion-rotate-in-[-10deg] motion-blur-in-[5px] motion-duration-[0.00s] motion-duration-[0.70s]/translate"

@@ -117,9 +117,8 @@ const PaymentIcons: React.FC = () => {
           className=" mb-5"
         />
         <p className="text-pretty text-center text-[13px] w-full md:w-2/5 mb-3">
-          Clocky offers premium, elegant watches with diverse styles,
-          competitive prices, and exceptional customer service, providing a
-          seamless shopping experience for gifts or everyday sophistication.
+          We guarantee a secure and seamless payment experience with all our
+          trusted payment methods. Powered by PayMob.
         </p>
         <div className="center gap-4 mb-5">
           <span className="bg-main w-5 rounded-full h-5"></span>
