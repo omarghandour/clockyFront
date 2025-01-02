@@ -22,7 +22,7 @@ const Page = () => {
         </button>
         {isEnglish ? (
           // English Section
-          <div className="w-full mx-auto p-6 bg-gray-100 text-gray-900">
+          <div className="w-full mx-auto p-6  text-gray-900">
             <h1 className="text-3xl font-bold mb-6 text-center">
               About Clocky Watches
             </h1>
@@ -66,7 +66,7 @@ const Page = () => {
           </div>
         ) : (
           // Arabic Section
-          <div className="w-full mx-auto p-6 bg-gray-100 text-gray-900 text-right">
+          <div className="w-full mx-auto p-6  text-gray-900 text-right">
             <h1 className="text-3xl font-bold mb-6 text-center">
               من نحن - شركة كلوكي للساعات
             </h1>
