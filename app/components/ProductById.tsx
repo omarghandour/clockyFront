@@ -182,43 +182,6 @@ const ProductById = () => {
       setFavoriteLoading(false);
     }
   };
-
-  // const handleAddToCart = async () => {
-  //   if (!userId) {
-  //     toast({
-  //       title: "Error",
-  //       description: "Please login to add items to your cart.",
-  //       variant: "destructive",
-  //       action: <Link href="/login">Login</Link>,
-  //     });
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await axiosInstance.post(`/products/cart/add`, {
-  //       userId,
-  //       productId: product._id,
-  //       quantity,
-  //     });
-
-  //     toast({
-  //       title: "Added to cart",
-  //       description: response.data.message,
-  //       action: (
-  //         <Link href="/cart" className="p-[10px]">
-  //           Go to cart
-  //         </Link>
-  //       ),
-  //     });
-  //   } catch (error: any) {
-  //     console.error("Error adding to cart:", error);
-  //     toast({
-  //       title: "Error",
-  //       description: "Could not add the product to the cart. Try again later.",
-  //       variant: "destructive",
-  //     });
-  //   }
-  // };
   const handleAddToCart = async () => {
     if (!userId) {
       toast({
@@ -229,12 +192,6 @@ const ProductById = () => {
       });
       return;
     }
-
-    // setActiveProductId(product._id);
-    // setTimeout(() => {
-    //   setActiveProductId(null);
-    // }, 1000);
-
     try {
       const response = await axiosInstance.post(
         "/products/cart/add/one",
@@ -434,32 +391,49 @@ const ProductById = () => {
           <CarouselDApiDemo images={images} />
         </div>
         <div className="">
-          <div className="flex flex-col justify-center items-center py-6 gap-4">
+          <div className="flex flex-col justify-center  py-6 gap-4">
             <h1 className="text-[#2E2E2E] text-2xl text-left md:text-3xl w-full font-medium">
               {product.name}
             </h1>
-            <p>Description: {product.description}</p>
-            <p className="text-[#D4AF37B2] text-left w-full text-xl ">
-              EGP {product.price}
-            </p>
-          </div>
-          <div className="flex justify-end flex-col py-6 gap-3">
-            <div className="flex items-center gap-4 w-full px-4 py-1 bg-main md:w-96 justify-between">
-              <button
-                className="px-4 py-2 bg-main text-two md:hover:bg-gray-300 text-xl font-bold"
-                onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}
-                disabled={quantity === 1}
-              >
-                -
-              </button>
-              <span className="text-2xl font-bold text-white">{quantity}</span>
-              <button
-                className="px-4 py-2 bg-main text-two md:hover:bg-gray-300 text-xl font-bold"
-                onClick={() => setQuantity((prev) => prev + 1)}
-              >
-                +
-              </button>
+            <p className="flex">Description: {product.description}</p>
+            <div className="flex justify-evenly w-full gap-9 items-center">
+              <p className="text-[#D4AF37B2] text-left  text-xl">
+                EGP {product.price}
+              </p>
+              <div className="flex flex-row items-center gap-3">
+                <h2 className="text-lg  font-medium ">Average Rating</h2>
+                <div className="flex">{renderStars(averageRating)}</div>
+              </div>
             </div>
+          </div>
+          <div className="flex justify-end flex-col py-2 gap-3">
+            <div className="flex md:flex-col xl:flex-row  gap-2">
+              <div className="flex items-center gap-2 w-full md:w-96 px-4 py-1 bg-main  justify-between">
+                <button
+                  className="px-4 py-2 bg-main text-two md:hover:bg-gray-300 text-xl font-bold"
+                  onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}
+                  disabled={quantity === 1}
+                >
+                  -
+                </button>
+                <span className="text-2xl font-bold text-white">
+                  {quantity}
+                </span>
+                <button
+                  className="px-4 py-2 bg-main text-two md:hover:bg-gray-300 text-xl font-bold"
+                  onClick={() => setQuantity((prev) => prev + 1)}
+                >
+                  +
+                </button>
+              </div>
+              <div className="center gap-3 bg-main p-2 w-full md:w-96">
+                <h2 className="text-lg text-white ">Your Rating</h2>
+                <div className="flex ">
+                  {renderStars(userRating, (rating) => submitRating(rating))}
+                </div>
+              </div>
+            </div>
+
             <div className="flex md:flex-col xl:flex-row gap-2">
               {" "}
               <button
@@ -492,16 +466,6 @@ const ProductById = () => {
                   {isFavorite ? "REMOVE FROM FAVORITES" : "ADD TO FAVORITES"}
                 </span>
               </button>
-            </div>
-            <div className="center flex-col">
-              <h2 className="text-lg font-semibold">Average Rating</h2>
-              <div className="flex">{renderStars(averageRating)}</div>
-            </div>
-            <div className="center flex-col">
-              <h2 className="text-lg font-semibold">Your Rating</h2>
-              <div className="flex">
-                {renderStars(userRating, (rating) => submitRating(rating))}
-              </div>
             </div>
           </div>
         </div>
