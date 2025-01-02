@@ -150,7 +150,7 @@ const AdminDashboard = () => {
   return (
     <>
       {isAuthenticated ? (
-        <div className="p-4 sm:p-6 bg-black min-h-dvh w-full text-black">
+        <div className="p-4 sm:p-6 mt-20 bg-black min-h-dvh w-full text-black">
           <h1 className="text-xl sm:text-2xl font-bold mb-4">
             Admin Dashboard
           </h1>
