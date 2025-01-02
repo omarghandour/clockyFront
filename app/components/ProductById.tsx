@@ -426,7 +426,7 @@ const ProductById = () => {
                   +
                 </button>
               </div>
-              <div className="center gap-3 bg-main p-2 w-full md:w-96">
+              <div className="center flex-col md:flex-row gap-3 bg-main p-2 w-full md:w-96">
                 <h2 className="text-lg text-white ">Your Rating</h2>
                 <div className="flex ">
                   {renderStars(userRating, (rating) => submitRating(rating))}
