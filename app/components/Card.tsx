@@ -73,7 +73,7 @@ const Card = ({ product }: { product: Product }) => {
         action: (
           <Link
             href="/cart"
-            className="bg-two hover:bg-green-600 text-main text-sm px-5 py-2 rounded shadow transition duration-200"
+            className="bg-two  text-main text-sm px-5 py-2 rounded shadow transition duration-200"
           >
             Go to Cart
           </Link>
@@ -103,7 +103,7 @@ const Card = ({ product }: { product: Product }) => {
         action: (
           <Link
             href="/cart"
-            className="bg-two hover:bg-main text-main text-sm px-5 py-2 rounded shadow transition duration-200"
+            className="bg-two  text-main text-sm px-5 py-2 rounded shadow transition duration-200"
           >
             Go to Cart
           </Link>
