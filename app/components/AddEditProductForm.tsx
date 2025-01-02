@@ -45,6 +45,9 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
     undefined
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [showImageSelection, setShowImageSelection] = useState(false);
+  const [showMultipleImageSelection, setShowMultipleImageSelection] =
+    useState(false);
 
   useEffect(() => {
     if (editingProduct) {
@@ -114,52 +117,71 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
       <h2 className="text-xl font-semibold mb-3">
         {editingProduct ? "Edit Product" : "Add Product"}
       </h2>
+
       <div className="mb-3">
-        <label className="block text-gray-700 mb-2">Select an Image:</label>
-        <div className="grid grid-cols-3 gap-3">
-          {availableImages.map((imageUrl) => (
-            <div
-              key={imageUrl}
-              className={`cursor-pointer p-1 border ${
-                selectedImage === imageUrl
-                  ? "border-blue-500"
-                  : "border-gray-300"
-              }`}
-              onClick={() => handleImageSelect(imageUrl)}
-            >
-              <img
-                src={imageUrl}
-                alt="Product"
-                className="w-full h-24 object-cover"
-              />
-            </div>
-          ))}
-        </div>
+        <button
+          type="button"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={() => setShowImageSelection(!showImageSelection)}
+        >
+          {showImageSelection ? "Hide Images" : "Select an Image"}
+        </button>
+        {showImageSelection && (
+          <div className="grid grid-cols-3 gap-3 mt-3">
+            {availableImages.map((imageUrl) => (
+              <div
+                key={imageUrl}
+                className={`cursor-pointer p-1 border ${
+                  selectedImage === imageUrl
+                    ? "border-blue-500"
+                    : "border-gray-300"
+                }`}
+                onClick={() => handleImageSelect(imageUrl)}
+              >
+                <img
+                  src={imageUrl}
+                  alt="Product"
+                  className="w-full h-24 object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="mb-3">
-        <label className="block text-gray-700 mb-2">
-          Select Multiple Images:
-        </label>
-        <div className="grid grid-cols-3 gap-3">
-          {availableImages.map((imageUrl) => (
-            <div
-              key={imageUrl}
-              className={`cursor-pointer p-1 border ${
-                form.images?.includes(imageUrl)
-                  ? "border-blue-500"
-                  : "border-gray-300"
-              }`}
-              onClick={() => handleMultipleImageSelect(imageUrl)}
-            >
-              <img
-                src={imageUrl}
-                alt="Product"
-                className="w-full h-24 object-cover"
-              />
-            </div>
-          ))}
-        </div>
+        <button
+          type="button"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={() =>
+            setShowMultipleImageSelection(!showMultipleImageSelection)
+          }
+        >
+          {showMultipleImageSelection
+            ? "Hide Images"
+            : "Select Multiple Images"}
+        </button>
+        {showMultipleImageSelection && (
+          <div className="grid grid-cols-3 gap-3 mt-3">
+            {availableImages.map((imageUrl) => (
+              <div
+                key={imageUrl}
+                className={`cursor-pointer p-1 border ${
+                  form.images?.includes(imageUrl)
+                    ? "border-blue-500"
+                    : "border-gray-300"
+                }`}
+                onClick={() => handleMultipleImageSelect(imageUrl)}
+              >
+                <img
+                  src={imageUrl}
+                  alt="Product"
+                  className="w-full h-24 object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="mb-3">
