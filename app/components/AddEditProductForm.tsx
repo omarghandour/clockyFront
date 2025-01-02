@@ -12,6 +12,7 @@ type ProductFormData = {
   dialColor?: string;
   movmentType?: string;
   img?: string;
+  images?: string[];
 };
 
 type ProductFormProps = {
@@ -38,6 +39,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
     dialColor: "",
     movmentType: "",
     img: "",
+    images: [],
   });
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
     undefined
@@ -80,6 +82,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
       dialColor: "",
       movmentType: "",
       img: "",
+      images: [],
     });
     setSelectedImage(undefined);
     setImageFile(null);
@@ -88,6 +91,15 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
     setImageFile(null); // Clear file input if an image is selected
+  };
+
+  const handleMultipleImageSelect = (imageUrl: string) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      images: prevForm.images?.includes(imageUrl)
+        ? prevForm.images.filter((img) => img !== imageUrl)
+        : [...(prevForm.images || []), imageUrl],
+    }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,6 +126,31 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
                   : "border-gray-300"
               }`}
               onClick={() => handleImageSelect(imageUrl)}
+            >
+              <img
+                src={imageUrl}
+                alt="Product"
+                className="w-full h-24 object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-3">
+        <label className="block text-gray-700 mb-2">
+          Select Multiple Images:
+        </label>
+        <div className="grid grid-cols-3 gap-3">
+          {availableImages.map((imageUrl) => (
+            <div
+              key={imageUrl}
+              className={`cursor-pointer p-1 border ${
+                form.images?.includes(imageUrl)
+                  ? "border-blue-500"
+                  : "border-gray-300"
+              }`}
+              onClick={() => handleMultipleImageSelect(imageUrl)}
             >
               <img
                 src={imageUrl}
