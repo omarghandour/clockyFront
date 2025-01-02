@@ -5,6 +5,7 @@ import axiosInstance from "@/lib/axiosConfig";
 import Orders from "./Orders";
 import AddEditProductForm from "./AddEditProductForm";
 import { Client, ID, Storage } from "node-appwrite";
+
 type Product = {
   _id: string;
   name?: string;
@@ -18,7 +19,6 @@ type Product = {
   movmentType?: string;
   class?: string;
   img?: string;
-  images?: string[]; // Add images field
 };
 
 // Define ProductFormData without _id for the form
@@ -150,7 +150,7 @@ const AdminDashboard = () => {
   return (
     <>
       {isAuthenticated ? (
-        <div className="p-4 sm:p-6 mt-20 bg-black min-h-dvh w-full text-black">
+        <div className="p-4 sm:p-6 bg-black min-h-dvh w-full text-black">
           <h1 className="text-xl sm:text-2xl font-bold mb-4">
             Admin Dashboard
           </h1>
