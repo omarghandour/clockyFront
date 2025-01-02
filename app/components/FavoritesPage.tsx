@@ -25,16 +25,22 @@ const FavoritesPage = () => {
   useEffect(() => {
     const userID: any = localStorage.getItem("userId");
     setUserId(userID);
+
+    // Get favorites from local storage first
+    const localFavorites = JSON.parse(
+      localStorage.getItem("favorites") || "[]"
+    );
+    setFavorites(localFavorites);
+    setLoading(false);
+
     if (userID && userID !== undefined && userID !== null) {
       fetchFavorites(userID);
-    } else {
-      setFavorites([]);
-      setLoading(false);
     }
   }, []);
 
   // Fetch user's favorite products
   const fetchFavorites = async (userID: string) => {
+    setLoading(true);
     try {
       const res = await axiosInstance.get(`/products/favorites/${userID}`);
       setFavorites(res.data);
@@ -49,15 +55,30 @@ const FavoritesPage = () => {
   const handleRemoveFavorite = async (productId: string) => {
     setRemovingFavoriteId(productId); // Indicate which favorite is being removed
     try {
-      await axiosInstance.delete(`/products/favorites/${userId}`, {
-        data: { ProductId: productId },
-      });
-      setFavorites((prevFavorites) =>
-        prevFavorites.filter((product) => product._id !== productId)
-      );
-      toast({
-        title: "Removed from favorites",
-      });
+      if (!userId) {
+        // User is not logged in, remove from local storage only
+        const updatedFavorites = favorites.filter(
+          (product) => product._id !== productId
+        );
+        setFavorites(updatedFavorites);
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites)); // Update localStorage
+        toast({
+          title: "Removed from favorites",
+        });
+      } else {
+        // User is logged in, remove from API
+        await axiosInstance.delete(`/products/favorites/${userId}`, {
+          data: { ProductId: productId },
+        });
+        const updatedFavorites = favorites.filter(
+          (product) => product._id !== productId
+        );
+        setFavorites(updatedFavorites);
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites)); // Update localStorage
+        toast({
+          title: "Removed from favorites",
+        });
+      }
     } catch (error: any) {
       console.error("Error removing favorite:", error);
       toast({

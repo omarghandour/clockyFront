@@ -45,7 +45,7 @@ const Featured = async () => {
                   <Skeleton className="w-full h-10" />
                 </div>
               ))
-            : data.map((product: Product) => (
+            : data?.map((product: Product) => (
                 <Card product={product} key={product._id} />
               ))}
         </div>

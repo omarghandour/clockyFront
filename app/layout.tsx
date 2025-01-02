@@ -42,7 +42,7 @@ export default function RootLayout({
         {/* <SidebarTrigger /> */}
         <Nav />
         {children}
-        <CookiesWarning />
+        {/* <CookiesWarning /> */}
         <Toaster />
         <Analytics />
         <SpeedInsights />

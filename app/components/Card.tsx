@@ -143,26 +143,51 @@ const Card = ({ product }: { product: Product }) => {
   const handleAddToFavorites = async () => {
     setFavoriteLoading(true);
     try {
-      if (isFavorite) {
-        await axiosInstance.delete(`/products/favorites/${userId}`, {
-          data: { ProductId: product._id },
+      if (!userId) {
+        // Handle local storage favorite logic
+        const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+        if (isFavorite) {
+          // Remove from local storage favorites
+          const updatedFavorites = favorites.filter(
+            (fav: { _id: string }) => fav._id !== product._id
+          );
+          localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+          setIsFavorite(false);
+        } else {
+          // Add to local storage favorites
+          favorites.push(product);
+          localStorage.setItem("favorites", JSON.stringify(favorites));
+          setIsFavorite(true);
+        }
+
+        toast({
+          title: isFavorite ? "Removed from favorites" : "Added to favorites",
+          description: isFavorite
+            ? "Product removed from your favorites."
+            : "Product added to your favorites.",
         });
-        setIsFavorite(false);
-        // toast({ title: "Removed from favorites" });
       } else {
-        await axiosInstance.post(`/products/favorites/${userId}`, {
-          ProductId: product._id,
-        });
-        setIsFavorite(true);
-        // toast({ title: "Added to favorites" });
+        // If logged in, make the backend request
+        if (isFavorite) {
+          await axiosInstance.delete(`/products/favorites/${userId}`, {
+            data: { ProductId: product._id },
+          });
+          setIsFavorite(false);
+        } else {
+          await axiosInstance.post(`/products/favorites/${userId}`, {
+            ProductId: product._id,
+          });
+          setIsFavorite(true);
+        }
       }
     } catch (error: any) {
       console.error("Error updating favorite status:", error);
       toast({
         title: "Error",
-        description: "You are not logged in. Please login and try again.",
+        description:
+          "Could not update favorite status. Please try again later.",
         variant: "destructive",
-        action: <Link href="/login">Go to login page</Link>,
       });
     } finally {
       setFavoriteLoading(false);
@@ -205,7 +230,7 @@ const Card = ({ product }: { product: Product }) => {
       <div
         onClick={() => {
           router.push(
-            `${pathname.includes("/product") ? "" : "product/"}${product._id}`
+            `${pathname?.includes("/product") ? "" : "product/"}${product._id}`
           );
         }}
         className="flex w-full flex-col h-full cursor-pointer"

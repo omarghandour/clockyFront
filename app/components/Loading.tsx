@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const Loading = () => {
   return (
-    <div className="paddingX mx-auto my-8 py-10 px-5">
+    <div className="paddingX w-full mx-auto my-8 py-10 px-5">
       <div className="flex flex-col items-center w-full bg-[#FCFCFC]">
         <h2 className="text-main font-bold text-xl md:text-3xl">FEATURED</h2>
         <div className="grid lg:grid-cols-4 xl:grid-cols-5 grid-cols-2 md:grid-cols-3 gap-2 w-full pb-5">

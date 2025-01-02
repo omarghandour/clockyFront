@@ -52,7 +52,7 @@ const Arrivals = () => {
                 <Skeleton className="w-full h-10" />
               </div>
             ))
-          : products.map((product) => (
+          : products?.map((product) => (
               <Card product={product} key={product._id} />
             ))}
       </div>
