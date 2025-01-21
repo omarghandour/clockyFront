@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/lib/axiosConfig";
 
@@ -26,13 +27,52 @@ type Order = {
 
 const Orders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
+  // Fetch orders
   const fetchOrders = async () => {
+    setLoading(true);
+    setError(null);
+
     try {
       const response = await axiosInstance.get("/products/orders/all");
       setOrders(response.data);
     } catch (error) {
+      setError("Failed to fetch orders. Please try again.");
       console.error("Failed to fetch orders", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Change order status
+  const handleChangeOrderStatus = async (
+    orderId: string,
+    newStatus: string
+  ) => {
+    if (
+      !window.confirm(
+        `Are you sure you want to change the status to ${newStatus}?`
+      )
+    )
+      return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axiosInstance.put(`/products/orders/${orderId}`, {
+        status: newStatus,
+      });
+      setOrders(
+        orders.map((order) => (order._id === orderId ? response.data : order))
+      );
+    } catch (error) {
+      setError("Failed to update order status. Please try again.");
+      console.error("Failed to update order status", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,46 +81,81 @@ const Orders = () => {
   }, []);
 
   return (
-    <div className="bg-white p-4 rounded shadow-md overflow-x-auto">
+    <div className="bg-white p-4 rounded shadow-md w-full">
       <h2 className="text-lg sm:text-xl font-semibold mb-3">Orders</h2>
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr>
-            <th className="border-b p-2 text-sm sm:text-base">Order ID</th>
-            <th className="border-b p-2 text-sm sm:text-base">Total Price</th>
-            <th className="border-b p-2 text-sm sm:text-base">
-              Payment Method
-            </th>
-            <th className="border-b p-2 text-sm sm:text-base">Status</th>
-            <th className="border-b p-2 text-sm sm:text-base">
-              Shipping Address
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order._id}>
-              <td className="border-b p-2 text-sm sm:text-base">{order._id}</td>
-              <td className="border-b p-2 text-sm sm:text-base">
-                ${order.totalPrice}
-              </td>
-              <td className="border-b p-2 text-sm sm:text-base">
-                {order.paymentMethod}
-              </td>
-              <td className="border-b p-2 text-sm sm:text-base">
-                {order.status}
-              </td>
-              <td className="border-b p-2 text-sm sm:text-base">
-                <div className="whitespace-normal">
-                  {order.shippingAddress.fullName},{" "}
-                  {order.shippingAddress.address}, {order.shippingAddress.city},{" "}
-                  {order.shippingAddress.country}, {order.shippingAddress.phone}
-                </div>
-              </td>
+
+      {loading && <div className="text-center text-gray-600">Loading...</div>}
+      {error && <div className="text-center text-red-500">{error}</div>}
+
+      {/* Scrollable Table Container */}
+      <div className="overflow-x-scroll max-h-[500px] overflow-y-auto border border-gray-200 rounded-lg">
+        <table className="w-full text-left border-collapse">
+          <thead className="sticky top-0 bg-gray-100 z-10">
+            <tr>
+              <th className="p-2 text-sm sm:text-base">Order ID</th>
+              <th className="p-2 text-sm sm:text-base">Total Price</th>
+              <th className="p-2 text-sm sm:text-base">Payment Method</th>
+              <th className="p-2 text-sm sm:text-base">Status</th>
+              <th className="p-2 text-sm sm:text-base">Shipping Address</th>
+              <th className="p-2 text-sm sm:text-base">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr
+                key={order._id}
+                className="hover:bg-gray-50 transition-colors"
+              >
+                <td className="p-2 text-sm sm:text-base">{order._id}</td>
+                <td className="p-2 text-sm sm:text-base">
+                  ${order.totalPrice}
+                </td>
+                <td className="p-2 text-sm sm:text-base">
+                  {order.paymentMethod}
+                </td>
+                <td className="p-2 text-sm sm:text-base">
+                  <select
+                    value={order.status}
+                    onChange={(e) =>
+                      handleChangeOrderStatus(order._id, e.target.value)
+                    }
+                    className="p-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+                </td>
+                <td className="p-2 text-sm sm:text-base">
+                  <div className="whitespace-normal">
+                    {order.shippingAddress.fullName},{" "}
+                    {order.shippingAddress.address},{" "}
+                    {order.shippingAddress.city},{" "}
+                    {order.shippingAddress.country},{" "}
+                    {order.shippingAddress.phone}
+                  </div>
+                </td>
+                <td className="p-2 text-sm sm:text-base">
+                  <button
+                    onClick={() =>
+                      handleChangeOrderStatus(order._id, order.status)
+                    }
+                    className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition-colors"
+                  >
+                    Update
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* No Orders Message */}
+      {orders.length === 0 && !loading && (
+        <div className="text-center text-gray-600 mt-4">No orders found.</div>
+      )}
     </div>
   );
 };

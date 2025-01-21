@@ -23,6 +23,8 @@ type Product = {
   otherImages?: string[];
 };
 const Card = ({ product }: { product: Product }) => {
+  console.log(product);
+
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
 import { useState, useEffect } from "react";
 
 type ProductFormData = {
@@ -20,6 +21,7 @@ type ProductFormProps = {
   editingProduct?: ProductFormData;
   uploadImageToAppwrite: (file: File) => Promise<string>;
   availableImages: string[];
+  onCancel: () => void; // Add onCancel prop
 };
 
 const AddEditProductForm: React.FC<ProductFormProps> = ({
@@ -27,6 +29,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
   editingProduct,
   uploadImageToAppwrite,
   availableImages,
+  onCancel,
 }) => {
   const [form, setForm] = useState<ProductFormData>({
     name: "",
@@ -49,6 +52,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
   const [showMultipleImageSelection, setShowMultipleImageSelection] =
     useState(false);
 
+  // Initialize form with editing product data
   useEffect(() => {
     if (editingProduct) {
       setForm(editingProduct);
@@ -56,46 +60,56 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
     }
   }, [editingProduct]);
 
+  // Handle input changes
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
   };
 
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     let imageUrl = selectedImage;
 
+    // Upload new image if a file is selected
     if (imageFile) {
       imageUrl = await uploadImageToAppwrite(imageFile);
     }
 
+    // Save the product data
     onSave({ ...form, img: imageUrl });
-    setForm({
-      name: "",
-      price: "",
-      before: "",
-      description: "",
-      countInStock: "",
-      gender: "",
-      caseColor: "",
-      dialColor: "",
-      movmentType: "",
-      img: "",
-      images: [],
-    });
-    setSelectedImage(undefined);
-    setImageFile(null);
+
+    // Reset form after submission
+    if (!editingProduct) {
+      setForm({
+        name: "",
+        price: "",
+        before: "",
+        description: "",
+        countInStock: "",
+        gender: "",
+        caseColor: "",
+        dialColor: "",
+        movmentType: "",
+        img: "",
+        images: [],
+      });
+      setSelectedImage(undefined);
+      setImageFile(null);
+    }
   };
 
+  // Handle image selection from available images
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
     setImageFile(null); // Clear file input if an image is selected
   };
 
+  // Handle multiple image selection
   const handleMultipleImageSelect = (imageUrl: string) => {
     setForm((prevForm) => ({
       ...prevForm,
@@ -105,6 +119,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
     }));
   };
 
+  // Handle file input change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setImageFile(e.target.files[0]);
@@ -118,10 +133,11 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         {editingProduct ? "Edit Product" : "Add Product"}
       </h2>
 
+      {/* Image Selection Section */}
       <div className="mb-3">
         <button
           type="button"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
           onClick={() => setShowImageSelection(!showImageSelection)}
         >
           {showImageSelection ? "Hide Images" : "Select an Image"}
@@ -149,10 +165,11 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         )}
       </div>
 
+      {/* Multiple Image Selection Section */}
       <div className="mb-3">
         <button
           type="button"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
           onClick={() =>
             setShowMultipleImageSelection(!showMultipleImageSelection)
           }
@@ -184,11 +201,13 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         )}
       </div>
 
+      {/* File Upload Section */}
       <div className="mb-3">
         <label className="block text-gray-700 mb-2">Upload a New Image:</label>
         <input type="file" accept="image/*" onChange={handleFileChange} />
       </div>
 
+      {/* Selected Image Preview */}
       {selectedImage && (
         <div className="mb-3">
           <label className="block text-gray-700">Selected Image:</label>
@@ -200,6 +219,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         </div>
       )}
 
+      {/* Uploaded File Preview */}
       {imageFile && (
         <div className="mb-3">
           <label className="block text-gray-700">Uploaded File:</label>
@@ -207,6 +227,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         </div>
       )}
 
+      {/* Product Form */}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="block text-gray-700">Product Name</label>
@@ -319,6 +340,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
             <option value="quartz">Quartz</option>
           </select>
         </div>
+
         <div className="mb-3">
           <label className="block text-gray-700">Image URL</label>
           <input
@@ -331,12 +353,21 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
           />
         </div>
 
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          {editingProduct ? "Update Product" : "Add Product"}
-        </button>
+        <div className="flex gap-2">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+          >
+            {editingProduct ? "Update Product" : "Add Product"}
+          </button>
+          <button
+            type="button"
+            onClick={onCancel}
+            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );

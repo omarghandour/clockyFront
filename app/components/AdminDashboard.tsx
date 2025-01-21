@@ -1,28 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/lib/axiosConfig";
-import Orders from "./Orders";
 import AddEditProductForm from "./AddEditProductForm";
-import { Client, ID, Storage } from "node-appwrite";
-
-type Product = {
-  _id: string;
-  name?: string;
-  price?: string;
-  before?: string;
-  description?: string;
-  countInStock?: string;
-  gender?: string;
-  caseColor?: string;
-  dialColor?: string;
-  movmentType?: string;
-  class?: string;
-  img?: string;
-};
-
-// Define ProductFormData without _id for the form
-type ProductFormData = Omit<Product, "_id">;
+import { storage, ID } from "@/lib/appwriteConfig";
+import { Product, ProductFormData } from "@/types"; // Define types in a separate file
+import Orders from "./Orders"; // Import the updated Orders component
 
 const AdminDashboard = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -32,58 +14,60 @@ const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState<"products" | "orders">(
     "products"
   );
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showAddProductForm, setShowAddProductForm] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for mobile sidebar toggle
 
-  const client = new Client();
-  const storage = new Storage(client);
-
-  // Initialize Appwrite Client
-  client
-    .setEndpoint("https://cloud.appwrite.io/v1") // Replace with your Appwrite endpoint
-    .setProject("67130d070031ae19004c"), // Replace with your Project ID
-    client.setKey(
-      "standard_de2f7c0b928559ad83209ee3d68098bc8ec5554199d3cfc09957cb45b9f007c907be76035b8f43ec7e8e4c0f724f291daff49744d6c6fdbdd8ee535de2c737702058844f1b1c25a95da777429539a8b98096420a1de785c6635fa177ca96849747ae7f93c652a6711b4e112257e19dc249da70a0b0d51777a88e3991d273c70b"
-    ); // Replace with your API key
+  // Check authentication
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) setIsAuthenticated(true);
+    setIsAuthenticated(!!token);
   }, []);
 
+  // Fetch products
   const fetchProducts = async () => {
-    setLoading(true); // Set loading to true
+    setLoading(true);
+    setError(null);
 
     try {
       const response = await axiosInstance.get("products/dashboard");
       setProducts(response.data);
     } catch (error) {
+      setError("Failed to fetch products. Please try again.");
       console.error("Failed to fetch products", error);
     } finally {
-      setLoading(false); // Set loading to false
+      setLoading(false);
     }
   };
 
+  // Fetch images from Appwrite
   const fetchImages = async () => {
     try {
-      const response = await storage.listFiles("67130d23001000917f00"); // Replace with your Appwrite bucket ID
+      const response = await storage.listFiles("678bc73e0009c345b3e6"); // Replace with your Appwrite bucket ID
       const imageUrls = response.files.map(
         (file) =>
-          `https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/${file.$id}/view?project=67130d070031ae19004c&mode=admin`
+          `https://cloud.appwrite.io/v1/storage/buckets/678bc73e0009c345b3e6/files/${file.$id}/view?project=678bc6d5000e65b1ae96&mode=admin`
       );
       setImages(imageUrls);
     } catch (error) {
+      setError("Failed to fetch images. Please try again.");
       console.error("Failed to fetch images from Appwrite", error);
     }
   };
 
+  // Fetch data based on active section
   useEffect(() => {
-    if (activeSection === "products") {
+    if (activeSection === "products" && isAuthenticated) {
       fetchProducts();
       fetchImages();
     }
-  }, [activeSection]);
+  }, [activeSection, isAuthenticated]);
 
+  // Save or update product
   const handleSaveProduct = async (productData: ProductFormData) => {
     setLoading(true);
+    setError(null);
 
     try {
       if (editingProduct) {
@@ -103,130 +87,177 @@ const AdminDashboard = () => {
         const response = await axiosInstance.post("/products", productData);
         setProducts([...products, response.data]);
       }
-      fetchProducts();
+      setShowAddProductForm(false); // Hide form after saving
     } catch (error) {
+      setError("Failed to save product. Please try again.");
       console.error("Failed to save product", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleEditProduct = (product: Product) => {
-    setEditingProduct(product);
-  };
-
+  // Delete product
   const handleDeleteProduct = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this product?"))
+      return;
+
     try {
       await axiosInstance.delete(`/products/${id}`);
       setProducts(products.filter((product) => product._id !== id));
     } catch (error) {
+      setError("Failed to delete product. Please try again.");
       console.error("Failed to delete product", error);
     }
   };
 
-  const uploadImageToAppwrite = async (file: any) => {
+  // Upload image to Appwrite
+  const uploadImageToAppwrite = async (file: File) => {
     setLoading(true);
+    setError(null);
 
     try {
       const response = await storage.createFile(
-        "67130d23001000917f00", // Replace with your Appwrite bucket ID
-        ID.unique(), // Generate a unique ID for the file
+        "678bc73e0009c345b3e6",
+        ID.unique(),
         file
       );
-
-      // Generate the file's URL
-      const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/67130d23001000917f00/files/${response.$id}/view?project=67130d070031ae19004c&mode=admin`;
+      const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/678bc73e0009c345b3e6/files/${response.$id}/view?project=678bc6d5000e65b1ae96&mode=admin`;
       return fileUrl;
     } catch (error) {
-      setLoading(false); // Set loading to false
-
+      setError("Failed to upload image. Please try again.");
       console.error("Error uploading image to Appwrite", error);
       throw error;
     } finally {
-      setLoading(false); // Set loading to false
+      setLoading(false);
     }
   };
 
+  // Redirect if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="bg-red-100 text-red-700 p-4 rounded">
+        You are not authenticated. Please log in.
+      </div>
+    );
+  }
+
   return (
-    <>
-      {isAuthenticated ? (
-        <div className="p-4 sm:p-6 mt-20 bg-black min-h-dvh w-full text-black">
-          <h1 className="text-xl sm:text-2xl font-bold mb-4">
-            Admin Dashboard
-          </h1>
+    <div className="flex min-h-dvh w-full text-black mt-20">
+      {/* Sidebar Toggle Button for Mobile */}
+      <button
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className="fixed top-20 left-2 z-50 p-2 bg-gray-700 text-white rounded sm:hidden"
+      >
+        {isSidebarOpen ? "✕" : "☰"}
+      </button>
 
-          <div className="mb-4 flex flex-col sm:flex-row gap-2">
+      {/* Sidebar */}
+      <div
+        className={`w-64 bg-main p-4 fixed sm:relative h-full transform transition-transform duration-300 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"
+        } sm:block z-40`}
+      >
+        <h2 className="text-lg font-bold mb-4 text-two">Actions</h2>
+        <ul className="space-y-2 gap-2 flex flex-col">
+          <li>
             <button
-              onClick={() => setActiveSection("products")}
-              className={`px-4 py-2 ${
-                activeSection === "products" ? "bg-gray-700" : "bg-gray-500"
-              } text-white rounded`}
+              onClick={() => {
+                setActiveSection("products");
+                setIsSidebarOpen(false); // Close sidebar on mobile
+              }}
+              className={`w-full text-left px-4 py-2 rounded transition-colors ${
+                activeSection === "products"
+                  ? "bg-two text-main font-bold hover:bg-white"
+                  : "bg-white hover:bg-white text-main font-bold"
+              }`}
             >
-              Products
+              Manage Products
             </button>
+          </li>
+          <li>
             <button
-              onClick={() => setActiveSection("orders")}
-              className={`px-4 py-2 ${
-                activeSection === "orders" ? "bg-gray-700" : "bg-gray-500"
-              } text-white rounded`}
+              onClick={() => {
+                setActiveSection("orders");
+                setIsSidebarOpen(false); // Close sidebar on mobile
+              }}
+              className={`w-full text-left px-4 py-2 rounded transition-colors ${
+                activeSection === "orders"
+                  ? "bg-two text-main font-bold"
+                  : "bg-white text-main font-bold hover:bg-two"
+              }`}
             >
-              Orders
+              Manage Orders
             </button>
-          </div>
+          </li>
+          {activeSection === "products" && (
+            <li>
+              <button
+                onClick={() => {
+                  setEditingProduct(null);
+                  setShowAddProductForm(true);
+                  setIsSidebarOpen(false); // Close sidebar on mobile
+                }}
+                className="w-full text-left px-4 py-2 rounded bg-green-600 text-white font-bold hover:bg-green-700 transition-colors"
+              >
+                Add Product
+              </button>
+            </li>
+          )}
+        </ul>
+      </div>
 
-          {loading ? (
-            <div className="text-center text-white">Loading...</div>
-          ) : activeSection === "products" ? (
-            <div>
+      {/* Main Content */}
+      <div className="flex-1 p-2 sm:p-4 ml-0">
+        <h1 className="text-xl sm:text-2xl font-bold mb-4 text-white">
+          {activeSection === "orders" ? "Orders" : "Products"}
+        </h1>
+
+        {loading && <div className="text-center text-white">Loading...</div>}
+        {error && <div className="text-center text-red-500">{error}</div>}
+
+        {activeSection === "products" ? (
+          <div>
+            {showAddProductForm || editingProduct ? (
               <AddEditProductForm
                 onSave={handleSaveProduct}
                 editingProduct={editingProduct || undefined}
                 uploadImageToAppwrite={uploadImageToAppwrite}
-                availableImages={images} // Pass fetched images
+                availableImages={images}
+                onCancel={() => {
+                  setShowAddProductForm(false);
+                  setEditingProduct(null);
+                }}
               />
-              <div className="bg-white p-4 rounded shadow-md mt-4 overflow-x-auto">
+            ) : (
+              <div className="bg-white p-4 rounded shadow-md overflow-x-auto">
                 <h2 className="text-lg sm:text-xl font-semibold mb-3">
                   Product List
                 </h2>
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr>
-                      <th className="border-b p-2 text-sm sm:text-base">
-                        Name
-                      </th>
-                      <th className="border-b p-2 text-sm sm:text-base">
-                        Price
-                      </th>
-                      <th className="border-b p-2 text-sm sm:text-base">
-                        Count in Stock
-                      </th>
-                      <th className="border-b p-2 text-sm sm:text-base">
-                        Actions
-                      </th>
+                      <th className="border-b p-2">Name</th>
+                      <th className="border-b p-2">Price</th>
+                      <th className="border-b p-2">Count in Stock</th>
+                      <th className="border-b p-2">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {products.map((product) => (
                       <tr key={product._id}>
-                        <td className="border-b p-2 text-sm sm:text-base">
-                          {product.name}
-                        </td>
-                        <td className="border-b p-2 text-sm sm:text-base">
-                          ${product.price}
-                        </td>
-                        <td className="border-b p-2 text-sm sm:text-base">
-                          {product.countInStock}
-                        </td>
-                        <td className="border-b p-2 flex gap-2 text-sm sm:text-base">
+                        <td className="border-b p-2">{product.name}</td>
+                        <td className="border-b p-2">${product.price}</td>
+                        <td className="border-b p-2">{product.countInStock}</td>
+                        <td className="border-b p-2 flex gap-2">
                           <button
-                            onClick={() => handleEditProduct(product)}
-                            className="bg-yellow-500 text-white px-2 py-1 rounded"
+                            onClick={() => setEditingProduct(product)}
+                            className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => handleDeleteProduct(product._id)}
-                            className="bg-red-500 text-white px-2 py-1 rounded"
+                            className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
                           >
                             Delete
                           </button>
@@ -236,17 +267,13 @@ const AdminDashboard = () => {
                   </tbody>
                 </table>
               </div>
-            </div>
-          ) : (
-            <Orders />
-          )}
-        </div>
-      ) : (
-        <div className="bg-red-100 text-red-700 p-4 rounded">
-          You are not authenticated. Please log in.
-        </div>
-      )}
-    </>
+            )}
+          </div>
+        ) : (
+          <Orders />
+        )}
+      </div>
+    </div>
   );
 };
 
