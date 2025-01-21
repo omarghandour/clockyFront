@@ -6,6 +6,8 @@ const nextConfig = {
     domains: [
       "cloud.appwrite.io", // Add the domain of your external images here
       "https://cloud.appwrite.io",
+      "appwrite.clockyeg.com",
+      "https://appwrite.clockyeg.com",
     ],
     remotePatterns: [
       {
