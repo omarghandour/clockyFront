@@ -47,7 +47,7 @@ const AdminDashboard = () => {
       const response = await storage.listFiles("678bc73e0009c345b3e6"); // Replace with your Appwrite bucket ID
       const imageUrls = response.files.map(
         (file) =>
-          `https://cloud.appwrite.io/v1/storage/buckets/678bc73e0009c345b3e6/files/${file.$id}/view?project=678bc6d5000e65b1ae96&mode=admin`
+          `https://appwrite.clockyeg.com/v1/storage/buckets/678bc73e0009c345b3e6/files/${file.$id}/view?project=678bc6d5000e65b1ae96&mode=admin`
       );
       setImages(imageUrls);
     } catch (error) {
@@ -120,7 +120,7 @@ const AdminDashboard = () => {
         ID.unique(),
         file
       );
-      const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/678bc73e0009c345b3e6/files/${response.$id}/view?project=678bc6d5000e65b1ae96&mode=admin`;
+      const fileUrl = `https://appwrite.clockyeg.com/v1/storage/buckets/678bc73e0009c345b3e6/files/${response.$id}/view?project=678bc6d5000e65b1ae96&mode=admin`;
       return fileUrl;
     } catch (error) {
       setError("Failed to upload image. Please try again.");
@@ -144,7 +144,7 @@ const AdminDashboard = () => {
           ID.unique(),
           file
         );
-        const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/678bc73e0009c345b3e6/files/${response.$id}/view?project=678bc6d5000e65b1ae96&mode=admin`;
+        const fileUrl = `https://appwrite.clockyeg.com/v1/storage/buckets/678bc73e0009c345b3e6/files/${response.$id}/view?project=678bc6d5000e65b1ae96&mode=admin`;
         uploadedImageUrls.push(fileUrl);
       }
 
