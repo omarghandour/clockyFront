@@ -33,19 +33,19 @@ export function CarouselDApiDemo(images: any) {
     <div className="mx-auto bg-transparent">
       <Carousel
         setApi={setApi}
-        className="w-full bg-transparent center flex-col"
+        className="w-full bg-transparent shadow-none center flex-col"
       >
-        <CarouselContent className="rounded bg-transparent">
+        <CarouselContent className="rounded shadow-none bg-transparent">
           {images.images.map((src: any, index: any) => (
             <CarouselItem key={index}>
-              <Card className="p-0 border-none rounded-none bg-transparent">
-                <CardContent className="flex aspect-square bg-transparent items-center justify-center p-0 rounded-none">
+              <Card className="p-0 border-none rounded-none bg-transparent shadow-none">
+                <CardContent className="flex shadow-none aspect-square bg-transparent items-center justify-center p-0 rounded-none">
                   <Image
                     src={src}
                     width={500}
                     height={500}
                     alt="product image"
-                    className="transform transition-transform duration-300 hover:scale-110"
+                    className="transform shadow-none transition-transform duration-300 hover:scale-110"
                   />
                   {/* <span className="text-4xl font-semibold">{index + 1}</span> */}
                 </CardContent>

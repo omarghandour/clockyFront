@@ -33,10 +33,10 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [products, setProducts] = useState<Product[]>([]);
-  // const [brands, setBrands] = useState<string[]>(["All"]);
-  // const [categories, setCategories] = useState<string[]>(["All"]);
-  // const [caseColors, setCaseColors] = useState<string[]>(["All"]);
-  // const [dialColors, setDialColors] = useState<string[]>(["All"]);
+  const [brands, setBrands] = useState<string[]>(["All"]);
+  const [categories, setCategories] = useState<string[]>(["All"]);
+  const [caseColors, setCaseColors] = useState<string[]>(["All"]);
+  const [dialColors, setDialColors] = useState<string[]>(["All"]);
   const [activeProductId, setActiveProductId] = useState<string | null>(null);
   const [filters, setFilters] = useState({
     selectedBrand: "All",

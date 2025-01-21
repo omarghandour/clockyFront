@@ -114,7 +114,6 @@ const AdminDashboard = () => {
   const uploadImageToAppwrite = async (file: File) => {
     setLoading(true);
     setError(null);
-
     try {
       const response = await storage.createFile(
         "678bc73e0009c345b3e6",
@@ -131,7 +130,33 @@ const AdminDashboard = () => {
       setLoading(false);
     }
   };
+  const uploadImagesToAppwrite = async (files: File[]) => {
+    setLoading(true);
+    setError(null);
+    console.log(files);
 
+    try {
+      const uploadedImageUrls: string[] = [];
+
+      for (const file of files) {
+        const response = await storage.createFile(
+          "678bc73e0009c345b3e6", // Replace with your bucket ID
+          ID.unique(),
+          file
+        );
+        const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/678bc73e0009c345b3e6/files/${response.$id}/view?project=678bc6d5000e65b1ae96&mode=admin`;
+        uploadedImageUrls.push(fileUrl);
+      }
+
+      return uploadedImageUrls;
+    } catch (error) {
+      setError("Failed to upload images. Please try again.");
+      console.error("Error uploading images to Appwrite", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
   // Redirect if not authenticated
   if (!isAuthenticated) {
     return (
@@ -146,14 +171,14 @@ const AdminDashboard = () => {
       {/* Sidebar Toggle Button for Mobile */}
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="fixed top-20 left-2 z-50 p-2 bg-gray-700 text-white rounded sm:hidden"
+        className="fixed top-20 left-[90%] z-50 p-2 bg-gray-700 text-white rounded sm:hidden"
       >
         {isSidebarOpen ? "✕" : "☰"}
       </button>
 
       {/* Sidebar */}
       <div
-        className={`w-64 bg-main p-4 fixed sm:relative h-full transform transition-transform duration-300 ${
+        className={`w-64 bg-main p-4 fixed top-16 sm:relative h-full transform transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"
         } sm:block z-40`}
       >
@@ -222,6 +247,7 @@ const AdminDashboard = () => {
                 onSave={handleSaveProduct}
                 editingProduct={editingProduct || undefined}
                 uploadImageToAppwrite={uploadImageToAppwrite}
+                uploadImagesToAppwrite={uploadImagesToAppwrite}
                 availableImages={images}
                 onCancel={() => {
                   setShowAddProductForm(false);

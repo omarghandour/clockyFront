@@ -21,6 +21,8 @@ const Featured = async () => {
     const res = await axios.get(`${api}/products/featured`, {
       withCredentials: true,
     });
+    // console.log(res);
+
     data = res.data;
   } catch (error) {
     console.error("Failed to fetch products", error);

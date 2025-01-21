@@ -23,7 +23,7 @@ type Product = {
   otherImages?: string[];
 };
 const Card = ({ product }: { product: Product }) => {
-  console.log(product);
+  // console.log(product);
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
@@ -237,46 +237,48 @@ const Card = ({ product }: { product: Product }) => {
         }}
         className="flex w-full flex-col h-full cursor-pointer"
       >
-        <div className="relative overflow-hidden border-b-2 drop-shadow flex-grow-[1]">
+        <div className="relative overflow-hidden  flex-grow-[1]">
           {/* Carousel Component */}
           <CarouselDApiDemo images={images} />
           {/* <div className="card-img-background bg-cover bg-main"></div> */}
         </div>
-        <div className="flex flex-col justify-between flex-grow-[2] px-2 pt-2">
-          <div className="pb-2">
-            <h2 className="text-main text-[14px] md:text-[20px] font-bold truncate w-full text-lines-1">
-              {product.name}
-            </h2>
-            <p className="text-main text-[14px] md:text-[16px] font-thin text-lines-1 md:text-lines-2">
-              {product.description}
-            </p>
-          </div>
-          <div className="flex pb-3">
-            <p className="text-two text-[16px] md:text-[20px] font-bold">
-              {product.price} L.E
-              {/* <span className="text-[#595959] inline-flex text-[16px] ps-1 font-light line-through align-bottom">
+        <div>
+          <div className="flex flex-col justify-between border-t-2 flex-grow-[2] px-2 pt-2">
+            <div className="pb-2">
+              <h2 className="text-main text-[14px] md:text-[20px] font-bold truncate w-full text-lines-1">
+                {product.name}
+              </h2>
+              <p className="text-main text-[14px] md:text-[16px] font-thin text-lines-1 md:text-lines-2">
+                {product.description}
+              </p>
+            </div>
+            <div className="flex pb-3">
+              <p className="text-two text-[16px] md:text-[20px] font-bold">
+                {product.price} L.E
+                {/* <span className="text-[#595959] inline-flex text-[16px] ps-1 font-light line-through align-bottom">
                             {product.before} L.E
                           </span> */}
-            </p>
-            <p
-              className={`text-[#595959] text-[14px] md:text-[16px] ps-1 line-through self-end ${
-                product.before === null || product.before === undefined
-                  ? "hidden"
-                  : ""
-              }`}
-            >
-              {product.before} L.E
-            </p>
+              </p>
+              <p
+                className={`text-[#595959] text-[14px] md:text-[16px] ps-1 line-through self-end ${
+                  product.before === null || product.before === undefined
+                    ? "hidden"
+                    : ""
+                }`}
+              >
+                {product.before} L.E
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="pb-2 px-2 ">
-        <button
-          onClick={() => addToCart(product)}
-          className="rounded-sm relative z-50 w-full bg-transparent text-main py-1 md:py-2 md:text-[14px] border-[0.5px] border-main hover:font-bold hover:text-two hover:bg-main"
-        >
-          ADD TO CARD
-        </button>
+        <div className="pb-2 px-2 ">
+          <button
+            onClick={() => addToCart(product)}
+            className="rounded-sm relative z-50 w-full bg-transparent text-main py-1 md:py-2 md:text-[14px] border-[0.5px] border-main hover:font-bold hover:text-two hover:bg-main"
+          >
+            ADD TO CARD
+          </button>
+        </div>
       </div>
     </div>
   );
