@@ -76,17 +76,19 @@ const AdminDashboard = () => {
           `/products/${editingProduct._id}`,
           productData
         );
-        setProducts(
-          products.map((product) =>
-            product._id === editingProduct._id ? response.data : product
-          )
-        );
+        // setProducts(
+        //   products.map((product) =>
+        //     product._id === editingProduct._id ? response.data : product
+        //   )
+        // );
+        window.location.reload();
         setEditingProduct(null);
       } else {
         // Add new product
         const response = await axiosInstance.post("/products", productData);
         setProducts([...products, response.data]);
       }
+      window.location.reload();
       setShowAddProductForm(false); // Hide form after saving
     } catch (error) {
       setError("Failed to save product. Please try again.");
