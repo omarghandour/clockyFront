@@ -24,6 +24,8 @@ const watchDetails = [
   { attribute: "Watch Movement", value: "Quartz" },
 ];
 const Mytable = (product: any) => {
+  console.log(product);
+
   return (
     <div className="w-full  flex justify-center items-center h-full text-pretty">
       <Card className="w-full m-auto rounded-none mt-0">
@@ -54,39 +56,39 @@ const Mytable = (product: any) => {
                   <TableCell className="font-medium">
                     Case Size / Diameter
                   </TableCell>
-                  <TableCell>{product?.product?.CaseSizeORDiameter}</TableCell>
+                  <TableCell>{product?.product?.caseSize}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">Face Material</TableCell>
-                  <TableCell>{product?.product?.FaceMaterial}</TableCell>
+                  <TableCell>{product?.product?.faceMaterial}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">Features</TableCell>
-                  <TableCell>{product?.product?.Features}</TableCell>
+                  <TableCell>{product?.product?.features}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">Model Number</TableCell>
-                  <TableCell>{product?.product?.ModelNumber}</TableCell>
+                  <TableCell>{product?.product?.modelNumber}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">Band Closure</TableCell>
-                  <TableCell>{product?.product?.BandClosure}</TableCell>
+                  <TableCell>{product?.product?.brandClosure}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">
                     Face / Dial Shape
                   </TableCell>
-                  <TableCell>{product?.product?.FaceORDialShape}</TableCell>
+                  <TableCell>{product?.product?.faceDialShape}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">
                     Face / Dial Type
                   </TableCell>
-                  <TableCell>{product?.product?.FaceORDialType}</TableCell>
+                  <TableCell>{product?.product?.faceDialType}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">Watch Movement</TableCell>
-                  <TableCell>{product?.product?.WatchMovement}</TableCell>
+                  <TableCell>{product?.product?.movmentType}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
