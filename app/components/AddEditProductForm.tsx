@@ -370,7 +370,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Price</label>
           <input
-            type="text"
+            type="number"
             name="price"
             value={form.price || ""} // Ensure value is never undefined
             onChange={handleInputChange}
@@ -382,7 +382,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Previous Price</label>
           <input
-            type="text"
+            type="number"
             name="before"
             value={form.before || ""} // Ensure value is never undefined
             onChange={handleInputChange}
@@ -405,7 +405,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Count in Stock</label>
           <input
-            type="text"
+            type="number"
             name="countInStock"
             value={form.countInStock || ""} // Ensure value is never undefined
             onChange={handleInputChange}

@@ -3,7 +3,6 @@ import Arrivals from "./components/Arrivals";
 import Featured from "./components/Featured";
 import Brands from "./components/Brands";
 import FullWidthCarousel from "@/components/full-width-carousel";
-import axios from "axios";
 import { Suspense } from "react";
 import Loading from "./components/Loading";
 import Services from "./components/Services";
