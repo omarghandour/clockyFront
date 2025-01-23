@@ -25,7 +25,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ProductById = () => {
-  const { id } = useParams();
+  const { id }: any = useParams();
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -38,94 +38,94 @@ const ProductById = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchUserRating();
+    // fetchUserRating();
     const userID = localStorage.getItem("userId");
     setUserId(userID);
 
-    if (userID && id) {
-      checkIfFavorite(userID);
-    }
+    // if (userID && id) {
+    //   // checkIfFavorite(userID);
+    // }
     fetchProduct();
-    fetchRatings();
+    // fetchRatings();
   }, [id]);
 
-  const fetchRatings = async () => {
-    try {
-      const res = await axios.get(
-        `https://express.clockyeg.com/api/products/${id}/ratings`,
-        {
-          withCredentials: true,
-        }
-      );
+  // const fetchRatings = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `https://express.clockyeg.com/api/products/${id}/ratings`,
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
 
-      setAverageRating(res.data.averageRating);
-    } catch (error) {
-      console.error("Error fetching ratings:", error);
-    }
-  };
-  const submitRating = async (rating: number) => {
-    if (!userId) {
-      toast({
-        title: "Not logged in",
-        description: "Please log in to rate this product.",
-        variant: "destructive",
-        action: <Link href="/login">Go to login</Link>,
-      });
-      return;
-    }
+  //     setAverageRating(res.data.averageRating);
+  //   } catch (error) {
+  //     console.error("Error fetching ratings:", error);
+  //   }
+  // };
+  // const submitRating = async (rating: number) => {
+  //   if (!userId) {
+  //     toast({
+  //       title: "Not logged in",
+  //       description: "Please log in to rate this product.",
+  //       variant: "destructive",
+  //       action: <Link href="/login">Go to login</Link>,
+  //     });
+  //     return;
+  //   }
 
-    try {
-      await axios.patch(
-        `https://express.clockyeg.com/api/products/${id}/ratings`,
-        { rating },
-        { withCredentials: true }
-      );
-      toast({
-        title: "Rating submitted",
-        description: `You rated this product ${rating} stars.`,
-      });
-      setUserRating(rating);
-      fetchRatings(); // Update the average rating after submission
-    } catch (error) {
-      console.error("Error submitting rating:", error);
-      toast({
-        title: "Error",
-        description: "Could not submit your rating. Please try again later.",
-        variant: "destructive",
-      });
-    }
-  };
-  const fetchUserRating = async () => {
-    try {
-      const { data } = await axios.get(
-        `https://express.clockyeg.com/api/products/${id}/rating`,
-        { withCredentials: true }
-      );
-      // console.log(data.rating.rating);
+  //   try {
+  //     await axios.patch(
+  //       `https://express.clockyeg.com/api/products/${id}/ratings`,
+  //       { rating },
+  //       { withCredentials: true }
+  //     );
+  //     toast({
+  //       title: "Rating submitted",
+  //       description: `You rated this product ${rating} stars.`,
+  //     });
+  //     setUserRating(rating);
+  //     fetchRatings(); // Update the average rating after submission
+  //   } catch (error) {
+  //     console.error("Error submitting rating:", error);
+  //     toast({
+  //       title: "Error",
+  //       description: "Could not submit your rating. Please try again later.",
+  //       variant: "destructive",
+  //     });
+  //   }
+  // };
+  // const fetchUserRating = async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       `https://express.clockyeg.com/api/products/${id}/rating`,
+  //       { withCredentials: true }
+  //     );
+  //     // console.log(data.rating.rating);
 
-      setUserRating(data.rating.rating);
-      // fetchRatings(); // Update the average rating after submission
-    } catch (error) {
-      console.error("Error submitting rating:", error);
-      // toast({
-      //   title: "Error",
-      //   description: "Could not submit your rating. Please try again later.",
-      //   variant: "destructive",
-      // });
-    }
-  };
-  const renderStars = (count: number, onClick?: (index: number) => void) => {
-    return Array.from({ length: 5 }, (_, index) => (
-      <FontAwesomeIcon
-        key={index}
-        icon={faStar}
-        className={`cursor-pointer ${
-          index < count ? "text-yellow-500" : "text-gray-300"
-        }`}
-        onClick={() => onClick && onClick(index + 1)}
-      />
-    ));
-  };
+  //     setUserRating(data.rating.rating);
+  //     // fetchRatings(); // Update the average rating after submission
+  //   } catch (error) {
+  //     console.error("Error submitting rating:", error);
+  //     // toast({
+  //     //   title: "Error",
+  //     //   description: "Could not submit your rating. Please try again later.",
+  //     //   variant: "destructive",
+  //     // });
+  //   }
+  // };
+  // const renderStars = (count: number, onClick?: (index: number) => void) => {
+  //   return Array.from({ length: 5 }, (_, index) => (
+  //     <FontAwesomeIcon
+  //       key={index}
+  //       icon={faStar}
+  //       className={`cursor-pointer ${
+  //         index < count ? "text-yellow-500" : "text-gray-300"
+  //       }`}
+  //       onClick={() => onClick && onClick(index + 1)}
+  //     />
+  //   ));
+  // };
 
   const fetchProduct = async () => {
     try {
@@ -141,18 +141,18 @@ const ProductById = () => {
     }
   };
 
-  const checkIfFavorite = async (userId: string) => {
-    try {
-      const res = await axios.post(
-        `https://express.clockyeg.com/api/products/isFavorite/${userId}`,
-        { ProductId: id },
-        { withCredentials: true }
-      );
-      setIsFavorite(res.data.isFavorite);
-    } catch (error: any) {
-      console.error("Error checking favorite:", error);
-    }
-  };
+  // const checkIfFavorite = async (userId: string) => {
+  //   try {
+  //     const res = await axios.post(
+  //       `https://express.clockyeg.com/api/products/isFavorite/${userId}`,
+  //       { ProductId: id },
+  //       { withCredentials: true }
+  //     );
+  //     setIsFavorite(res.data.isFavorite);
+  //   } catch (error: any) {
+  //     console.error("Error checking favorite:", error);
+  //   }
+  // };
 
   const handleAddToFavorites = async () => {
     setFavoriteLoading(true);
@@ -387,10 +387,10 @@ const ProductById = () => {
   return (
     <div className="paddingX mx-auto flex-col flex items-center h-full mt-20 w-full text-pretty">
       <div className="flex md:flex-row items-center gap-8 justify-between w-full flex-col bg-white">
-        <div className="mb-6 md:mb-0 ">
+        <div className="mb-6 md:mb-0 w-full">
           <CarouselDApiDemo images={images} />
         </div>
-        <div className="">
+        <div className="w-full md:w-3/5">
           <div className="flex flex-col justify-center  py-6 gap-4">
             <h1 className="text-[#2E2E2E] text-2xl text-left md:text-3xl w-full font-medium">
               {product.name}
@@ -400,10 +400,10 @@ const ProductById = () => {
               <p className="text-[#D4AF37B2] text-left  text-xl">
                 EGP {product.price}
               </p>
-              <div className="flex flex-row items-center gap-3">
+              {/* <div className="flex flex-row items-center gap-3">
                 <h2 className="text-lg  font-medium ">Average Rating</h2>
                 <div className="flex">{renderStars(averageRating)}</div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex justify-end flex-col py-2 gap-3">
@@ -426,12 +426,12 @@ const ProductById = () => {
                   +
                 </button>
               </div>
-              <div className="center flex-col md:flex-row gap-3 bg-main p-2 w-full md:w-96">
+              {/* <div className="center flex-col md:flex-row gap-3 bg-main p-2 w-full md:w-96">
                 <h2 className="text-lg text-white ">Your Rating</h2>
                 <div className="flex ">
                   {renderStars(userRating, (rating) => submitRating(rating))}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="flex md:flex-col xl:flex-row gap-2">
