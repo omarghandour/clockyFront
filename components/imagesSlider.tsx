@@ -45,7 +45,7 @@ export function CarouselDApiDemo(images: any) {
                     width={500}
                     height={500}
                     alt="product image"
-                    className="transform shadow-none transition-transform duration-300 scale-[1.3] hover:scale-110"
+                    className="transform shadow-none transition-transform duration-300 scale-[1.2] hover:scale-110"
                   />
                   {/* <span className="text-4xl font-semibold">{index + 1}</span> */}
                 </CardContent>
