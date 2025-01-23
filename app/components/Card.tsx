@@ -237,7 +237,7 @@ const Card = ({ product }: { product: Product }) => {
         }}
         className="flex w-full flex-col h-full cursor-pointer"
       >
-        <div className="relative overflow-hidden  flex-grow-[1]">
+        <div className="relative overflow-hidden flex items-center  flex-grow-[1]">
           {/* Carousel Component */}
           <CarouselDApiDemo images={images} />
           {/* <div className="card-img-background bg-cover bg-main"></div> */}
