@@ -229,20 +229,30 @@ const Card = ({ product }: { product: Product }) => {
           />
         )}
       </button>
-      <div
-        onClick={() => {
-          router.push(
-            `${pathname?.includes("/product") ? "" : "product/"}${product._id}`
-          );
-        }}
-        className="flex w-full flex-col h-full cursor-pointer"
-      >
-        <div className="relative overflow-hidden flex items-center  flex-grow-[1]">
+      <div className="flex w-full flex-col h-full cursor-pointer">
+        <div
+          onClick={() => {
+            router.push(
+              `${pathname?.includes("/product") ? "" : "product/"}${
+                product._id
+              }`
+            );
+          }}
+          className="relative overflow-hidden flex items-center  flex-grow-[1]"
+        >
           {/* Carousel Component */}
           <CarouselDApiDemo images={images} />
           {/* <div className="card-img-background bg-cover bg-main"></div> */}
         </div>
-        <div>
+        <div
+          onClick={() => {
+            router.push(
+              `${pathname?.includes("/product") ? "" : "product/"}${
+                product._id
+              }`
+            );
+          }}
+        >
           <div className="flex flex-col justify-between border-t-2 flex-grow-[2] px-2 pt-2">
             <div className="pb-2">
               <h2 className="text-main text-[14px] md:text-[20px] font-bold truncate w-full text-lines-1">
