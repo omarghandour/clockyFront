@@ -15,7 +15,7 @@ import {
   faHeart as regularHeart,
 } from "@fortawesome/free-regular-svg-icons";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import Loading from "./Loading";
+import loading from "../loading";
 import { CarouselDApiDemo } from "@/components/imagesSlider";
 import Card from "./Card";
 import debounce from "lodash.debounce";
@@ -237,13 +237,13 @@ const ProductById = () => {
       });
     }
   };
-  if (loading) {
-    return (
-      <div className="w-full h-full">
-        <Loading />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="w-full h-full">
+  //       <loading />
+  //     </div>
+  //   );
+  // }
 
   if (!product) {
     return <div>Product not found</div>;

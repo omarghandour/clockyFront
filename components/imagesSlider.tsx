@@ -44,6 +44,7 @@ export function CarouselDApiDemo(images: any) {
                     src={src}
                     width={500}
                     height={500}
+                    loading="lazy"
                     alt="product image"
                     className="transform shadow-none transition-transform duration-300 hover:scale-110"
                   />
