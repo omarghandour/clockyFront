@@ -62,6 +62,7 @@ const Nav = () => {
 
   const handleClick = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     setStorageValue(null);
     toast({ title: "Logged Out successfully" });
   };

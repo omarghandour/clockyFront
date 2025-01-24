@@ -30,6 +30,7 @@ const Cart = () => {
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
+    console.log(cartItems);
 
     if (userId) {
       syncLocalCartWithBackend();
@@ -55,8 +56,7 @@ const Cart = () => {
       const res = await axiosInstance.get(`/products/cart/${userId}`, {
         withCredentials: true,
       });
-
-      const updatedCart = res.data.map((item: any) => ({
+      const updatedCart = res.data.products.map((item: any) => ({
         product: { ...item.product },
         quantity: item.quantity,
       }));
@@ -171,7 +171,14 @@ const Cart = () => {
   };
 
   const navigateToCheckout = () => {
-    router.push("/checkout");
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+    if (userId && token) {
+      router.push("/checkout");
+    } else {
+      alert("Please login to checkout");
+      router.push("/login");
+    }
   };
 
   return (

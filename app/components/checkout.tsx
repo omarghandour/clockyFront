@@ -220,7 +220,6 @@ const Checkout = () => {
                 required
               />
             </div>
-
             {/* Payment Method */}
             <div className="mb-4">
               <label className="block text-sm font-semibold mb-1">
