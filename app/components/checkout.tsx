@@ -49,9 +49,10 @@ const Checkout = () => {
           headers: { Authorization: `Bearer ${userToken}` },
         })
         .then((response) => {
-          const cart = response.data || [];
+          const cart = response.data.products || [];
           setCartItems(cart);
           updateTotalPrice(cart);
+          console.log(response);
         })
         .catch((error) => {
           console.error("Failed to fetch cart:", error);
@@ -67,11 +68,13 @@ const Checkout = () => {
   }, [router]);
 
   const updateTotalPrice = (cart: any[]) => {
-    const total = cart.reduce(
+    const total = cart?.reduce(
       (sum, item) =>
         sum + item?.product?.price * (item?.product?.quantity || 1),
       0
     );
+    console.log(cart);
+
     setTotalPrice(total);
   };
 
