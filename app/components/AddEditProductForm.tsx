@@ -16,7 +16,7 @@ type ProductFormData = {
   images?: string[];
   brand?: string;
   caseSize?: string;
-  faceMaterial?: string;
+  caseMaterial?: string;
   features?: string;
   modelNumber?: string;
   brandClosure?: string;
@@ -24,6 +24,11 @@ type ProductFormData = {
   faceDialType?: string;
   productClass?: string;
   attachment?: string[];
+  dialType?: string; // New field
+  Bracelet?: string; // New field
+  waterResistance?: boolean; // New field
+  caseShape?: string; // New field
+  Guarantee?: string; // New field
 };
 
 type ProductFormProps = {
@@ -59,7 +64,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
     images: [],
     brand: "",
     caseSize: "",
-    faceMaterial: "",
+    caseMaterial: "",
     features: "",
     modelNumber: "",
     brandClosure: "",
@@ -67,6 +72,11 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
     faceDialType: "",
     productClass: "",
     attachment: [],
+    dialType: "", // New field
+    Bracelet: "", // New field
+    waterResistance: false, // Default value
+    caseShape: "", // New field
+    Guarantee: "", // New field
   });
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
     undefined
@@ -193,7 +203,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
           images: [],
           brand: "",
           caseSize: "",
-          faceMaterial: "",
+          caseMaterial: "",
           features: "",
           modelNumber: "",
           brandClosure: "",
@@ -201,6 +211,11 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
           faceDialType: "",
           productClass: "",
           attachment: [],
+          dialType: "", // Reset new field
+          Bracelet: "", // Reset new field
+          waterResistance: false, // Default value
+          caseShape: "", // Reset new field
+          Guarantee: "", // Reset new field
         });
         setSelectedImage(undefined);
         setImageFile(null);
@@ -358,6 +373,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Product Name</label>
           <input
+            required
             type="text"
             name="name"
             value={form.name || ""} // Ensure value is never undefined
@@ -370,6 +386,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Price</label>
           <input
+            required
             type="number"
             name="price"
             value={form.price || ""} // Ensure value is never undefined
@@ -382,6 +399,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Previous Price</label>
           <input
+            required
             type="number"
             name="before"
             value={form.before || ""} // Ensure value is never undefined
@@ -394,6 +412,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Description</label>
           <textarea
+            required
             name="description"
             value={form.description || ""} // Ensure value is never undefined
             onChange={handleInputChange}
@@ -405,6 +424,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Count in Stock</label>
           <input
+            required
             type="number"
             name="countInStock"
             value={form.countInStock || ""} // Ensure value is never undefined
@@ -417,6 +437,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Gender</label>
           <select
+            required
             name="gender"
             value={form.gender || ""} // Ensure value is never undefined
             onChange={handleInputChange}
@@ -432,6 +453,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Case Color</label>
           <input
+            required
             type="text"
             name="caseColor"
             value={form.caseColor || ""} // Ensure value is never undefined
@@ -444,6 +466,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Dial Color</label>
           <input
+            required
             type="text"
             name="dialColor"
             value={form.dialColor || ""} // Ensure value is never undefined
@@ -452,10 +475,75 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
             placeholder="Enter dial color"
           />
         </div>
+        <div className="mb-3">
+          <label className="block text-gray-700">Dial Type</label>
+          <input
+            required
+            type="text"
+            name="dialType"
+            value={form.dialType || ""}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded mt-1"
+            placeholder="Enter dial type"
+          />
+        </div>
 
+        <div className="mb-3">
+          <label className="block text-gray-700">Bracelet</label>
+          <input
+            required
+            type="text"
+            name="Bracelet"
+            value={form.Bracelet || ""}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded mt-1"
+            placeholder="Enter bracelet type"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="inline-flex items-center">
+            <input
+              required
+              type="checkbox"
+              name="waterResistance"
+              checked={form.waterResistance || false}
+              onChange={handleInputChange}
+              className="mr-2"
+            />
+            Water Resistance
+          </label>
+        </div>
+
+        <div className="mb-3">
+          <label className="block text-gray-700">Case Shape</label>
+          <input
+            required
+            type="text"
+            name="caseShape"
+            value={form.caseShape || ""}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded mt-1"
+            placeholder="Enter case shape"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="block text-gray-700">Guarantee</label>
+          <input
+            required
+            type="text"
+            name="Guarantee"
+            value={form.Guarantee || ""}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded mt-1"
+            placeholder="Enter guarantee"
+          />
+        </div>
         <div className="mb-3">
           <label className="block text-gray-700">Movement Type</label>
           <select
+            required
             name="movmentType"
             value={form.movmentType || ""} // Ensure value is never undefined
             onChange={handleInputChange}
@@ -470,6 +558,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Brand</label>
           <input
+            required
             type="text"
             name="brand"
             value={form.brand || ""} // Ensure value is never undefined
@@ -482,6 +571,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Case Size</label>
           <input
+            required
             type="text"
             name="caseSize"
             value={form.caseSize || ""} // Ensure value is never undefined
@@ -494,9 +584,10 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Face Material</label>
           <input
+            required
             type="text"
-            name="faceMaterial"
-            value={form.faceMaterial || ""} // Ensure value is never undefined
+            name="caseMaterial"
+            value={form.caseMaterial || ""} // Ensure value is never undefined
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded mt-1"
             placeholder="Enter face material"
@@ -506,6 +597,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Features</label>
           <input
+            required
             type="text"
             name="features"
             value={form.features || ""} // Ensure value is never undefined
@@ -518,6 +610,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Model Number</label>
           <input
+            required
             type="text"
             name="modelNumber"
             value={form.modelNumber || ""} // Ensure value is never undefined
@@ -530,6 +623,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Brand Closure</label>
           <input
+            required
             type="text"
             name="brandClosure"
             value={form.brandClosure || ""} // Ensure value is never undefined
@@ -542,6 +636,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Face Dial Shape</label>
           <input
+            required
             type="text"
             name="faceDialShape"
             value={form.faceDialShape || ""} // Ensure value is never undefined
@@ -554,6 +649,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Face Dial Type</label>
           <input
+            required
             type="text"
             name="faceDialType"
             value={form.faceDialType || ""} // Ensure value is never undefined
@@ -566,6 +662,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="block text-gray-700">Product Class</label>
           <input
+            required
             type="text"
             name="productClass"
             value={form.productClass || ""} // Ensure value is never undefined

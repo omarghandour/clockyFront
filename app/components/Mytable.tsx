@@ -45,12 +45,24 @@ const Mytable = (product: any) => {
               </TableHeader>
               <TableBody>
                 <TableRow>
+                  <TableCell className="font-medium">Brand</TableCell>
+                  <TableCell>{product?.product?.brand}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Model Number</TableCell>
+                  <TableCell>{product?.product?.modelNumber}</TableCell>
+                </TableRow>
+                <TableRow>
                   <TableCell className="font-medium">Gender</TableCell>
                   <TableCell>{product?.product?.gender}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">Dial Color</TableCell>
-                  <TableCell>{product?.product?.dialColor}</TableCell>
+                  <TableCell className="font-medium">Watch Movement</TableCell>
+                  <TableCell>{product?.product?.movmentType}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Case Material</TableCell>
+                  <TableCell>{product?.product?.caseMaterial}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">
@@ -59,17 +71,40 @@ const Mytable = (product: any) => {
                   <TableCell>{product?.product?.caseSize}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">Face Material</TableCell>
-                  <TableCell>{product?.product?.faceMaterial}</TableCell>
+                  <TableCell className="font-medium">Dial Color</TableCell>
+                  <TableCell>{product?.product?.dialColor}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">
+                    Face / Dial Type
+                  </TableCell>
+                  <TableCell>{product?.product?.faceDialType}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Bracelet</TableCell>
+                  <TableCell>{product?.product?.Bracelet}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">
+                    Water Resistance
+                  </TableCell>
+                  <TableCell>
+                    {product?.product?.waterResistance ? "Yes" : "No"}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Case Shape</TableCell>
+                  <TableCell>{product?.product?.caseShape}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Guarantee</TableCell>
+                  <TableCell>{product?.product?.Guarantee}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">Features</TableCell>
                   <TableCell>{product?.product?.features}</TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">Model Number</TableCell>
-                  <TableCell>{product?.product?.modelNumber}</TableCell>
-                </TableRow>
+
                 <TableRow>
                   <TableCell className="font-medium">Band Closure</TableCell>
                   <TableCell>{product?.product?.brandClosure}</TableCell>
@@ -79,16 +114,6 @@ const Mytable = (product: any) => {
                     Face / Dial Shape
                   </TableCell>
                   <TableCell>{product?.product?.faceDialShape}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    Face / Dial Type
-                  </TableCell>
-                  <TableCell>{product?.product?.faceDialType}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">Watch Movement</TableCell>
-                  <TableCell>{product?.product?.movmentType}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
