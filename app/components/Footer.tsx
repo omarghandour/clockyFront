@@ -279,10 +279,7 @@ const Footer: React.FC = () => {
         </p>
         <p className="mt-4">
           &copy; 2025{" "}
-          <Link
-            href={"https://www.facebook.com/profile.php?id=61565897626564"}
-            className="text-two"
-          >
+          <Link href={"https://blackwaveseg.com"} className="text-two">
             BW
           </Link>
           , Inc. All rights reserved.

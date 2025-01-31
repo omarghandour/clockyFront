@@ -2,12 +2,28 @@
 
 import React, { useState, useCallback, useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import Image from "next/image";
+// import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const images = ["/cover1.jpg", "/cover2.jpg", "/cover3.jpg"];
-
+const images = [
+  "/cover1.png",
+  "/cover2.png",
+  "/cover3.png",
+  "/cover4.png",
+  "/cover5.png",
+  "/cover6.png",
+  "/cover7.png",
+];
+const smallImages = [
+  "/cover1.png",
+  // "/cover2.png",
+  "/cover3.png",
+  "/cover4.png",
+  "/cover5.png",
+  // "/cover6.png",
+  "/cover7.png",
+];
 export default function FullWidthCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
@@ -19,6 +35,7 @@ export default function FullWidthCarousel() {
   });
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const scrollPrev = useCallback(
     () => emblaApi && emblaApi.scrollPrev(),
@@ -57,11 +74,26 @@ export default function FullWidthCarousel() {
     };
   }, [emblaApi, onSelect]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768); // Adjust the breakpoint as needed
+    };
+
+    handleResize(); // Check on initial render
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const displayedImages = isSmallScreen ? smallImages : images;
+
   return (
     <div className="relative mt-20 h-full">
       <div className="overflow-hidden " ref={emblaRef}>
         <div className="flex h-full">
-          {images.map((src, index) => (
+          {displayedImages?.map((src, index) => (
             <div key={index} className="relative flex-[0_0_100%]">
               {/*  eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -69,7 +101,8 @@ export default function FullWidthCarousel() {
                 alt={`Slide ${index + 1}`}
                 // width={1600}
                 // height={undefined}
-                className="w-full h-full object-cover"
+                loading="lazy"
+                className="w-full md:h-full object-cover h-[250px]"
               />
             </div>
           ))}

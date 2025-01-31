@@ -1,26 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-/* eslint-disable @next/next/no-img-element */
-
 import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import one from "../../public/apple-pay-svgrepo-com.svg";
-import two from "../../public/2.png";
+import two from "../../public/apple-pay-svgrepo-com.svg";
 import three from "../../public/3.png";
 import four from "../../public/mastercard-svgrepo-com.svg";
 import five from "../../public/valu.webp";
 import six from "../../public/aman.png";
-import logo from "../../public/logo.png";
-// import eight from "../../public/8.png";
-// import nine from "../../public/9.png";
-// import ten from "../../public/10.png";
+import visa from "../../public/visa-svgrepo-com.svg";
 import Image from "next/image";
-
+import paymoblogo from "../../public/idgsOqghIr_1738360317906.png";
 const brands = [
   {
     name: "FAST SHIPPING",
     route: "/brands/rolex",
-    logoUrl: one,
+    logoUrl: visa,
+    p: "Order will be shipped to your doorstep within 22-days",
+  },
+  {
+    name: "LOCAL WARRANTY",
+    route: "/brands/cartier",
+    logoUrl: four,
     p: "Order will be shipped to your doorstep within 22-days",
   },
   {
@@ -35,12 +35,7 @@ const brands = [
     logoUrl: three,
     p: "Order will be shipped to your doorstep within 22-days",
   },
-  {
-    name: "LOCAL WARRANTY",
-    route: "/brands/cartier",
-    logoUrl: four,
-    p: "Order will be shipped to your doorstep within 22-days",
-  },
+
   {
     name: "EXCHANGE & RETURN",
     route: "/brands/seiko",
@@ -108,7 +103,7 @@ const PaymentIcons: React.FC = () => {
       ref={sectionRef}
       className="paddingX mx-auto pb-5 md:py-8 mb-4 md:my-8  w-full"
     >
-      <div className="w-full center flex-col">
+      {/* <div className="w-full center flex-col">
         <Image
           src={logo}
           alt="logo"
@@ -125,7 +120,7 @@ const PaymentIcons: React.FC = () => {
           <span className="bg-two w-5 rounded-full h-5"></span>
           <span className="bg-black w-5 rounded-full h-5"></span>
         </div>
-      </div>
+      </div> */}
       <div className=" mx-auto">
         {/* <h2 className="md:text-3xl text-xl text-main font-bold text-center mb-8">
           OUR WATCH BRANDS
@@ -149,16 +144,18 @@ const PaymentIcons: React.FC = () => {
                   height={60}
                   className=" object-contain"
                 />
-
-                {/* <h4 className="mt-1 text-[12px] md:text-[16px] text-main">
-                  {brand.name}
-                </h4>
-                <p className="text-lines-2 text-center text-[10px] text-main">
-                  {brand.p}
-                </p> */}
               </div>
             </div>
           ))}
+        </div>
+        <div className="w-full flex flex-col items-center justify-center mt-2">
+          {" "}
+          <div>
+            <span className="text-[#3a3e3b] text-left text-[10px]">
+              Powered by
+            </span>
+            <Image src={paymoblogo} width={100} height={100} alt="paymobLogo" />
+          </div>
         </div>
       </div>
     </section>

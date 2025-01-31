@@ -15,25 +15,25 @@ const brands = [
     name: "FAST SHIPPING",
     route: "/brands/rolex",
     logoUrl: rolex,
-    p: "Order will be shipped to your doorstep within 22-days",
+    p: "Orders will be shipped to your doorstep within 2-3 days",
   },
   {
     name: "FREE RETURNS",
     route: "/brands/casio",
     logoUrl: casio,
-    p: "Order will be shipped to your doorstep within 22-days",
+    p: "You may return or exchange your product within 14 days of purchase if it is in its original condition.",
   },
   {
     name: "CASH ON DELIVERY",
     route: "/brands/omega",
     logoUrl: omega,
-    p: "Order will be shipped to your doorstep within 22-days",
+    p: "Flexible Payment Options Pay on delivery or securely with your card on our website—choose what suits you best!",
   },
   {
     name: "LOCAL WARRANTY",
     route: "/brands/cartier",
     logoUrl: Cartier,
-    p: "Order will be shipped to your doorstep within 22-days",
+    p: "Clocky 2-Year Warranty We guarantee our watches against manufacturing defects for 2 years. Contact us with proof of purchase for support",
   },
   //   { name: "Seiko", route: "/brands/seiko", logoUrl: Seiko, p: "" },
   // Add more brands here as needed
@@ -92,7 +92,7 @@ const Services: React.FC = () => {
                 <h4 className="mt-1 text-[12px] md:text-[16px] text-main">
                   {brand.name}
                 </h4>
-                <p className="text-lines-2 text-center text-[10px] text-main">
+                <p className="text-pretty hover:text-lines-3 text-center text-[10px] text-main">
                   {brand.p}
                 </p>
               </div>
