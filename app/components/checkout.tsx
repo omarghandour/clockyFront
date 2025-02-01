@@ -91,7 +91,7 @@ const Checkout = () => {
 
     try {
       const response = await axiosInstance.get(
-        `/products/coupon/code?code=${couponCode}`
+        `/products/coupon/code?code=${couponCode.toLowerCase()}`
       );
       const coupon = response.data.code;
 
