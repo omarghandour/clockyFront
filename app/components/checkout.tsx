@@ -91,7 +91,7 @@ const Checkout = () => {
 
     try {
       const response = await axiosInstance.get(
-        `/products/coupon/code?code=${couponCode.toLowerCase()}`
+        `/products/coupon/code?code=${couponCode?.toLowerCase()}`
       );
       const coupon = response.data.code;
 
@@ -137,9 +137,8 @@ const Checkout = () => {
           city: userInfo.city,
           phone: userInfo.phoneNumber,
         },
-        couponCode: couponCode || null, // Include the coupon code in the checkout
+        couponCode: couponCode?.toLowerCase() || null, // Include the coupon code in the checkout
       };
-      console.log(couponCode);
 
       const response = await axiosInstance.post(
         `/products/checkout`,
@@ -306,7 +305,7 @@ const Checkout = () => {
               <div className="flex gap-2">
                 <input
                   type="text"
-                  value={couponCode}
+                  value={couponCode?.toLowerCase()}
                   onChange={(e) => setCouponCode(e.target.value)}
                   className="w-full p-2 border rounded"
                   placeholder="Enter coupon code"
