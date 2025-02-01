@@ -4,7 +4,6 @@ import * as React from "react";
 import { Filter } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Sheet,
   SheetContent,
@@ -13,15 +12,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useEffect, useState } from "react";
 import axios from "axios";
+
 type Filters = {
   caseColor: string[];
   dialColor: string[];
   selectedBrand: string[];
   category: string[];
-  minPrice: number;
-  maxPrice: number;
+  priceRange: [number, number];
 };
 
 interface WatchFiltersComponentProps {
@@ -36,14 +34,14 @@ export function WatchFiltersComponent({
     dialColor: [],
     selectedBrand: [],
     category: [],
-    minPrice: 0,
-    maxPrice: 100000,
+    priceRange: [0, 100000], // Default price range
   });
 
   const [categories, setCategories] = React.useState<string[]>([]);
   const [caseColors, setCaseColors] = React.useState<string[]>([]);
   const [brands, setBrands] = React.useState<string[]>([]);
   const [dialColors, setDialColors] = React.useState<string[]>([]);
+  const [isSheetOpen, setIsSheetOpen] = React.useState(false); // Track sheet open state
 
   const handleCheckboxChange = (
     name: keyof Filters,
@@ -68,16 +66,14 @@ export function WatchFiltersComponent({
       dialColor: [],
       selectedBrand: [],
       category: [],
-      minPrice: 0,
-      maxPrice: 100000,
+      priceRange: [0, 100000],
     });
     onApplyFilters({
       caseColor: [],
       dialColor: [],
       selectedBrand: [],
       category: [],
-      minPrice: 0,
-      maxPrice: 100000,
+      priceRange: [0, 100000],
     });
   };
 
@@ -105,6 +101,14 @@ export function WatchFiltersComponent({
 
     fetchFilters();
   }, []);
+
+  const handlePriceRangeChange = (index: number, value: number) => {
+    setFilters((prev) => {
+      const newPriceRange = [...prev.priceRange] as [number, number];
+      newPriceRange[index] = value;
+      return { ...prev, priceRange: newPriceRange };
+    });
+  };
 
   const FiltersContent = () => (
     <div
@@ -184,39 +188,35 @@ export function WatchFiltersComponent({
       </div>
 
       <div className="px-2">
-        <label htmlFor="minPrice" className="text-sm font-medium leading-none">
-          Min Price:
-        </label>
-        <input
-          type="number"
-          id="minPrice"
-          value={filters.minPrice}
-          onChange={(e) =>
-            setFilters((prev) => ({
-              ...prev,
-              minPrice: Number(e.target.value),
-            }))
-          }
-          className="mt-1 px-2 rounded"
-        />
-      </div>
-
-      <div className="px-2">
-        <label htmlFor="maxPrice" className="text-sm font-medium leading-none">
-          Max Price:
-        </label>
-        <input
-          type="number"
-          id="maxPrice"
-          value={filters.maxPrice}
-          onChange={(e) =>
-            setFilters((prev) => ({
-              ...prev,
-              maxPrice: Number(e.target.value),
-            }))
-          }
-          className="mt-1 px-2 rounded"
-        />
+        <label className="text-sm font-medium leading-none">Price Range:</label>
+        <div className="flex flex-col space-y-4">
+          <div className="flex justify-between">
+            <span>Min: ${filters.priceRange[0]}</span>
+            <span>Max: ${filters.priceRange[1]}</span>
+          </div>
+          <div className="flex space-x-4">
+            <input
+              type="range"
+              min={0}
+              max={100000}
+              value={filters.priceRange[0]}
+              onChange={(e) =>
+                handlePriceRangeChange(0, parseInt(e.target.value))
+              }
+              className="w-full"
+            />
+            <input
+              type="range"
+              min={0}
+              max={100000}
+              value={filters.priceRange[1]}
+              onChange={(e) =>
+                handlePriceRangeChange(1, parseInt(e.target.value))
+              }
+              className="w-full"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -242,7 +242,7 @@ export function WatchFiltersComponent({
       </div>
 
       <div className="block lg:hidden text-main ">
-        <Sheet>
+        <Sheet onOpenChange={setIsSheetOpen}>
           <SheetTrigger asChild>
             <Button variant="outline" className="mb-4 text-two bg-main mt-5">
               <Filter className="mr-2 h-4 w-4 text-two" /> Filters

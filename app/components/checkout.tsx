@@ -152,7 +152,7 @@ const Checkout = () => {
       if (response.status === 201) {
         alert("Checkout completed successfully!");
         setCartItems([]);
-        router.push("/");
+        router.push("/success");
       }
     } catch (error: any) {
       setCheckoutError(error.message);
