@@ -20,6 +20,7 @@ const Checkout = () => {
   const [couponError, setCouponError] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [discountAmount, setDiscountAmount] = useState<number>();
+  const [checkoutError, setCheckoutError] = useState();
   const [userInfo, setUserInfo] = useState({
     fullName: "",
     governorate: "",
@@ -153,7 +154,8 @@ const Checkout = () => {
         setCartItems([]);
         router.push("/");
       }
-    } catch (error) {
+    } catch (error: any) {
+      setCheckoutError(error.message);
       console.error("Checkout failed:", error);
     }
   };
@@ -335,7 +337,9 @@ const Checkout = () => {
                 100 LE Shipping
               </h3>
             </div>
-
+            {checkoutError && (
+              <p className="text-red-500 text-sm mt-4">{checkoutError}</p>
+            )}
             {/* Submit Button */}
             <button
               type="submit"
