@@ -15,7 +15,11 @@ type Product = {
 const Checkout = () => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [discountedPrice, setDiscountedPrice] = useState<number | null>(null);
+  const [couponCode, setCouponCode] = useState<string>("");
+  const [couponError, setCouponError] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [discountAmount, setDiscountAmount] = useState<number>();
   const [userInfo, setUserInfo] = useState({
     fullName: "",
     governorate: "",
@@ -26,6 +30,7 @@ const Checkout = () => {
     paymentMethod: "",
   });
   const router = useRouter();
+
   // Fetch cart from backend using user ID
   useEffect(() => {
     const userToken =
@@ -34,13 +39,11 @@ const Checkout = () => {
     if (userToken) {
       setToken(userToken);
 
-      // Assuming the user ID is encoded in the token or stored separately
       const userId =
         typeof window !== "undefined" ? localStorage.getItem("userId") : null;
 
       if (!userId) {
         alert("User ID not found. Please log in.");
-        // router.push("/login");
         return;
       }
 
@@ -52,18 +55,15 @@ const Checkout = () => {
           const cart = response.data.products || [];
           setCartItems(cart);
           updateTotalPrice(cart);
-          console.log(response);
         })
         .catch((error) => {
           console.error("Failed to fetch cart:", error);
           if (error.response?.status === 401) {
             alert("Session expired. Please log in again.");
-            // router.push("/login");
           }
         });
     } else {
       alert("Please log in to view your cart.");
-      // router.push("/login");
     }
   }, [router]);
 
@@ -73,8 +73,6 @@ const Checkout = () => {
         sum + item?.product?.price * (item?.product?.quantity || 1),
       0
     );
-    console.log(cart);
-
     setTotalPrice(total);
   };
 
@@ -85,19 +83,51 @@ const Checkout = () => {
     setUserInfo({ ...userInfo, [name]: value });
   };
 
+  const handleCouponApply = async () => {
+    if (!couponCode) {
+      setCouponError("Please enter a coupon code.");
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.get(
+        `/products/coupon/code?code=${couponCode}`
+      );
+      const coupon = response.data.code;
+
+      if (!coupon.valid) {
+        setCouponError("Coupon is not valid.");
+        return;
+      }
+
+      if (coupon.usedCount >= coupon.maxUsage) {
+        setCouponError("Coupon usage limit exceeded.");
+        return;
+      }
+
+      if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) {
+        setCouponError("Coupon has expired.");
+        return;
+      }
+
+      // Apply the discount
+      const discountAmount = (totalPrice * coupon.discount) / 100;
+      setDiscountAmount(discountAmount);
+      setDiscountedPrice(totalPrice - discountAmount);
+
+      setCouponError(null);
+    } catch (error) {
+      console.error("Failed to validate coupon:", error);
+      setCouponError("Invalid coupon code.");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       const checkoutPayload = {
         userId: localStorage.getItem("userId"),
-        // products: cartItems.map((item) => ({
-        //   productId: item._id,
-        //   quantity: item.quantity || 1,
-        //   price: item.price * (item.quantity || 1),
-        //   name: item.name,
-        // })),
-        totalPrice,
         paymentMethod: userInfo.paymentMethod,
         shippingAddress: {
           fullName: userInfo.fullName,
@@ -107,7 +137,9 @@ const Checkout = () => {
           city: userInfo.city,
           phone: userInfo.phoneNumber,
         },
+        couponCode: couponCode || null, // Include the coupon code in the checkout
       };
+      console.log(couponCode);
 
       const response = await axiosInstance.post(
         `/products/checkout`,
@@ -247,6 +279,7 @@ const Checkout = () => {
                 required
               />
             </div>
+
             {/* Payment Method */}
             <div className="mb-4">
               <label className="block text-sm font-semibold mb-1">
@@ -265,10 +298,42 @@ const Checkout = () => {
               </select>
             </div>
 
+            {/* Coupon Code */}
+            <div className="mb-4">
+              <label className="block text-sm font-semibold mb-1">
+                Coupon Code
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  className="w-full p-2 border rounded"
+                  placeholder="Enter coupon code"
+                />
+                <button
+                  type="button"
+                  onClick={handleCouponApply}
+                  className="p-2 bg-main text-two font-semibold rounded hover:bg-two hover:text-main"
+                >
+                  Apply
+                </button>
+              </div>
+              {discountAmount && (
+                <p className="text-main text-sm mt-1">
+                  Discount applied: -${discountAmount.toFixed(2)}
+                </p>
+              )}
+              {couponError && (
+                <p className="text-red-500 text-sm mt-1">{couponError}</p>
+              )}
+            </div>
+
             {/* Total Price */}
             <div className="mb-4">
               <h3 className="text-lg font-semibold">
-                Total Price: ${totalPrice.toFixed(2)}
+                Total Price: {(discountedPrice || totalPrice).toFixed(2)} LE +
+                100 LE Shipping
               </h3>
             </div>
 

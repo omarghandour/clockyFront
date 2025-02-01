@@ -278,7 +278,7 @@ const Footer: React.FC = () => {
           </a>
         </p>
         <p className="mt-4">
-          &copy; 2025{" "}
+          &copy; 2025
           <Link href={"https://blackwaveseg.com"} className="text-two">
             BW
           </Link>

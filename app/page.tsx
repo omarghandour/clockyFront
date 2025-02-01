@@ -11,44 +11,25 @@ type Product = {
   data: {
     _id: string;
     name: string;
-    before: number; // Original price
+    before: number;
     price: number;
     description: string;
     countInStock: number;
     img: string;
   };
 };
-// const api = "https://express.clockyeg.com/api";
 export default async function Home() {
-  // let data;
-  // try {
-  //   const res = await axios.get(`${api}/products/newArrival`, {
-  //     withCredentials: true,
-  //   });
-  //   data = res.data;
-  // } catch (error) {
-  //   console.error("Failed to fetch products", error);
-  // }
   return (
     <main className="h-auto bg-[#FCFCFC]">
-      {/* <Nav /> */}
-      {/* <Hero /> */}
-      {/* <ResponsiveSliderComponent /> */}
       <FullWidthCarousel />
       <Brands />
       <Suspense fallback={<Loading />}>
         <Featured />
       </Suspense>
-      {/* <Products /> */}
       <Recommended />
-      {/* <Products2 /> */}
-      {/* <One /> */}
       <Arrivals />
       <Services />
       <PaymentIcons />
-      {/* <Footer /> */}
-      {/* <AppSidebar /> */}
-      {/* <Payment /> */}
     </main>
   );
 }
