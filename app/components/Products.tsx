@@ -75,7 +75,7 @@ const Products = () => {
       try {
         const query = {
           page,
-          limit: 5,
+          limit: 20,
           minPrice: filters.minPrice,
           maxPrice: filters.maxPrice,
           caseColor:
