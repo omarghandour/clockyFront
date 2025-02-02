@@ -8,6 +8,7 @@ import { WatchFiltersComponent } from "@/components/watch-filters";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import Card from "./Card";
 // import { FiFilter } from "react-icons/fi"; // Import an icon for the toggle button
 
 type Product = {
@@ -193,62 +194,7 @@ const Products = () => {
                 </div>
               ))
             : products.map((product, index) => (
-                <div
-                  ref={products.length === index + 1 ? lastProductRef : null}
-                  key={index}
-                  className={`rounded-md z-0 relative overflow-hidden mt-4 md:mt-6 border-solid border-2 border-[#F0F0F0] flex flex-col shadow transition-transform duration-300 transform w-full flex-grow`}
-                >
-                  <div
-                    onClick={() => {
-                      router.push(`product/${product._id}`);
-                    }}
-                    className="flex w-full flex-col h-full cursor-pointer"
-                  >
-                    <div className="relative overflow-hidden border-b-2 drop-shadow flex-grow-[1]">
-                      <img
-                        src={product.img}
-                        loading="lazy"
-                        alt={product.name}
-                        className="w-full object-cover transform transition-transform duration-300 hover:scale-110"
-                      />
-                      {/* <div className="card-img-background bg-cover bg-main"></div> */}
-                    </div>
-                    <div className="flex flex-col justify-between flex-grow-[2] px-2 pt-2">
-                      <div className="pb-2">
-                        <h2 className="text-main text-[20px] font-bold truncate w-full text-lines-1">
-                          {product.name}
-                        </h2>
-                        <p className="text-main text-lines-2">
-                          {product.description}
-                        </p>
-                      </div>
-                      <div className="flex pb-3">
-                        <p className="text-two text-[16px] md:text-[20px] font-bold">
-                          {product.price} L.E
-                          {/* <span className="text-[#595959] inline-flex text-[16px] ps-1 font-light line-through align-bottom">
-                            {product.before} L.E
-                          </span> */}
-                        </p>
-                        <p className="text-[#595959] text-[14px] md:text-[16px] ps-1 line-through self-end">
-                          {product.before} L.E
-                        </p>
-                      </div>
-                      {/* <div
-                        className={`absolute top-[8.5rem] md:top-[15.5rem] left-[0.25rem] text-main px-2 py-1 rounded-md text-xs`}
-                      >
-                        Stock: {product.countInStock}
-                      </div> */}
-                    </div>
-                  </div>
-                  <div className="pb-2 px-2">
-                    <Button
-                      onClick={() => addToCart(product)}
-                      className="rounded-sm relative z-50 w-full bg-transparent text-main md:py-5 py-4 text-[14px] md:text-[16px] border border-main hover:font-bold hover:text-two hover:bg-main"
-                    >
-                      ADD TO CARD
-                    </Button>
-                  </div>
-                </div>
+                <Card product={product} key={index} />
               ))}
         </div>
       </div>
