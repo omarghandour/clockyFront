@@ -57,32 +57,32 @@ const Mytable = (product: any) => {
                   <TableCell>{product?.product?.gender}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">Watch Movement</TableCell>
-                  <TableCell>{product?.product?.movmentType}</TableCell>
+                  <TableCell className="font-medium">Watch Shape</TableCell>
+                  <TableCell>{product?.product?.faceDialShape}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">Case Material</TableCell>
-                  <TableCell>{product?.product?.caseMaterial}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    Case Size / Diameter
-                  </TableCell>
-                  <TableCell>{product?.product?.caseSize}</TableCell>
+                  <TableCell className="font-medium">Display Type</TableCell>
+                  <TableCell>{product?.product?.faceDialType}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">Dial Color</TableCell>
                   <TableCell>{product?.product?.dialColor}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">
-                    Face / Dial Type
-                  </TableCell>
-                  <TableCell>{product?.product?.faceDialType}</TableCell>
+                  <TableCell className="font-medium">Diameter</TableCell>
+                  <TableCell>{product?.product?.caseSize}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">Bracelet</TableCell>
+                  <TableCell className="font-medium">Strap Type</TableCell>
+                  <TableCell>{product?.product?.caseMaterial}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Strap Kind</TableCell>
                   <TableCell>{product?.product?.Bracelet}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Watch Movement</TableCell>
+                  <TableCell>{product?.product?.movmentType}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">
@@ -97,23 +97,16 @@ const Mytable = (product: any) => {
                   <TableCell>{product?.product?.caseShape}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">Guarantee</TableCell>
-                  <TableCell>{product?.product?.Guarantee}</TableCell>
-                </TableRow>
-                <TableRow>
                   <TableCell className="font-medium">Features</TableCell>
                   <TableCell>{product?.product?.features}</TableCell>
                 </TableRow>
-
+                <TableRow>
+                  <TableCell className="font-medium">Warranty</TableCell>
+                  <TableCell>{product?.product?.Guarantee}</TableCell>
+                </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">Band Closure</TableCell>
                   <TableCell>{product?.product?.brandClosure}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    Face / Dial Shape
-                  </TableCell>
-                  <TableCell>{product?.product?.faceDialShape}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>

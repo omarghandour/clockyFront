@@ -47,6 +47,7 @@ const Products = () => {
     caseColor: "All",
     dialColor: "All",
   });
+  console.log(filters);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar toggle state

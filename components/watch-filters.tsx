@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Filter } from "lucide-react";
+import * as SliderPrimitive from "@radix-ui/react-slider";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -34,14 +35,14 @@ export function WatchFiltersComponent({
     dialColor: [],
     selectedBrand: [],
     category: [],
-    priceRange: [0, 100000], // Default price range
+    priceRange: [0, 100000],
   });
 
   const [categories, setCategories] = React.useState<string[]>([]);
   const [caseColors, setCaseColors] = React.useState<string[]>([]);
   const [brands, setBrands] = React.useState<string[]>([]);
   const [dialColors, setDialColors] = React.useState<string[]>([]);
-  const [isSheetOpen, setIsSheetOpen] = React.useState(false); // Track sheet open state
+  const [isSheetOpen, setIsSheetOpen] = React.useState(false);
 
   const handleCheckboxChange = (
     name: keyof Filters,
@@ -102,18 +103,19 @@ export function WatchFiltersComponent({
     fetchFilters();
   }, []);
 
-  const handlePriceRangeChange = (index: number, value: number) => {
-    setFilters((prev) => {
-      const newPriceRange = [...prev.priceRange] as [number, number];
-      newPriceRange[index] = value;
-      return { ...prev, priceRange: newPriceRange };
-    });
+  const handlePriceRangeChange = (newValue: number[]) => {
+    if (newValue.length === 2) {
+      setFilters((prev) => ({
+        ...prev,
+        priceRange: [newValue[0], newValue[1]] as [number, number],
+      }));
+    }
   };
 
   const FiltersContent = () => (
     <div
       className="space-y-4 text-two overflow-y-auto"
-      style={{ maxHeight: "600px" }} // Limit height and make scrollable
+      style={{ maxHeight: "600px" }}
     >
       <div className="px-2">
         <label className="text-sm font-medium leading-none">Case Color:</label>
@@ -191,30 +193,32 @@ export function WatchFiltersComponent({
         <label className="text-sm font-medium leading-none">Price Range:</label>
         <div className="flex flex-col space-y-4">
           <div className="flex justify-between">
-            <span>Min: ${filters.priceRange[0]}</span>
-            <span>Max: ${filters.priceRange[1]}</span>
+            <span>Min: ${filters.priceRange[0].toLocaleString()}</span>
+            <span>Max: ${filters.priceRange[1].toLocaleString()}</span>
           </div>
           <div className="flex space-x-4">
-            <input
-              type="range"
+            <SliderPrimitive.Root
               min={0}
               max={100000}
-              value={filters.priceRange[0]}
-              onChange={(e) =>
-                handlePriceRangeChange(0, parseInt(e.target.value))
-              }
-              className="w-full"
-            />
-            <input
-              type="range"
-              min={0}
-              max={100000}
-              value={filters.priceRange[1]}
-              onChange={(e) =>
-                handlePriceRangeChange(1, parseInt(e.target.value))
-              }
-              className="w-full"
-            />
+              step={1}
+              value={filters.priceRange}
+              onValueChange={handlePriceRangeChange}
+              className="relative flex items-center w-full h-5 m-5"
+            >
+              <SliderPrimitive.Track className="relative h-2 grow rounded-full bg-slate-200">
+                <SliderPrimitive.Range className="absolute h-full bg-main rounded-full" />
+              </SliderPrimitive.Track>
+              <SliderPrimitive.Thumb
+                className="block w-7 h-7 bg-main rounded-full hover:bg-main/80 focus:outline-none focus:ring-2 focus:ring-main"
+                aria-label="Min price"
+                style={{ touchAction: "none" }}
+              />
+              <SliderPrimitive.Thumb
+                className="block w-7 h-7 bg-main rounded-full hover:bg-main/80 focus:outline-none focus:ring-2 focus:ring-main"
+                aria-label="Max price"
+                style={{ touchAction: "none" }}
+              />
+            </SliderPrimitive.Root>
           </div>
         </div>
       </div>
