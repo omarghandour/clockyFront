@@ -9,20 +9,20 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const watchDetails = [
-  { attribute: "Department", value: "Men" },
-  { attribute: "Dial Colour", value: "Blue" },
-  { attribute: "Case Size/Diameter", value: "42 mm" },
-  { attribute: "Face Material", value: "Stainless Steel" },
-  { attribute: "Feature 1", value: "Water Resistant" },
-  { attribute: "Model Number", value: "1514093" },
-  { attribute: "Band Closure", value: "Clasp" },
-  { attribute: "Band Colour", value: "Silver" },
-  { attribute: "Band Material", value: "Stainless Steel" },
-  { attribute: "Face/Dial Shape", value: "Round" },
-  { attribute: "Face/Dial Type", value: "Analog" },
-  { attribute: "Watch Movement", value: "Quartz" },
-];
+// const watchDetails = [
+//   { attribute: "Department", value: "Men" },
+//   { attribute: "Dial Colour", value: "Blue" },
+//   { attribute: "Case Size/Diameter", value: "42 mm" },
+//   { attribute: "Face Material", value: "Stainless Steel" },
+//   { attribute: "Feature 1", value: "Water Resistant" },
+//   { attribute: "Model Number", value: "1514093" },
+//   { attribute: "Band Closure", value: "Clasp" },
+//   { attribute: "Band Colour", value: "Silver" },
+//   { attribute: "Band Material", value: "Stainless Steel" },
+//   { attribute: "Face/Dial Shape", value: "Round" },
+//   { attribute: "Face/Dial Type", value: "Analog" },
+//   { attribute: "Watch Movement", value: "Quartz" },
+// ];
 const Mytable = (product: any) => {
   console.log(product);
 
@@ -77,6 +77,10 @@ const Mytable = (product: any) => {
                   <TableCell>{product?.product?.caseMaterial}</TableCell>
                 </TableRow>
                 <TableRow>
+                  <TableCell className="font-medium">Strap Color</TableCell>
+                  <TableCell>{product?.product?.caseColor}</TableCell>
+                </TableRow>
+                <TableRow>
                   <TableCell className="font-medium">Strap Kind</TableCell>
                   <TableCell>{product?.product?.Bracelet}</TableCell>
                 </TableRow>
@@ -92,10 +96,10 @@ const Mytable = (product: any) => {
                     {product?.product?.waterResistance ? "Yes" : "No"}
                   </TableCell>
                 </TableRow>
-                <TableRow>
+                {/* <TableRow>
                   <TableCell className="font-medium">Case Shape</TableCell>
                   <TableCell>{product?.product?.caseShape}</TableCell>
-                </TableRow>
+                </TableRow> */}
                 <TableRow>
                   <TableCell className="font-medium">Features</TableCell>
                   <TableCell>{product?.product?.features}</TableCell>
@@ -104,10 +108,10 @@ const Mytable = (product: any) => {
                   <TableCell className="font-medium">Warranty</TableCell>
                   <TableCell>{product?.product?.Guarantee}</TableCell>
                 </TableRow>
-                <TableRow>
+                {/* <TableRow>
                   <TableCell className="font-medium">Band Closure</TableCell>
                   <TableCell>{product?.product?.brandClosure}</TableCell>
-                </TableRow>
+                </TableRow> */}
               </TableBody>
             </Table>
           </div>

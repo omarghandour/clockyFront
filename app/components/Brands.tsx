@@ -4,11 +4,11 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import rolex from "../../public/RolexLogo.png";
-import casio from "../../public/casio.png";
-import omega from "../../public/omega.png";
-import Cartier from "../../public/Cartier.png";
-import Seiko from "../../public/Seiko.png";
+import rolex from "../../public/Rolex_Logo_0.svg";
+import casio from "../../public/Patek Philippe_iddB3vNFWv_0.svg";
+import omega from "../../public/Cartier_idLzbI2ywI_0.svg";
+import Cartier from "../../public/hublot-logo-upd.svg";
+import Seiko from "../../public/TISSOT_idAinKNK5p_1.svg";
 import Image from "next/image";
 
 const brands = [
