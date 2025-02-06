@@ -9,6 +9,7 @@ import casio from "../../public/Patek Philippe_iddB3vNFWv_0.svg";
 import omega from "../../public/Cartier_idLzbI2ywI_0.svg";
 import Cartier from "../../public/hublot-logo-upd.svg";
 import Seiko from "../../public/TISSOT_idAinKNK5p_1.svg";
+import audimars from "../../public/idBCHFJ8Yl_1738537164622.png";
 import Image from "next/image";
 
 const brands = [
@@ -17,6 +18,11 @@ const brands = [
   { name: "Omega", route: "/brands/omega", logoUrl: omega },
   { name: "Cartier", route: "/brands/cartier", logoUrl: Cartier },
   { name: "Seiko", route: "/brands/seiko", logoUrl: Seiko },
+  {
+    name: "Audemars Piguet",
+    route: "/brands/audemars-piguet",
+    logoUrl: audimars,
+  },
   // Add more brands here as needed
 ];
 
@@ -51,7 +57,7 @@ const Brands: React.FC = () => {
         <h2 className="md:text-3xl text-xl text-main font-bold text-center mb-8">
           OUR WATCH BRANDS
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
           {brands.map((brand) => (
             <Link key={brand.name} href={brand.route} passHref>
               <div

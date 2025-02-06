@@ -24,8 +24,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 //   { attribute: "Watch Movement", value: "Quartz" },
 // ];
 const Mytable = (product: any) => {
-  console.log(product);
-
   return (
     <div className="w-full  flex justify-center items-center h-full text-pretty">
       <Card className="w-full m-auto rounded-none mt-0">
