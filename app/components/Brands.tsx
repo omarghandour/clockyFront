@@ -6,21 +6,21 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import rolex from "../../public/Rolex_Logo_0.svg";
 import casio from "../../public/Patek Philippe_iddB3vNFWv_0.svg";
-import omega from "../../public/Cartier_idLzbI2ywI_0.svg";
-import Cartier from "../../public/hublot-logo-upd.svg";
+import Cartier from "../../public/Cartier_idLzbI2ywI_0.svg";
+import hublot from "../../public/hublot-logo-upd.svg";
 import Seiko from "../../public/TISSOT_idAinKNK5p_1.svg";
 import audimars from "../../public/idBCHFJ8Yl_1738537164622.png";
 import Image from "next/image";
 
 const brands = [
   { name: "Rolex", route: "/brands/rolex", logoUrl: rolex },
-  { name: "Casio", route: "/brands/casio", logoUrl: casio },
-  { name: "Omega", route: "/brands/omega", logoUrl: omega },
+  { name: "Patek Philippe", route: "/brands/patekphilippe", logoUrl: casio },
   { name: "Cartier", route: "/brands/cartier", logoUrl: Cartier },
-  { name: "Seiko", route: "/brands/seiko", logoUrl: Seiko },
+  { name: "Hublot", route: "/brands/hublot", logoUrl: hublot },
+  { name: "Tissot", route: "/brands/tissot", logoUrl: Seiko },
   {
     name: "Audemars Piguet",
-    route: "/brands/audemars-piguet",
+    route: "/brands/audemarspiguet",
     logoUrl: audimars,
   },
   // Add more brands here as needed
