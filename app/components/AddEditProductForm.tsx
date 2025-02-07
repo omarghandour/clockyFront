@@ -451,7 +451,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         </div>
 
         <div className="mb-3">
-          <label className="block text-gray-700">Case Color</label>
+          <label className="block text-gray-700">Strap Color</label>
           <input
             required
             type="text"
@@ -489,7 +489,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         </div>
 
         <div className="mb-3">
-          <label className="block text-gray-700">Bracelet</label>
+          <label className="block text-gray-700">Strap Kind</label>
           <input
             required
             type="text"
@@ -529,7 +529,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         </div>
 
         <div className="mb-3">
-          <label className="block text-gray-700">Guarantee</label>
+          <label className="block text-gray-700">Warranty</label>
           <input
             required
             type="text"
@@ -541,7 +541,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
           />
         </div>
         <div className="mb-3">
-          <label className="block text-gray-700">Movement Type</label>
+          <label className="block text-gray-700">Watch Movement</label>
           <select
             required
             name="movmentType"
@@ -569,7 +569,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         </div>
 
         <div className="mb-3">
-          <label className="block text-gray-700">Case Size</label>
+          <label className="block text-gray-700">Diameter</label>
           <input
             required
             type="text"
@@ -582,7 +582,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         </div>
 
         <div className="mb-3">
-          <label className="block text-gray-700">Face Material</label>
+          <label className="block text-gray-700">Strap Type</label>
           <input
             required
             type="text"
@@ -634,7 +634,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         </div>
 
         <div className="mb-3">
-          <label className="block text-gray-700">Face Dial Shape</label>
+          <label className="block text-gray-700">Watch Shape</label>
           <input
             required
             type="text"
@@ -647,7 +647,7 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         </div>
 
         <div className="mb-3">
-          <label className="block text-gray-700">Face Dial Type</label>
+          <label className="block text-gray-700">Display Type</label>
           <input
             required
             type="text"

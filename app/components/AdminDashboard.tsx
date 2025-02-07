@@ -76,11 +76,7 @@ const AdminDashboard = () => {
           `/products/${editingProduct._id}`,
           productData
         );
-        // setProducts(
-        //   products.map((product) =>
-        //     product._id === editingProduct._id ? response.data : product
-        //   )
-        // );
+
         window.location.reload();
         setEditingProduct(null);
       } else {
