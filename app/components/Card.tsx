@@ -233,9 +233,11 @@ const Card = ({ product }: { product: Product }) => {
         <div
           onClick={() => {
             router.push(
-              `${pathname?.includes("/product") ? "" : "product/"}${
-                product._id
-              }`
+              `${
+                pathname?.includes("/product") || pathname?.includes("/brands")
+                  ? "/product/"
+                  : "product/"
+              }${product._id}`
             );
           }}
           className="relative overflow-hidden flex items-center  flex-grow-[1]"
