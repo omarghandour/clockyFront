@@ -1,21 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import Mytable from "./Mytable";
 import axiosInstance from "@/lib/axiosConfig";
+import "./index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import {
+  faHeart as solidHeart,
   faSpinner,
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import { CarouselDApiDemo } from "@/components/imagesSlider";
 import Card from "./Card";
 import debounce from "lodash.debounce";
@@ -38,7 +39,7 @@ const ProductById = () => {
     checkFavoriteStatus();
   }, [id]);
 
-  const checkFavoriteStatus = () => {
+  const checkFavoriteStatus = useCallback(() => {
     const userID = localStorage.getItem("userId");
     if (userID) {
       checkIfFavorite(userID);
@@ -47,22 +48,25 @@ const ProductById = () => {
       const isFav = favorites.some((fav: any) => fav._id === id);
       setIsFavorite(isFav);
     }
-  };
+  }, [id]);
 
-  const checkIfFavorite = async (userId: string) => {
-    try {
-      const res = await axios.post(
-        `https://express.clockyeg.com/api/products/isFavorite/${userId}`,
-        { ProductId: id },
-        { withCredentials: true }
-      );
-      setIsFavorite(res.data.isFavorite);
-    } catch (error) {
-      console.error("Error checking favorite:", error);
-    }
-  };
+  const checkIfFavorite = useCallback(
+    async (userId: string) => {
+      try {
+        const res = await axios.post(
+          `https://express.clockyeg.com/api/products/isFavorite/${userId}`,
+          { ProductId: id },
+          { withCredentials: true }
+        );
+        setIsFavorite(res.data.isFavorite);
+      } catch (error) {
+        console.error("Error checking favorite:", error);
+      }
+    },
+    [id]
+  );
 
-  const fetchProduct = async () => {
+  const fetchProduct = useCallback(async () => {
     try {
       const res = await axios.get(
         `https://express.clockyeg.com/api/products/${id}`,
@@ -74,7 +78,7 @@ const ProductById = () => {
       console.error("Error fetching product:", error);
       setLoading(false);
     }
-  };
+  }, [id]);
 
   const handleAddToFavorites = async () => {
     setFavoriteLoading(true);
@@ -213,24 +217,27 @@ const ProductById = () => {
   const Search = () => {
     const [results, setResults] = useState<any[]>([]);
 
-    const handleSearch = debounce(async (searchTerm: string) => {
-      try {
-        if (searchTerm.trim()) {
-          const response = await axios.get(
-            `https://express.clockyeg.com/api/products/search?keyword=${searchTerm}`
-          );
-          setResults(response.data);
-        } else {
-          setResults([]);
+    const handleSearch = useCallback(
+      debounce(async (searchTerm: string) => {
+        try {
+          if (searchTerm.trim()) {
+            const response = await axios.get(
+              `https://express.clockyeg.com/api/products/search?keyword=${searchTerm}`
+            );
+            setResults(response.data);
+          } else {
+            setResults([]);
+          }
+        } catch (error) {
+          console.error("Error searching products", error);
         }
-      } catch (error) {
-        console.error("Error searching products", error);
-      }
-    }, 300);
+      }, 300),
+      []
+    );
 
     useEffect(() => {
       handleSearch(product?.name);
-    }, [product?.name]);
+    }, [product?.name, handleSearch]);
 
     return (
       <div className="px- h-full mx-auto mt-5 text-base flex flex-col items-center w-full mb-2">
@@ -276,7 +283,12 @@ const ProductById = () => {
     );
   };
 
-  if (!product) return <div>Product not found</div>;
+  if (!product)
+    return (
+      <div className="w-full h-[100dvh] center">
+        <div className="clock-loader"></div>
+      </div>
+    );
 
   const images = [product.img, ...(product.otherImages || [])];
 
@@ -296,10 +308,6 @@ const ProductById = () => {
               <p className="text-[#D4AF37B2] text-left  text-xl">
                 EGP {product.price}
               </p>
-              {/* <div className="flex flex-row items-center gap-3">
-                <h2 className="text-lg  font-medium ">Average Rating</h2>
-                <div className="flex">{renderStars(averageRating)}</div>
-              </div> */}
             </div>
           </div>
           <div className="flex justify-end flex-col py-2 gap-3">
@@ -322,12 +330,6 @@ const ProductById = () => {
                   +
                 </button>
               </div>
-              {/* <div className="center flex-col md:flex-row gap-3 bg-main p-2 w-full md:w-96">
-                <h2 className="text-lg text-white ">Your Rating</h2>
-                <div className="flex ">
-                  {renderStars(userRating, (rating) => submitRating(rating))}
-                </div>
-              </div> */}
             </div>
 
             <div className="flex md:flex-col xl:flex-row gap-2">
