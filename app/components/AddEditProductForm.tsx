@@ -244,11 +244,11 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
           {showImageSelection ? "Hide Images" : "Select an Image"}
         </button>
         {showImageSelection && (
-          <div className="grid grid-cols-3 gap-3 mt-3">
+          <div className="grid grid-cols-8 gap-3 mt-3">
             {availableImages.map((imageUrl) => (
               <div
                 key={imageUrl}
-                className={`cursor-pointer p-1 border ${
+                className={`cursor-pointer p-1 border-2 ${
                   selectedImage === imageUrl
                     ? "border-blue-500"
                     : "border-gray-300"
@@ -258,7 +258,8 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
                 <img
                   src={imageUrl}
                   alt="Product"
-                  className="w-full h-24 object-cover"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
                 />
               </div>
             ))}
@@ -280,11 +281,11 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
             : "Select Multiple Images"}
         </button>
         {showMultipleImageSelection && (
-          <div className="grid grid-cols-3 gap-3 mt-3">
+          <div className="grid grid-cols-8 gap-3 mt-3">
             {availableImages.map((imageUrl) => (
               <div
                 key={imageUrl}
-                className={`cursor-pointer p-1 border ${
+                className={`cursor-pointer p-1 border-2 ${
                   form.images?.includes(imageUrl)
                     ? "border-blue-500"
                     : "border-gray-300"
@@ -294,7 +295,8 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
                 <img
                   src={imageUrl}
                   alt="Product"
-                  className="w-full h-24 object-cover"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
                 />
               </div>
             ))}
@@ -347,13 +349,13 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
           <label className="block text-gray-700">
             Selected Multiple Images:
           </label>
-          <div className="grid grid-cols-3 gap-3 mt-2">
+          <div className="grid grid-cols-8 gap-3 mt-2">
             {form.images.map((imageUrl, index) => (
               <div key={index} className="relative">
                 <img
                   src={imageUrl}
                   alt={`Selected ${index}`}
-                  className="w-full h-24 object-cover border border-gray-300"
+                  className="w-full h-full object-cover border border-gray-300"
                 />
                 <button
                   type="button"

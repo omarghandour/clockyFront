@@ -25,10 +25,10 @@ export default async function Home() {
       <Brands />
       <Suspense fallback={<Loading />}>
         <Featured />
+        <Services />
       </Suspense>
       <Recommended />
       <Arrivals />
-      <Services />
       <PaymentIcons />
     </main>
   );

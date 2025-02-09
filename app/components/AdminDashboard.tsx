@@ -5,6 +5,7 @@ import AddEditProductForm from "./AddEditProductForm";
 import { storage, ID } from "@/lib/appwriteConfig";
 import { Product, ProductFormData } from "@/types"; // Define types in a separate file
 import Orders from "./Orders"; // Import the updated Orders component
+import { Query } from "node-appwrite";
 
 const AdminDashboard = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -44,11 +45,16 @@ const AdminDashboard = () => {
   // Fetch images from Appwrite
   const fetchImages = async () => {
     try {
-      const response = await storage.listFiles("678bc73e0009c345b3e6"); // Replace with your Appwrite bucket ID
+      const response = await storage.listFiles("678bc73e0009c345b3e6", [
+        Query.limit(2000),
+      ]); // Replace with your Appwrite bucket ID
+      console.log(response);
+
       const imageUrls = response.files.map(
         (file) =>
           `https://appwrite.clockyeg.com/v1/storage/buckets/678bc73e0009c345b3e6/files/${file.$id}/view?project=678bc6d5000e65b1ae96&mode=admin`
       );
+
       setImages(imageUrls);
     } catch (error) {
       setError("Failed to fetch images. Please try again.");
