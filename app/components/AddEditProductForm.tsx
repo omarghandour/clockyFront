@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 
 type ProductFormData = {
@@ -255,7 +256,9 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
                 }`}
                 onClick={() => handleImageSelect(imageUrl)}
               >
-                <img
+                <Image
+                  width={100}
+                  height={100}
                   src={imageUrl}
                   alt="Product"
                   loading="lazy"
@@ -292,7 +295,9 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
                 }`}
                 onClick={() => handleMultipleImageSelect(imageUrl)} // Use the new handler
               >
-                <img
+                <Image
+                  width={100}
+                  height={100}
                   src={imageUrl}
                   alt="Product"
                   loading="lazy"
