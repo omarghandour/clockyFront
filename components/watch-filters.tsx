@@ -232,22 +232,22 @@ export function WatchFiltersComponent({
             side="left"
             className="w-[300px] sm:w-[400px] p-4 bg-main text-two border-none"
           >
-            <SheetHeader>
-              <SheetTitle className="text-two">Filters</SheetTitle>
-              <SheetDescription>
-                Apply filters to refine your watch search.
-              </SheetDescription>
-            </SheetHeader>
-            <div className="mt-4">
-              <FiltersContent />
-            </div>
-            <div className="mt-4 flex justify-between">
+            <div className="my-6 flex justify-between">
               <Button onClick={applyFilters} className="mr-2 bg-two text-main">
                 Apply Filters
               </Button>
               <Button variant="outline" onClick={resetFilters}>
                 Reset
               </Button>
+            </div>
+            <SheetHeader>
+              <SheetTitle className="text-two">Filters</SheetTitle>
+              <SheetDescription>
+                Apply filters to refine your watch search.
+              </SheetDescription>
+            </SheetHeader>
+            <div className="mb-28">
+              <FiltersContent />
             </div>
           </SheetContent>
         </Sheet>

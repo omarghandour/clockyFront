@@ -8,12 +8,7 @@ import Footer from "../components/Footer";
 const page = () => {
   return (
     <div className="bg-main min-h-[100dvh] center flex flex-col">
-      {/* <Nav /> */}
-      {/* <SidebarProvider> */}
-      {/* <AppSidebar /> */}
-      {/* <SidebarTrigger className="z-50" /> */}
       <Products />
-      {/* </SidebarProvider> */}
     </div>
   );
 };
