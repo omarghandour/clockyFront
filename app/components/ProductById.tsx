@@ -307,6 +307,9 @@ const ProductById = () => {
             <div className="flex justify-evenly w-full gap-9 items-center">
               <p className="text-[#D4AF37B2] text-left w-full  text-2xl">
                 EGP {product.price}
+                <span className="text-[#595959] inline-flex text-[16px] ps-1 font-light line-through align-bottom">
+                  {product.before} L.E
+                </span>
               </p>
             </div>
           </div>
