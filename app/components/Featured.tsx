@@ -21,7 +21,9 @@ const Featured = async () => {
     const res = await axios.get(`${api}/products/featured`, {
       withCredentials: true,
       headers: {
-        "Cache-Control": "no-cache",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
       },
     });
     // console.log(res);
