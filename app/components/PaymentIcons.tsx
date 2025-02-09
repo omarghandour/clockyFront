@@ -2,7 +2,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import one from "../../public/apple-pay-svgrepo-com.svg";
-import two from "../../public/apple-pay-svgrepo-com.svg";
+import two from "../../public/logo-en.png";
 import three from "../../public/3.png";
 import four from "../../public/mastercard-svgrepo-com.svg";
 import five from "../../public/valu.webp";
