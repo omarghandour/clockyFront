@@ -132,7 +132,7 @@ export function WatchFiltersComponent({
               min={0}
               max={100000}
               step={1}
-              value={[filters.minPrice]}
+              value={[filters?.minPrice]}
               onValueChange={handleMinPriceChange}
               className="relative flex items-center w-full h-5 m-5"
             >
