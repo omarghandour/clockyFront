@@ -16,6 +16,10 @@ export function CarouselDApiDemo(images: any) {
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
 
+  // Get the current pathname without using next/router
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname.split("/")[1] : "";
+
   React.useEffect(() => {
     if (!api) {
       return;
@@ -54,10 +58,10 @@ export function CarouselDApiDemo(images: any) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        {/* <div className="md:flex gap-5 hidden">
+        <div className={`flex gap-5 ${pathname === "product" ? "" : "hidden"}`}>
           <CarouselPrevious className="bg-main text-two" />
           <CarouselNext className="bg-main text-two" />
-        </div> */}
+        </div>
       </Carousel>
       {/* <div className="text-center text-sm text-muted-foreground">
         Slide {current} of {count}

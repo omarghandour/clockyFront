@@ -20,6 +20,9 @@ const Featured = async () => {
   try {
     const res = await axios.get(`${api}/products/featured`, {
       withCredentials: true,
+      headers: {
+        "Cache-Control": "no-cache",
+      },
     });
     // console.log(res);
 

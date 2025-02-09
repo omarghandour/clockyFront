@@ -294,8 +294,8 @@ const ProductById = () => {
 
   return (
     <div className="paddingX mx-auto flex-col flex items-center h-full mt-20 w-full text-pretty">
-      <div className="flex md:flex-row items-center gap-8 justify-between w-full flex-col bg-white">
-        <div className="mb-6 md:mb-0 w-full">
+      <div className="flex md:flex-row items-center  justify-between w-full flex-col bg-white">
+        <div className="w-full">
           <CarouselDApiDemo images={images} />
         </div>
         <div className="w-full md:w-3/5">
@@ -305,16 +305,16 @@ const ProductById = () => {
             </h1>
             <p className="flex">Description: {product.description}</p>
             <div className="flex justify-evenly w-full gap-9 items-center">
-              <p className="text-[#D4AF37B2] text-left  text-xl">
+              <p className="text-[#D4AF37B2] text-left w-full  text-2xl">
                 EGP {product.price}
               </p>
             </div>
           </div>
           <div className="flex justify-end flex-col py-2 gap-3">
             <div className="flex md:flex-col xl:flex-row  gap-2">
-              <div className="flex items-center gap-2 w-full md:w-96 px-4 py-1 bg-main  justify-between">
+              <div className="flex items-center gap-2 w-full md:w-[49.5%] px-4 py-1 bg-main  justify-between">
                 <button
-                  className="px-4 py-2 bg-main text-two md:hover:bg-gray-300 text-xl font-bold"
+                  className="px-4 py-2  bg-main text-two md:hover:bg-two md:hover:text-main  text-xl font-bold"
                   onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}
                   disabled={quantity === 1}
                 >
@@ -324,7 +324,7 @@ const ProductById = () => {
                   {quantity}
                 </span>
                 <button
-                  className="px-4 py-2 bg-main text-two md:hover:bg-gray-300 text-xl font-bold"
+                  className="px-4 py-2 bg-main text-two md:hover:bg-two md:hover:text-main text-xl font-bold"
                   onClick={() => setQuantity((prev) => prev + 1)}
                 >
                   +
@@ -333,7 +333,6 @@ const ProductById = () => {
             </div>
 
             <div className="flex md:flex-col xl:flex-row gap-2">
-              {" "}
               <button
                 className="text-two px-4 py-3 w-full md:w-96 bg-main hover:bg-two hover:text-main"
                 onClick={handleAddToCart}

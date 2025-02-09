@@ -504,7 +504,6 @@ const AddEditProductForm: React.FC<ProductFormProps> = ({
         <div className="mb-3">
           <label className="inline-flex items-center">
             <input
-              required
               type="checkbox"
               name="waterResistance"
               checked={form.waterResistance || false}
