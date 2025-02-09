@@ -20,7 +20,8 @@ type Filters = {
   dialColor: string[];
   selectedBrand: string[];
   category: string[];
-  priceRange: [number, number];
+  minPrice: number;
+  maxPrice: number;
 };
 
 interface WatchFiltersComponentProps {
@@ -35,7 +36,8 @@ export function WatchFiltersComponent({
     dialColor: [],
     selectedBrand: [],
     category: [],
-    priceRange: [0, 100000],
+    minPrice: 0,
+    maxPrice: 100000,
   });
 
   const [categories, setCategories] = React.useState<string[]>([]);
@@ -62,20 +64,16 @@ export function WatchFiltersComponent({
   };
 
   const resetFilters = () => {
-    setFilters({
+    const defaultFilters = {
       caseColor: [],
       dialColor: [],
       selectedBrand: [],
       category: [],
-      priceRange: [0, 100000],
-    });
-    onApplyFilters({
-      caseColor: [],
-      dialColor: [],
-      selectedBrand: [],
-      category: [],
-      priceRange: [0, 100000],
-    });
+      minPrice: 0,
+      maxPrice: 100000,
+    };
+    setFilters(defaultFilters);
+    onApplyFilters(defaultFilters);
   };
 
   React.useEffect(() => {
@@ -103,13 +101,18 @@ export function WatchFiltersComponent({
     fetchFilters();
   }, []);
 
-  const handlePriceRangeChange = (newValue: number[]) => {
-    if (newValue.length === 2) {
-      setFilters((prev) => ({
-        ...prev,
-        priceRange: [newValue[0], newValue[1]] as [number, number],
-      }));
-    }
+  const handleMinPriceChange = (newValue: number[]) => {
+    setFilters((prev) => ({
+      ...prev,
+      minPrice: newValue[0],
+    }));
+  };
+
+  const handleMaxPriceChange = (newValue: number[]) => {
+    setFilters((prev) => ({
+      ...prev,
+      maxPrice: newValue[0],
+    }));
   };
 
   const FiltersContent = () => (
@@ -118,110 +121,83 @@ export function WatchFiltersComponent({
       style={{ maxHeight: "600px" }}
     >
       <div className="px-2">
-        <label className="text-sm font-medium leading-none">Case Color:</label>
-        {caseColors.map((color) => (
-          <div key={color} className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id={`caseColor-${color}`}
-              className="h-4 w-4"
-              checked={(filters.caseColor || []).includes(color)}
-              onChange={(e) =>
-                handleCheckboxChange("caseColor", color, e.target.checked)
-              }
-            />
-            <label htmlFor={`caseColor-${color}`}>{color}</label>
-          </div>
-        ))}
-      </div>
-
-      <div className="px-2">
-        <label className="text-sm font-medium leading-none">Dial Color:</label>
-        {dialColors.map((color) => (
-          <div key={color} className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id={`dialColor-${color}`}
-              className="h-4 w-4"
-              checked={(filters.dialColor || []).includes(color)}
-              onChange={(e) =>
-                handleCheckboxChange("dialColor", color, e.target.checked)
-              }
-            />
-            <label htmlFor={`dialColor-${color}`}>{color}</label>
-          </div>
-        ))}
-      </div>
-
-      <div className="px-2">
-        <label className="text-sm font-medium leading-none">Brand:</label>
-        {brands.map((brand) => (
-          <div key={brand} className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id={`selectedBrand-${brand}`}
-              className="h-4 w-4"
-              checked={(filters.selectedBrand || []).includes(brand)}
-              onChange={(e) =>
-                handleCheckboxChange("selectedBrand", brand, e.target.checked)
-              }
-            />
-            <label htmlFor={`selectedBrand-${brand}`}>{brand}</label>
-          </div>
-        ))}
-      </div>
-
-      <div className="px-2">
-        <label className="text-sm font-medium leading-none">Category:</label>
-        {categories.map((category) => (
-          <div key={category} className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id={`category-${category}`}
-              className="h-4 w-4"
-              checked={(filters.category || []).includes(category)}
-              onChange={(e) =>
-                handleCheckboxChange("category", category, e.target.checked)
-              }
-            />
-            <label htmlFor={`category-${category}`}>{category}</label>
-          </div>
-        ))}
-      </div>
-
-      <div className="px-2">
         <label className="text-sm font-medium leading-none">Price Range:</label>
         <div className="flex flex-col space-y-4">
           <div className="flex justify-between">
-            <span>Min: ${filters.priceRange[0].toLocaleString()}</span>
-            <span>Max: ${filters.priceRange[1].toLocaleString()}</span>
+            <span>Min: ${filters.minPrice.toLocaleString()}</span>
+            <span>Max: ${filters.maxPrice.toLocaleString()}</span>
           </div>
           <div className="flex space-x-4">
             <SliderPrimitive.Root
               min={0}
               max={100000}
               step={1}
-              value={filters.priceRange}
-              onValueChange={handlePriceRangeChange}
+              value={[filters.minPrice]}
+              onValueChange={handleMinPriceChange}
               className="relative flex items-center w-full h-5 m-5"
             >
               <SliderPrimitive.Track className="relative h-2 grow rounded-full bg-slate-200">
-                <SliderPrimitive.Range className="absolute h-full bg-main rounded-full" />
+                <SliderPrimitive.Range className="absolute h-full bg-two rounded-full" />
               </SliderPrimitive.Track>
               <SliderPrimitive.Thumb
-                className="block w-7 h-7 bg-main rounded-full hover:bg-main/80 focus:outline-none focus:ring-2 focus:ring-main"
+                className=" w-7 h-7 bg-two rounded-full hover:bg-two/80 focus:outline-none focus:ring-2 focus:ring-two"
                 aria-label="Min price"
-                style={{ touchAction: "none" }}
+                // style={{ touchAction: "none" }}
               />
+            </SliderPrimitive.Root>
+            <SliderPrimitive.Root
+              min={0}
+              max={100000}
+              step={1}
+              value={[filters.maxPrice]}
+              onValueChange={handleMaxPriceChange}
+              className="relative flex items-center w-full h-5 m-5"
+            >
+              <SliderPrimitive.Track className="relative h-2 grow rounded-full bg-slate-200">
+                <SliderPrimitive.Range className="absolute h-full bg-two rounded-full" />
+              </SliderPrimitive.Track>
               <SliderPrimitive.Thumb
-                className="block w-7 h-7 bg-main rounded-full hover:bg-main/80 focus:outline-none focus:ring-2 focus:ring-main"
+                className=" w-7 h-7 bg-two rounded-full hover:bg-main/80 focus:outline-none focus:ring-2 focus:ring-two"
                 aria-label="Max price"
-                style={{ touchAction: "none" }}
+                // style={{ touchAction: "none" }}
               />
             </SliderPrimitive.Root>
           </div>
         </div>
       </div>
+      {[
+        { label: "Case Color", items: caseColors, filterKey: "caseColor" },
+        { label: "Dial Color", items: dialColors, filterKey: "dialColor" },
+        { label: "Brand", items: brands, filterKey: "selectedBrand" },
+        { label: "Category", items: categories, filterKey: "category" },
+      ].map(({ label, items, filterKey }) => (
+        <div className="px-2" key={filterKey}>
+          <label className="text-sm font-medium leading-none">{label}:</label>
+          {items.map((item) => (
+            <div key={item} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id={`${filterKey}-${item}`}
+                className="h-4 w-4"
+                checked={
+                  Array.isArray(filters[filterKey as keyof Filters]) &&
+                  (filters[filterKey as keyof Filters] as string[]).includes(
+                    item
+                  )
+                }
+                onChange={(e) =>
+                  handleCheckboxChange(
+                    filterKey as keyof Filters,
+                    item,
+                    e.target.checked
+                  )
+                }
+              />
+              <label htmlFor={`${filterKey}-${item}`}>{item}</label>
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
   );
 

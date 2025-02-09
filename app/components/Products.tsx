@@ -32,7 +32,6 @@ type Filters = {
 
 const Products = () => {
   const [isLoading, setIsLoading] = useState(true);
-
   const [products, setProducts] = useState<Product[]>([]);
   const [brands, setBrands] = useState<string[]>(["All"]);
   const [categories, setCategories] = useState<string[]>(["All"]);
@@ -47,15 +46,15 @@ const Products = () => {
     caseColor: "All",
     dialColor: "All",
   });
-  console.log(filters);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar toggle state
   const { toast } = useToast();
   const router = useRouter();
   const observer = useRef<IntersectionObserver | null>(null);
-  const lastProductRef: any = useCallback(
+  const lastProductRef = useCallback(
     (node: Element) => {
+      if (isLoading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
@@ -64,7 +63,7 @@ const Products = () => {
       });
       if (node) observer.current.observe(node);
     },
-    [hasMore]
+    [isLoading, hasMore]
   );
 
   useEffect(() => {
@@ -73,6 +72,7 @@ const Products = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setIsLoading(true);
       try {
         const query = {
           page,
@@ -181,7 +181,7 @@ const Products = () => {
             isSidebarOpen ? "mt-4" : ""
           }`}
         >
-          {isLoading
+          {isLoading && page === 1
             ? Array.from({ length: 5 }).map((_, index) => (
                 <div
                   key={index}
@@ -194,9 +194,20 @@ const Products = () => {
                   <Skeleton className="w-full h-10" />
                 </div>
               ))
-            : products.map((product, index) => (
-                <Card product={product} key={index} />
-              ))}
+            : products.map((product, index) => {
+                if (products.length === index + 1) {
+                  return (
+                    <div
+                      ref={(node) => lastProductRef(node as HTMLDivElement)}
+                      key={index}
+                    >
+                      <Card product={product} />
+                    </div>
+                  );
+                } else {
+                  return <Card product={product} key={index} />;
+                }
+              })}
         </div>
       </div>
     </div>
