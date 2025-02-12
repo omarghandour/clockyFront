@@ -83,10 +83,8 @@ const Orders = () => {
   return (
     <div className="bg-white p-4 rounded shadow-md w-full">
       <h2 className="text-lg sm:text-xl font-semibold mb-3">Orders</h2>
-
       {loading && <div className="text-center text-gray-600">Loading...</div>}
       {error && <div className="text-center text-red-500">{error}</div>}
-
       {/* Scrollable Table Container */}
       <div className="overflow-x-scroll max-h-[7  00px] overflow-y-auto border border-gray-200 rounded-lg">
         <table className="w-full text-left border-collapse">

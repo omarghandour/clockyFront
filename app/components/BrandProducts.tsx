@@ -76,7 +76,7 @@ const BrandProducts: React.FC = () => {
     <div className="flex mt-20 py-10 flex-col items-center w-full bg-[#FCFCFC] pt-10 p-2 mx-auto ">
       <div className="border-t-2 border-two w-20 p-1 font-medium"></div>
       <h2 className="text-main font-bold text-xl md:text-2xl">
-        {brand.toUpperCase()} PRODUCTS
+        {brand.replace(/[%20]/g, "").toUpperCase()} PRODUCTS
       </h2>
       {isLoading ? (
         <div className="grid lg:grid-cols-5 grid-cols-2 md:grid-cols-3  gap-2 place-items-center w-full ">

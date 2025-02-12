@@ -14,13 +14,13 @@ import Image from "next/image";
 
 const brands = [
   { name: "Rolex", route: "/brands/rolex", logoUrl: rolex },
-  { name: "Patek Philippe", route: "/brands/patekphilippe", logoUrl: casio },
+  { name: "Patek Philippe", route: "/brands/patek philipp", logoUrl: casio },
   { name: "Cartier", route: "/brands/cartier", logoUrl: Cartier },
   { name: "Hublot", route: "/brands/hublot", logoUrl: hublot },
   { name: "Tissot", route: "/brands/tissot", logoUrl: Seiko },
   {
-    name: "Audemars Piguet",
-    route: "/brands/audemarspiguet",
+    name: "audemars piguet",
+    route: "/brands/audemars piguet",
     logoUrl: audimars,
   },
   // Add more brands here as needed

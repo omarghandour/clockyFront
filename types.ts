@@ -12,6 +12,7 @@ export type Product = {
   class?: string;
   productClass?: string;
   img?: string;
+  brand?: string;
 };
 
 export type ProductFormData = Omit<Product, "_id">;

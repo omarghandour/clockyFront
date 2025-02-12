@@ -268,6 +268,7 @@ const AdminDashboard = () => {
                       <th className="border-b p-2">Image</th>
                       <th className="border-b p-2">Name</th>
                       <th className="border-b p-2">Price</th>
+                      <th className="border-b p-2">Brand</th>
                       <th className="border-b p-2">Gender</th>
                       <th className="border-b p-2">Category</th>
                       <th className="border-b p-2">Count in Stock</th>
@@ -292,6 +293,7 @@ const AdminDashboard = () => {
                           </div>
                         </td>
                         <td className="border-b p-2">${product.price}</td>
+                        <td className="border-b p-2">{product.brand}</td>
                         <td className="border-b p-2">{product.gender}</td>
                         <td className="border-b p-2">
                           {product?.productClass}
