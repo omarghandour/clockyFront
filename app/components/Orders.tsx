@@ -16,6 +16,7 @@ type Order = {
   status: string;
   shippingAddress: {
     fullName: string;
+    lastName: string;
     address: string;
     city: string;
     country: string;
@@ -128,6 +129,7 @@ const Orders = () => {
                 <td className="p-2 text-sm sm:text-base">
                   <div className="whitespace-normal">
                     {order.shippingAddress.fullName},{" "}
+                    {order.shippingAddress.lastName},{" "}
                     {order.shippingAddress.address},{" "}
                     {order.shippingAddress.city},{" "}
                     {order.shippingAddress.country},{" "}

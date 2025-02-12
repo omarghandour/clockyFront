@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
-import Traje from "../../public/traje.png";
-
+import Traje from "../../public/last1.jpg";
+import { useRouter } from "next/navigation";
 type Product = {
   _id: string;
   name: string;
@@ -17,8 +16,7 @@ type Product = {
 
 export const Recommended = () => {
   const [activeProductId, setActiveProductId] = useState<string | null>(null);
-  const { toast } = useToast();
-
+  const router = useRouter();
   const recommendedProduct: Product = {
     _id: "recommended_1",
     name: "Inspirational Watch",
@@ -46,16 +44,6 @@ export const Recommended = () => {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-
-    toast({
-      title: product.name,
-      description: "added to cart",
-      action: (
-        <Link href="/cart" className="p-[10px]">
-          Go to cart
-        </Link>
-      ),
-    });
   };
 
   return (
@@ -66,26 +54,28 @@ export const Recommended = () => {
           Recommended
         </h3>
         <div className="flex flex-col gap-6 text-left">
-          <h1 className=" text-4xl text-[#2E2E2E] font-medium">
-            Inspirational Watch of <br /> this year
+          <h1 className=" text-3xl text-[#2E2E2E] font-medium">
+            The best-selling watch <br /> of 2024
           </h1>
           <p className="text-[#595959] text-base font-normal">
-            The latest and modern watches of this year are available in various
-            presentations in this store. Discover them now.
+            Discover timeless elegance with our best-selling watch of 2024 – the
+            perfect blend of style, craftsmanship, and sophistication. A piece
+            loved by many, and now it’s your turn to own it.
           </p>
           <button
             onClick={() => addToCart(recommendedProduct)}
             className="py-4 w-40 px-6 shadow-xl relative md:py-3 bg-main text-two font-semibold border overflow-hidden group"
           >
-            Order now
+            See details
             <div
               className={`group-hover:translate-x-0 absolute inset-0 text-main md:group-hover:translate-x-0 bg-two w-full h-full transform translate-x-full transition-transform md:!duration-500 !duration-1000 ease-in-out center ${
                 activeProductId === recommendedProduct._id
                   ? "group-hover:translate-x-0"
                   : ""
               }`}
+              onClick={() => router.push(`/product/67a4f390fb260bfb67b95a1a`)}
             >
-              Order now
+              See details
             </div>
           </button>
         </div>

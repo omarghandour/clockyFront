@@ -203,8 +203,8 @@ const Cart = () => {
                     {product.name}
                   </h2>
                   <p className="text-two">
-                    <span className="text-main">Price:</span> $
-                    {product?.price?.toFixed(2)}
+                    <span className="text-main">Price:</span>
+                    {product?.price?.toFixed(2)} LE
                   </p>
                   <div className="flex space-x-2 mt-2 items-center justify-around">
                     <button
@@ -254,7 +254,7 @@ const Cart = () => {
           </h2>
           <p className="text-main mb-2">
             Total Price:{" "}
-            <span className="font-bold">${totalPrice.toFixed(2)}</span>
+            <span className="font-bold">EGP {totalPrice.toFixed(2)}</span>
           </p>
           <p className="text-main mb-2">
             Total Products:{" "}
@@ -271,7 +271,7 @@ const Cart = () => {
             <ul className="text-sm text-main">
               {cartItems.map(({ product, quantity }) => (
                 <li key={product?._id}>
-                  {quantity}x {product?.name} (${product?.price?.toFixed(2)})
+                  {quantity}x {product?.name} (EGP {product?.price?.toFixed(2)})
                 </li>
               ))}
             </ul>

@@ -23,6 +23,7 @@ const Checkout = () => {
   const [checkoutError, setCheckoutError] = useState();
   const [userInfo, setUserInfo] = useState({
     fullName: "",
+    lastName: "",
     governorate: "",
     address: "",
     city: "",
@@ -132,6 +133,7 @@ const Checkout = () => {
         paymentMethod: userInfo.paymentMethod,
         shippingAddress: {
           fullName: userInfo.fullName,
+          lastName: userInfo.lastName,
           governorate: userInfo.governorate,
           address: userInfo.address,
           country: userInfo.country,
@@ -169,12 +171,26 @@ const Checkout = () => {
             {/* Full Name */}
             <div className="mb-4">
               <label className="block text-sm font-semibold mb-1">
-                Full Name
+                First Name
               </label>
               <input
                 type="text"
                 name="fullName"
                 value={userInfo.fullName}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+                required
+              />
+            </div>
+            {/* Last Name */}
+            <div className="mb-4">
+              <label className="block text-sm font-semibold mb-1">
+                Last Name
+              </label>
+              <input
+                type="text"
+                name="lastName"
+                value={userInfo.lastName}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded"
                 required
@@ -333,9 +349,12 @@ const Checkout = () => {
             {/* Total Price */}
             <div className="mb-4">
               <h3 className="text-lg font-semibold">
-                Total Price: {(discountedPrice || totalPrice).toFixed(2)} LE +
-                100 LE Shipping
+                Price: {(discountedPrice || totalPrice).toFixed(2)} LE + 100 LE
+                Shipping
               </h3>
+              <p className="text-main text-sm mt-1">
+                Total {((discountedPrice || totalPrice) + 100).toFixed(2)} LE
+              </p>
             </div>
             {checkoutError && (
               <p className="text-red-500 text-sm mt-4">{checkoutError}</p>
