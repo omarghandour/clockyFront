@@ -159,7 +159,7 @@ export default function FullWidthCarousel() {
                 width={1600}
                 height={100}
                 loading="lazy"
-                className="w-full "
+                className="w-full h-full object-cover"
               />
               {isSmallScreen && (
                 <div className=" absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-around items-start text-white pl-14 p-4">
