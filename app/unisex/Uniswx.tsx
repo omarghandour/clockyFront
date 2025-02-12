@@ -30,7 +30,7 @@ const Unisex = () => {
         const response = await axios.get(
           "https://express.clockyeg.com/api/products/gender",
           {
-            params: { gender: "men" },
+            params: { gender: "unisex" },
             withCredentials: true,
           }
         );

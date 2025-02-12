@@ -6,6 +6,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const images = [
   "/cover1.png",
@@ -17,24 +18,24 @@ const images = [
   "/cover7.png",
 ];
 const smallImages = [
-  "/cover1.png",
-  // "/cover2.png",
-  // "/cover3.png",
-  "/cover4.png",
-  "/cover5.png",
-  // "/cover6.png",
-  "/cover7.png",
+  "/525A0030.jpg",
+  "/525A3860.jpg",
+  "/525A9327.jpg",
+  "/525A0174.jpg",
+  "/525A9431.jpg",
 ];
 
 const watchDetails = [
   {
+    image: "/525A0030.jpg",
     name: "Patek Philippe",
     brand: "Nautilus",
     description:
       "Elevate your style with the timeless elegance of the Patek Philippe Olive Dial. A masterpiece of sophistication, now within your reach. Order today with nationwide delivery!",
-    href: "/products/patek-philippe-nautilus-5711-1a-001",
+    href: "",
   },
   {
+    image: "/525A3860.jpg",
     name: "ROLEX Daytona",
     brand: "Rubber",
     description:
@@ -42,20 +43,23 @@ const watchDetails = [
     href: "https://clockyeg.com/product/67a7c95ffb260bfb67b977ae",
   },
   {
+    image: "/525A9327.jpg",
     name: "AUDEMARS",
     brand: "Piguet Rubber Chronograph",
     description:
       "Elevate your style with the Audemars Piguet Chronograph Olive Green Rubber Strap. A perfect blend of luxury and functionality. Order now and enjoy fast nationwide delivery!",
-    href: "",
+    href: "https://www.clockyeg.com/product/67aa1b51fb260bfb67b99967",
   },
   {
-    name: "AUDEMARS",
-    brand: "Piguet Royal Oak Chronograph with White Dial",
+    image: "/525A3860.jpg",
+    name: "Rolex DAYTONA",
+    brand: "Piguet Royal",
     description:
-      "Unleash bold sophistication with the Audemars Piguet Chronograph White Dial. Where precision meets timeless elegance. Order now with fast nationwide delivery!",
-    href: "",
+      "A sleek and sporty variant of the iconic Daytona, featuring a durable rubber strap for added comfort and style. With its precision chronograph function, tachymetric scale, and robust stainless steel case, it’s the perfect combination of performance, luxury, and modern design.",
+    href: "https://www.clockyeg.com/product/67a5fd1ffb260bfb67b966f5",
   },
   {
+    image: "/525A9327.jpg",
     name: "ROLEX",
     brand: "Day-Date",
     description:
@@ -149,13 +153,13 @@ export default function FullWidthCarousel() {
           {displayedImages?.map((src, index) => (
             <div key={index} className="relative flex-[0_0_100%] group">
               {/*  eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={src}
                 alt={`Slide ${index + 1}`}
-                // width={1600}
-                // height={undefined}
+                width={1600}
+                height={100}
                 loading="lazy"
-                className="w-full md:h-full object-cover h-[250px]"
+                className="w-full "
               />
               {isSmallScreen && (
                 <div className=" absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-around items-start text-white pl-14 p-4">

@@ -21,7 +21,7 @@ const NavbarSide = () => {
 
   const [storageValue, setStorageValue] = useState<string | null>(null);
   const { toast } = useToast();
-  const router = useRouter();
+  const router: any = useRouter();
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setIsOpen(false);
@@ -33,7 +33,16 @@ const NavbarSide = () => {
     router.push(`/search?value=${encodeURIComponent(searchValue)}`);
     setShowSearch(false);
   };
+  const handleNavigation = (e: React.MouseEvent, target: string) => {
+    e.preventDefault();
+    console.log(e, target);
 
+    if (router.pathname !== "/") {
+      router.push(`/?target=#${target}`);
+    } else {
+      document.getElementById(target)?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const handleClick = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
@@ -99,7 +108,10 @@ const NavbarSide = () => {
             <Link
               href="#newarraival"
               className="block px-4 text-center py-2 text-two hover:bg-gray-700 bg-[#0000004d] rounded"
-              onClick={() => setIsOpen(false)}
+              onClick={(e) => {
+                handleNavigation(e, "newarraival");
+                setIsOpen(false);
+              }}
             >
               NEW ARRIVAL
             </Link>

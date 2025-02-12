@@ -18,7 +18,7 @@ const Nav = () => {
   const [searchValue, setSearchValue] = useState("");
   const [storageValue, setStorageValue] = useState<string | null>(null);
   const { toast } = useToast();
-  const router = useRouter();
+  const router: any = useRouter();
 
   useEffect(() => {
     // Check local storage for token on mount
@@ -67,6 +67,17 @@ const Nav = () => {
     toast({ title: "Logged Out successfully" });
   };
 
+  const handleNavigation = (e: React.MouseEvent, target: string) => {
+    e.preventDefault();
+    console.log(e, target);
+
+    if (router.pathname !== "/") {
+      router.push(`/?target=#${target}`);
+    } else {
+      document.getElementById(target)?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div
       className={`mainFont top-0 shadow-lg text-two fixed w-full mx-auto z-50 flex justify-between items-center p-5 transition-colors duration-300 ${
@@ -81,16 +92,23 @@ const Nav = () => {
 
       {/* Desktop Navigation */}
       <div className="md:flex md:gap-3 lg:gap-8 items-center p-1 text-[15px] hidden">
-        <Link className="hover:text-white px-2" href="#newarraival">
-          NEW ARRIVAL
-        </Link>
+        <div
+          className="hover:text-white px-2"
+          onClick={(e) => handleNavigation(e, "newarraival")}
+        >
+          NEW ARRIVALd
+        </div>
         <Link prefetch={true} className="hover:text-white px-2" href="/shop">
           SHOP
         </Link>
         <div className="hover:text-white">
           <AccessibleDropdown />
         </div>
-        <Link className="hover:text-white px-2" href="/support">
+        <Link
+          className="hover:text-white px-2"
+          href="#contactus"
+          onClick={(e) => handleNavigation(e, "contactus")}
+        >
           CONTACT US
         </Link>
         {/* <Link className="hover:text-white px-2" href="/policy">
@@ -134,7 +152,6 @@ const Nav = () => {
         </Link>
       </div>
 
-      {/* Search Icon and Input */}
       {/* Search Icon and Input */}
       <div className="hidden relative md:flex justify-center items-center gap-5">
         <div
@@ -201,13 +218,14 @@ const Nav = () => {
             : "opacity-0 -translate-y-2"
         }`}
       >
-        <Link
-          className="block px-4 py-2 text-two hover:bg-gray-700 bg-[#0000004d]"
-          href="#newarraival"
-          onClick={() => setIsOpen(false)}
-        >
-          NEW ARRIVAL
-        </Link>
+        {router.pathname === "/" && (
+          <div
+            className="block px-4 py-2 text-two hover:bg-gray-700 bg-[#0000004d]"
+            onClick={(e) => handleNavigation(e, "newarraival")}
+          >
+            NEW ARRIVAL
+          </div>
+        )}
         <Link
           prefetch={true}
           className="block px-4 py-2 text-two hover:bg-gray-700 bg-[#0000004d]"
@@ -223,7 +241,7 @@ const Nav = () => {
         <Link
           className="block px-4 py-2 text-two hover:bg-gray-700 bg-[#0000004d]"
           href="#contactus"
-          onClick={() => setIsOpen(false)}
+          onClick={(e) => handleNavigation(e, "contactus")}
         >
           CONTACT US
         </Link>

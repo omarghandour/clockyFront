@@ -10,6 +10,7 @@ export type Product = {
   dialColor?: string;
   movmentType?: string;
   class?: string;
+  productClass?: string;
   img?: string;
 };
 

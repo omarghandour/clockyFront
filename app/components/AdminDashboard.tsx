@@ -48,7 +48,6 @@ const AdminDashboard = () => {
       const response = await storage.listFiles("678bc73e0009c345b3e6", [
         Query.limit(2000),
       ]); // Replace with your Appwrite bucket ID
-      console.log(response);
 
       const imageUrls = response.files.map(
         (file) =>
@@ -137,7 +136,6 @@ const AdminDashboard = () => {
   const uploadImagesToAppwrite = async (files: File[]) => {
     setLoading(true);
     setError(null);
-    console.log(files);
 
     try {
       const uploadedImageUrls: string[] = [];
@@ -268,6 +266,8 @@ const AdminDashboard = () => {
                     <tr>
                       <th className="border-b p-2">Name</th>
                       <th className="border-b p-2">Price</th>
+                      <th className="border-b p-2">Gender</th>
+                      <th className="border-b p-2">Category</th>
                       <th className="border-b p-2">Count in Stock</th>
                       <th className="border-b p-2">Actions</th>
                     </tr>
@@ -277,6 +277,10 @@ const AdminDashboard = () => {
                       <tr key={product._id}>
                         <td className="border-b p-2">{product.name}</td>
                         <td className="border-b p-2">${product.price}</td>
+                        <td className="border-b p-2">{product.gender}</td>
+                        <td className="border-b p-2">
+                          {product?.productClass}
+                        </td>
                         <td className="border-b p-2">{product.countInStock}</td>
                         <td className="border-b p-2 flex gap-2">
                           <button
