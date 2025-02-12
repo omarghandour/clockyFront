@@ -6,6 +6,7 @@ import { storage, ID } from "@/lib/appwriteConfig";
 import { Product, ProductFormData } from "@/types"; // Define types in a separate file
 import Orders from "./Orders"; // Import the updated Orders component
 import { Query } from "node-appwrite";
+import Image from "next/image";
 
 const AdminDashboard = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -264,6 +265,7 @@ const AdminDashboard = () => {
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr>
+                      <th className="border-b p-2">Image</th>
                       <th className="border-b p-2">Name</th>
                       <th className="border-b p-2">Price</th>
                       <th className="border-b p-2">Gender</th>
@@ -275,7 +277,20 @@ const AdminDashboard = () => {
                   <tbody>
                     {products.map((product) => (
                       <tr key={product._id}>
-                        <td className="border-b p-2">{product.name}</td>
+                        <td className="border-b p-2">
+                          <Image
+                            src={product.img || "/default-image.jpg"}
+                            alt={product.name || "Product Image"}
+                            width={100}
+                            height={100}
+                            className="w-16 h-16 object-cover"
+                          />
+                        </td>
+                        <td className="border-b p-2">
+                          <div className="truncate max-w-[15rem] hover:overflow-visible hover:whitespace-normal">
+                            {product.name}
+                          </div>
+                        </td>
                         <td className="border-b p-2">${product.price}</td>
                         <td className="border-b p-2">{product.gender}</td>
                         <td className="border-b p-2">

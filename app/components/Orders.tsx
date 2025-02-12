@@ -88,14 +88,14 @@ const Orders = () => {
       {error && <div className="text-center text-red-500">{error}</div>}
 
       {/* Scrollable Table Container */}
-      <div className="overflow-x-scroll max-h-[500px] overflow-y-auto border border-gray-200 rounded-lg">
+      <div className="overflow-x-scroll max-h-[7  00px] overflow-y-auto border border-gray-200 rounded-lg">
         <table className="w-full text-left border-collapse">
           <thead className="sticky top-0 bg-gray-100 z-10">
             <tr>
-              <th className="p-2 text-sm sm:text-base">Order ID</th>
               <th className="p-2 text-sm sm:text-base">Total Price</th>
               <th className="p-2 text-sm sm:text-base">Payment Method</th>
               <th className="p-2 text-sm sm:text-base">Status</th>
+              <th className="p-2 text-sm sm:text-base">Order ID</th>
               <th className="p-2 text-sm sm:text-base">Shipping Address</th>
               <th className="p-2 text-sm sm:text-base">Actions</th>
             </tr>
@@ -106,7 +106,6 @@ const Orders = () => {
                 key={order._id}
                 className="hover:bg-gray-50 transition-colors"
               >
-                <td className="p-2 text-sm sm:text-base">{order._id}</td>
                 <td className="p-2 text-sm sm:text-base">
                   ${order.totalPrice}
                 </td>
@@ -127,6 +126,7 @@ const Orders = () => {
                     <option value="Cancelled">Cancelled</option>
                   </select>
                 </td>
+                <td className="p-2 text-sm sm:text-base">{order._id}</td>
                 <td className="p-2 text-sm sm:text-base">
                   <div className="whitespace-normal">
                     {order.shippingAddress.fullName},{" "}
