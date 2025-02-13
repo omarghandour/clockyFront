@@ -9,18 +9,38 @@ import Footer from "./components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Clocky",
+  title: "Clocky - Stylish and High-Quality Watches",
   description:
-    "At Clocky Watches, we are passionate about providing stylish and high-quality timepieces that elevate your everyday life. Established in 2022, we have been on a mission to bring both timeless classics and modern designs to wristwatch enthusiasts around the world.",
+    "Discover stylish and high-quality timepieces at Clocky. Established in 2022, we offer a curated selection of timeless classics and modern designs for watch enthusiasts worldwide.",
+  keywords:
+    "watches, stylish watches, high-quality timepieces, Clocky, luxury watches, modern designs, classic watches",
+  authors: [
+    {
+      name: "Black Waves",
+      url: "https://blackwaveseg.com",
+    },
+  ],
   openGraph: {
+    title: "Clocky - Stylish and High-Quality Watches",
+    description:
+      "Explore our collection of stylish and high-quality timepieces that elevate your everyday life.",
+    url: "https://clockyeg.com",
+    type: "website",
     images: [
       {
-        url: "./icon.png", // Replace with the actual path to your image
+        url: "./icon.png", // Replace with a default image URL
         width: 1200,
         height: 630,
-        alt: "Clocky Watches - Stylish and High-Quality Timepieces",
+        alt: "Clocky Watches",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Clocky - Stylish and High-Quality Watches",
+    description:
+      "Explore our collection of stylish and high-quality timepieces that elevate your everyday life.",
+    images: ["./icon.png"], // Replace with a default image URL
   },
 };
 
