@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props) {
     notFound();
   }
 
-  const images = [product.img, ...(product.otherImages || [])];
+  // const images = [product.img, ...(product.otherImages || [])];
 
   return {
     title: product?.name,
@@ -36,15 +36,27 @@ export async function generateMetadata({ params }: Props) {
     openGraph: {
       title: product?.name,
       description: product?.description,
-      images:
-        images.length > 0 ? images : ["https://example.com/default-icon.png"], // Use product images or a default icon
+      images: [
+        {
+          url: product.img, // Ensure correct format
+          width: 1200, // Default recommended width
+          height: 630, // Default recommended height
+          alt: product.name, // Alternative text for accessibility
+        },
+      ], // Use product images or a default icon
     },
     twitter: {
       card: "summary_large_image", // Use a large image card for Twitter
       title: product?.name,
       description: product?.description,
-      images:
-        images.length > 0 ? images : ["https://example.com/default-icon.png"], // Use product images or a default icon
+      images: [
+        {
+          url: product.img, // Ensure correct format
+          width: 1200, // Default recommended width
+          height: 630, // Default recommended height
+          alt: product.name, // Alternative text for accessibility
+        },
+      ], // Use product images or a default icon
     },
   };
 }
