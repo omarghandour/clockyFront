@@ -96,7 +96,7 @@ const Nav = () => {
           className="hover:text-white px-2"
           onClick={(e) => handleNavigation(e, "newarraival")}
         >
-          NEW ARRIVALd
+          NEW ARRIVAL
         </div>
         <Link prefetch={true} className="hover:text-white px-2" href="/shop">
           SHOP
