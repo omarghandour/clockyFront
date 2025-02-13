@@ -27,6 +27,12 @@ export async function generateMetadata({ params }: Props) {
   if (!product) {
     notFound();
   }
+  // Change this in your metadata generation
+  const cleanImageUrl = product?.img
+    ? product.img
+        .replace("mode=admin", "mode=public") // Remove admin mode
+        .split("?")[0] // Remove any query parameters
+    : "";
 
   // const images = [product.img, ...(product.otherImages || [])];
 
@@ -36,27 +42,13 @@ export async function generateMetadata({ params }: Props) {
     openGraph: {
       title: product?.name,
       description: product?.description,
-      images: [
-        {
-          url: product.img, // Ensure correct format
-          width: 1200, // Default recommended width
-          height: 630, // Default recommended height
-          alt: product.name, // Alternative text for accessibility
-        },
-      ], // Use product images or a default icon
+      images: [cleanImageUrl], // Use product images or a default icon
     },
     twitter: {
       card: "summary_large_image", // Use a large image card for Twitter
       title: product?.name,
       description: product?.description,
-      images: [
-        {
-          url: product.img, // Ensure correct format
-          width: 1200, // Default recommended width
-          height: 630, // Default recommended height
-          alt: product.name, // Alternative text for accessibility
-        },
-      ], // Use product images or a default icon
+      images: [cleanImageUrl], // Use product images or a default icon
     },
   };
 }
