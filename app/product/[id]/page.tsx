@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: Props) {
   }
 
   return {
-    title: product.name,
+    title: product?.name,
     openGraph: {
-      images: [product.image],
-      title: product.name,
-      description: product.description,
+      images: [product?.img],
+      title: product?.name,
+      description: product?.description,
     },
   };
 }
