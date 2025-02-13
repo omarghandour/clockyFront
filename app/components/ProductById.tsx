@@ -21,10 +21,8 @@ import { CarouselDApiDemo } from "@/components/imagesSlider";
 import Card from "./Card";
 import debounce from "lodash.debounce";
 
-const ProductById = () => {
+const ProductById = ({ product }: { product: any }) => {
   const { id }: any = useParams();
-  const [product, setProduct] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
@@ -35,7 +33,6 @@ const ProductById = () => {
   useEffect(() => {
     const userID = localStorage.getItem("userId");
     setUserId(userID);
-    fetchProduct();
     checkFavoriteStatus();
   }, [id]);
 
@@ -65,20 +62,6 @@ const ProductById = () => {
     },
     [id]
   );
-
-  const fetchProduct = useCallback(async () => {
-    try {
-      const res = await axios.get(
-        `https://express.clockyeg.com/api/products/${id}`,
-        { withCredentials: true }
-      );
-      setProduct(res.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching product:", error);
-      setLoading(false);
-    }
-  }, [id]);
 
   const handleAddToFavorites = async () => {
     setFavoriteLoading(true);
@@ -252,12 +235,14 @@ const ProductById = () => {
               <button
                 className="left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full shadow-lg hover:bg-gray-300 z-10"
                 onClick={scrollLeft}
+                aria-label="Scroll left"
               >
                 <FontAwesomeIcon icon={faChevronLeft} />
               </button>
               <button
                 className="right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full shadow-lg hover:bg-gray-300 z-10"
                 onClick={scrollRight}
+                aria-label="Scroll right"
               >
                 <FontAwesomeIcon icon={faChevronRight} />
               </button>
@@ -283,29 +268,22 @@ const ProductById = () => {
     );
   };
 
-  if (!product)
-    return (
-      <div className="w-full h-[100dvh] center">
-        <div className="clock-loader"></div>
-      </div>
-    );
-
   const images = [product.img, ...(product.otherImages || [])];
 
   return (
     <div className="paddingX mx-auto flex-col flex items-center h-full mt-20 w-full text-pretty">
-      <div className="flex md:flex-row items-center  justify-between w-full flex-col bg-white">
+      <div className="flex md:flex-row items-center justify-between w-full flex-col bg-white">
         <div className="w-full">
           <CarouselDApiDemo images={images} />
         </div>
         <div className="w-full md:w-3/5">
-          <div className="flex flex-col justify-center  py-6 gap-4">
+          <div className="flex flex-col justify-center py-6 gap-4">
             <h1 className="text-[#2E2E2E] text-2xl text-left md:text-3xl w-full font-medium">
-              {product.name}
+              {product.name} - Buy Stylish Watches Online
             </h1>
             <p className="flex">Description: {product.description}</p>
             <div className="flex justify-evenly w-full gap-9 items-center">
-              <p className="text-[#D4AF37B2] text-left w-full  text-2xl">
+              <p className="text-[#D4AF37B2] text-left w-full text-2xl">
                 EGP {product.price}
                 <span className="text-[#595959] inline-flex text-[16px] ps-1 font-light line-through align-bottom">
                   {product.before} L.E
@@ -314,12 +292,13 @@ const ProductById = () => {
             </div>
           </div>
           <div className="flex justify-end flex-col py-2 gap-3">
-            <div className="flex md:flex-col xl:flex-row  gap-2">
-              <div className="flex items-center gap-2 w-full md:w-[49.5%] px-4 py-1 bg-main  justify-between">
+            <div className="flex md:flex-col xl:flex-row gap-2">
+              <div className="flex items-center gap-2 w-full md:w-[49.5%] px-4 py-1 bg-main justify-between">
                 <button
-                  className="px-4 py-2  bg-main text-two md:hover:bg-two md:hover:text-main  text-xl font-bold"
+                  className="px-4 py-2 bg-main text-two md:hover:bg-two md:hover:text-main text-xl font-bold"
                   onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}
                   disabled={quantity === 1}
+                  aria-label="Decrease quantity"
                 >
                   -
                 </button>
@@ -329,6 +308,7 @@ const ProductById = () => {
                 <button
                   className="px-4 py-2 bg-main text-two md:hover:bg-two md:hover:text-main text-xl font-bold"
                   onClick={() => setQuantity((prev) => prev + 1)}
+                  aria-label="Increase quantity"
                 >
                   +
                 </button>
@@ -339,6 +319,7 @@ const ProductById = () => {
               <button
                 className="text-two px-4 py-3 w-full md:w-96 bg-main hover:bg-two hover:text-main"
                 onClick={handleAddToCart}
+                aria-label="Add to cart"
               >
                 ADD TO CART
               </button>
@@ -348,6 +329,9 @@ const ProductById = () => {
                 } hover:bg-two hover:text-main relative`}
                 onClick={handleAddToFavorites}
                 disabled={favoriteLoading}
+                aria-label={
+                  isFavorite ? "Remove from favorites" : "Add to favorites"
+                }
               >
                 {favoriteLoading ? (
                   <FontAwesomeIcon
