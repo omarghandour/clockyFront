@@ -38,7 +38,6 @@ export async function generateMetadata({ params }: Props) {
         product?.img || "", // Ensure the main image is present
         ...(product.otherImages || []), // Include other images if available
       ],
-      type: "product", // Specify the type for better sharing
     },
     twitter: {
       card: "summary_large_image", // Use a large image card for Twitter
