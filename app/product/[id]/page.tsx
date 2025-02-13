@@ -30,10 +30,24 @@ export async function generateMetadata({ params }: Props) {
 
   return {
     title: product?.name,
+    description: product?.description,
     openGraph: {
-      images: [product?.img || "", ...(product.otherImages || [])], // Ensure at least one image is present
       title: product?.name,
       description: product?.description,
+      images: [
+        product?.img || "", // Ensure the main image is present
+        ...(product.otherImages || []), // Include other images if available
+      ],
+      type: "product", // Specify the type for better sharing
+    },
+    twitter: {
+      card: "summary_large_image", // Use a large image card for Twitter
+      title: product?.name,
+      description: product?.description,
+      images: [
+        product?.img || "", // Ensure the main image is present
+        ...(product.otherImages || []),
+      ],
     },
   };
 }
