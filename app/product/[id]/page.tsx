@@ -2,7 +2,11 @@ import React from "react";
 import ProductById from "@/app/components/ProductById";
 import axios from "axios";
 import { notFound } from "next/navigation";
-import Head from "next/head"; // Import Head for managing the document head
+import { ResolvingMetadata, Metadata } from "next"; // Import generateMetadata for managing the document head
+type Props = {
+  params: Promise<{ id: string }>;
+  // searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+};
 
 async function getProduct(id: string) {
   try {
@@ -15,6 +19,25 @@ async function getProduct(id: string) {
   }
 }
 
+// Define metadata generation function
+export async function generateMetadata({ params }: Props) {
+  const id = (await params).id;
+  const product = await getProduct(id);
+
+  if (!product) {
+    notFound();
+  }
+
+  return {
+    title: product.name,
+    openGraph: {
+      images: [product.image],
+      title: product.name,
+      description: product.description,
+    },
+  };
+}
+
 export default async function Page({ params }: { params: any }) {
   const { id } = await params;
 
@@ -24,18 +47,9 @@ export default async function Page({ params }: { params: any }) {
   }
 
   return (
-    <>
-      <Head>
-        <title>{product.name}</title>
-        <meta property="og:image" content={product.image} />
-        {/* Set the product image for social sharing */}
-        <meta property="og:title" content={product.name} />
-        <meta property="og:description" content={product.description} />
-      </Head>
-      <div className="min-h-dvh w-full justify-evenly bg-white">
-        {/* <Nav /> */}
-        <ProductById product={product} />
-      </div>
-    </>
+    <div className="min-h-dvh w-full justify-evenly bg-white">
+      {/* <Nav /> */}
+      <ProductById product={product} />
+    </div>
   );
 }
