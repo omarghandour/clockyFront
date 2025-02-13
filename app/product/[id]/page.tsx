@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: product?.name,
     openGraph: {
-      images: [product?.img],
+      images: [product?.img || "", ...(product.otherImages || [])], // Ensure at least one image is present
       title: product?.name,
       description: product?.description,
     },
