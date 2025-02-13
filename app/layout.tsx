@@ -12,6 +12,16 @@ export const metadata: Metadata = {
   title: "Clocky",
   description:
     "At Clocky Watches, we are passionate about providing stylish and high-quality timepieces that elevate your everyday life. Established in 2022, we have been on a mission to bring both timeless classics and modern designs to wristwatch enthusiasts around the world.",
+  openGraph: {
+    images: [
+      {
+        url: "./icon.png", // Replace with the actual path to your image
+        width: 1200,
+        height: 630,
+        alt: "Clocky Watches - Stylish and High-Quality Timepieces",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
