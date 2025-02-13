@@ -2,10 +2,10 @@ import React from "react";
 import ProductById from "@/app/components/ProductById";
 import axios from "axios";
 import { notFound } from "next/navigation";
-import { ResolvingMetadata, Metadata } from "next";
-
+import { ResolvingMetadata, Metadata } from "next"; // Import generateMetadata for managing the document head
 type Props = {
   params: Promise<{ id: string }>;
+  // searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 };
 
 async function getProduct(id: string) {
@@ -28,44 +28,23 @@ export async function generateMetadata({ params }: Props) {
     notFound();
   }
 
-  // Since images are coming from Appwrite, ensure we generate absolute URLs
-  // Replace the base with your Appwrite endpoint details
-  const appwriteEndpoint = "https://appwrite.clockyeg.com/v1/storage/files";
-
-  const getAppwriteImageUrl = (fileId: string): string => {
-    // If the fileId is already an absolute URL, return it as is
-    if (fileId.startsWith("http")) return fileId;
-    // Otherwise, construct the URL using the Appwrite storage endpoint
-    return `${appwriteEndpoint}/${fileId}/view`;
-  };
-
-  const mainImage = product.img ? getAppwriteImageUrl(product.img) : "";
-  const additionalImages = product.otherImages
-    ? product.otherImages.map(getAppwriteImageUrl)
-    : [];
+  const images = [product.img, ...(product.otherImages || [])];
 
   return {
-    title: product.name,
-    description: product.description,
+    title: product?.name,
+    description: product?.description,
     openGraph: {
-      title: product.name,
-      description: product.description,
-      images: [
-        mainImage, // Use the product image as the primary image
-        ...additionalImages,
-      ],
+      title: product?.name,
+      description: product?.description,
+      images:
+        images.length > 0 ? images : ["https://example.com/default-icon.png"], // Use product images or a default icon
     },
     twitter: {
-      card: "summary_large_image",
-      title: product.name,
-      description: product.description,
-      images: [
-        mainImage, // Use the product image for Twitter share cards
-        ...additionalImages,
-      ],
-    },
-    icons: {
-      icon: mainImage, // Set the product image as the page icon for sharing
+      card: "summary_large_image", // Use a large image card for Twitter
+      title: product?.name,
+      description: product?.description,
+      images:
+        images.length > 0 ? images : ["https://example.com/default-icon.png"], // Use product images or a default icon
     },
   };
 }
@@ -80,6 +59,7 @@ export default async function Page({ params }: { params: any }) {
 
   return (
     <div className="min-h-dvh w-full justify-evenly bg-white">
+      {/* <Nav /> */}
       <ProductById product={product} />
     </div>
   );
