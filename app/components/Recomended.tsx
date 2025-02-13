@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Traje from "../../public/last1.jpg";
 import { useRouter } from "next/navigation";
+
 type Product = {
   _id: string;
   name: string;
@@ -24,7 +25,7 @@ export const Recommended = () => {
     price: 4500,
     description: "The latest and modern watches of this year.",
     countInStock: 10,
-    img: "/traje.png", // Assuming you use Traje image for the recommended product
+    img: "/traje.png",
   };
 
   const addToCart = (product: Product) => {
@@ -34,7 +35,6 @@ export const Recommended = () => {
     }, 1000);
 
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-
     const existingProduct = cart.find((item: any) => item._id === product._id);
 
     if (existingProduct) {
@@ -47,20 +47,19 @@ export const Recommended = () => {
   };
 
   return (
-    <section className="md:px-32 xl:px-40 mx-auto md:flex md:flex-row-reverse md:justify-evenly md:items-center  bg-[#FCFCFC] px-5 py-10 md:pb-24  gap-5 md:gap-20 flex flex-col sm:justify-center items-center pb-12  w-full  shadow">
+    <section className="md:px-32 xl:px-40 mx-auto md:flex md:flex-row-reverse md:justify-evenly md:items-center bg-[#FCFCFC] px-5 py-10 md:pb-24 gap-5 md:gap-20 flex flex-col sm:justify-center items-center pb-12 w-full shadow">
       <div className="flex flex-col gap-6 text-left md:items-start items-center">
-        {/* <span className="border-t-2 border-two w-20 px-1 font-medium"></span> */}
         <h3 className="text-[#2E2E2E] font-bold text-xl md:text-3xl">
           Recommended
         </h3>
         <div className="flex flex-col gap-6 text-left">
-          <h1 className=" text-3xl text-[#2E2E2E] font-medium">
+          <h1 className="text-3xl text-[#2E2E2E] font-medium">
             The best-selling watch <br /> of 2024
           </h1>
           <p className="text-[#595959] text-base font-normal">
             Discover timeless elegance with our best-selling watch of 2024 – the
             perfect blend of style, craftsmanship, and sophistication. A piece
-            loved by many, and now it’s your turn to own it.
+            loved by many, and now {"it's"} your turn to own it.
           </p>
           <button
             onClick={() => addToCart(recommendedProduct)}
@@ -84,7 +83,7 @@ export const Recommended = () => {
         <Image
           src={Traje}
           alt="Inspirational Watch"
-          className="w-[300px] md:w-[400px]  shadow-4xl md:shadow-3xl"
+          className="w-[300px] md:w-[400px] shadow-4xl md:shadow-3xl"
         />
       </div>
     </section>

@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client";
 /* eslint-disable @next/next/no-img-element */
 
 import React, { useEffect, useRef, useState } from "react";
@@ -27,30 +26,9 @@ const brands = [
 ];
 
 const Brands: React.FC = () => {
-  const [isInView, setIsInView] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
-
   return (
     <section
       id="brands"
-      ref={sectionRef}
       className="paddingX mx-auto bg-gray-100 py-10 mb-8  w-full  shadow"
     >
       <div className=" mx-auto">
@@ -61,13 +39,7 @@ const Brands: React.FC = () => {
           {brands.map((brand) => (
             <Link key={brand.name} href={brand.route} passHref>
               <div
-                className={`cursor-pointer hover:shadow-lg transition transform hover:scale-105 flex justify-center items-center bg-white p-4 rounded-md
-                  {//  ${
-                    isInView
-                    //     ? "motion-scale-in-[0.5] motion-translate-x-in-[-199%] motion-translate-y-in-[-17%] motion-opacity-in-[0%] motion-rotate-in-[-10deg] motion-blur-in-[5px] motion-duration-[0.00s] motion-duration-[0.70s]/translate"
-                    //     : ""}
-                  }
-                  `}
+                className={`cursor-pointer hover:shadow-lg transition transform hover:scale-105 flex justify-center items-center bg-white p-4 rounded-md`}
               >
                 <Image
                   src={brand.logoUrl}
