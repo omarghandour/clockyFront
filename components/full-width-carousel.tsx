@@ -149,7 +149,7 @@ export default function FullWidthCarousel() {
           {displayedImages.map((src, index) => (
             <div key={index} className="relative flex-[0_0_100%] group">
               {!loadedIndices.has(index) && (
-                <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+                <div className="absolute inset-0 bg-black/50 animate-pulse" />
               )}
               <Image
                 src={src}
