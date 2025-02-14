@@ -32,7 +32,7 @@ const watchDetails = [
     brand: "Nautilus",
     description:
       "Elevate your style with the timeless elegance of the Patek Philippe Olive Dial. A masterpiece of sophistication, now within your reach. Order today with nationwide delivery!",
-    href: "",
+    href: "https://clockyeg.com/product/67ae049247b5e6d47b97dd2a",
   },
   {
     image: "/525A3860.jpg",
