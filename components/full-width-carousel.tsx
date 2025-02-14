@@ -89,7 +89,7 @@ export default function FullWidthCarousel() {
     align: "center",
     dragFree: false,
   });
-
+  const [loadedIndices, setLoadedIndices] = useState(new Set());
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -102,6 +102,10 @@ export default function FullWidthCarousel() {
     setPrevBtnEnabled(emblaApi.canScrollPrev());
     setNextBtnEnabled(emblaApi.canScrollNext());
   }, [emblaApi]);
+  // Reset loaded indices when images change
+  useEffect(() => {
+    setLoadedIndices(new Set());
+  }, [isSmallScreen]);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -144,16 +148,22 @@ export default function FullWidthCarousel() {
         <div className="flex h-full">
           {displayedImages.map((src, index) => (
             <div key={index} className="relative flex-[0_0_100%] group">
+              {!loadedIndices.has(index) && (
+                <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+              )}
               <Image
                 src={src}
                 alt={`Slide ${index + 1}`}
                 width={1600}
                 height={100}
                 loading="lazy"
-                className="w-full h-full object-cover"
+                className="w-full h-[390px] object-cover"
+                onLoadingComplete={() => {
+                  setLoadedIndices((prev) => new Set([...prev, index]));
+                }}
               />
               {isSmallScreen && (
-                <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-around items-start text-white pl-14 p-4">
+                <div className="absolute h-[300px] inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-around items-start text-white pl-14 p-4">
                   <div>
                     <h1 className="font-bold text-3xl">
                       {watchDetails[index].name}
