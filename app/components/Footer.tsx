@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-bold mt-6 mb-4 text-two">
               SEND A MESSAGE
             </h3>
-            <Link href={"support@clockyeg.com"}>
+            <Link href={"mailto:support@clockyeg.com"}>
               <p className="font-bold">
                 Email: <span className="font-bold">support@clockyeg.com</span>
               </p>
