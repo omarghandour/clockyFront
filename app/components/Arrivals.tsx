@@ -27,7 +27,7 @@ const Arrivals = async () => {
       </h2>
 
       <div className="grid lg:grid-cols-4 xl:grid-cols-5 grid-cols-2 md:grid-cols-3  gap-2 w-full pb-5 ">
-        {products.length === 0
+        {products?.length === 0
           ? // Display skeletons when loading
             Array.from({ length: 5 }).map((_, index) => (
               <div
@@ -41,7 +41,7 @@ const Arrivals = async () => {
                 <Skeleton className="w-full h-10" />
               </div>
             ))
-          : products.map((product) => (
+          : products?.map((product) => (
               <Card product={product} key={product._id} />
             ))}
       </div>

@@ -22,7 +22,7 @@ const smallImages = [
   "/525A3860.jpg",
   "/525A9327.jpg",
   "/525A0174.jpg",
-  "/525A9431.jpg",
+  // "/525A9431.jpg",
 ];
 
 const watchDetails = [
