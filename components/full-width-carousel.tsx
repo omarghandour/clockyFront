@@ -163,7 +163,7 @@ export default function FullWidthCarousel() {
                 }}
               />
               {isSmallScreen && (
-                <div className="absolute h-[300px] inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-around items-start text-white pl-14 p-4">
+                <div className="absolute h-[390px] inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-around items-start text-white pl-14 p-4">
                   <div>
                     <h1 className="font-bold text-3xl">
                       {watchDetails[index].name}
