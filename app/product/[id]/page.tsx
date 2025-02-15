@@ -29,10 +29,9 @@ export async function generateMetadata({ params }: Props) {
   }
   // Change this in your metadata generation
   const cleanImageUrl = product?.img
-    ? product.img.replace("mode=admin", "mode=public") // Remove admin mode
+    ? product.img.replace("mode=admin", "") // Remove admin mode
     : // Remove any query parameters
       "";
-  console.log(cleanImageUrl);
 
   // const images = [product.img, ...(product.otherImages || [])];
 
