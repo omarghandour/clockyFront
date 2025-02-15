@@ -8,21 +8,20 @@ import Link from "next/link";
 import Image from "next/image";
 
 const images = [
-  "/cover1.png",
-  "/cover2.png",
-  "/cover3.png",
-  "/cover4.png",
-  "/cover5.png",
-  "/cover6.png",
-  "/cover7.png",
+  { src: "/cover1.png", width: 2000, height: 600 },
+  { src: "/cover2.png", width: 2000, height: 600 },
+  { src: "/cover3.png", width: 2000, height: 600 },
+  { src: "/cover4.png", width: 2000, height: 600 },
+  { src: "/cover5.png", width: 2000, height: 600 },
+  { src: "/cover6.png", width: 2000, height: 600 },
+  { src: "/cover7.png", width: 2000, height: 600 },
 ];
 
 const smallImages = [
-  "/525A0030.jpg",
-  "/525A3860.jpg",
-  "/525A9327.jpg",
-  "/525A0174.jpg",
-  // "/525A9431.jpg",
+  { src: "/525A0030.jpg", width: 800, height: 500 },
+  { src: "/525A3860.jpg", width: 800, height: 500 },
+  { src: "/525A9327.jpg", width: 800, height: 500 },
+  { src: "/525A0174.jpg", width: 800, height: 500 },
 ];
 
 const watchDetails = [
@@ -93,6 +92,7 @@ export default function FullWidthCarousel() {
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -127,18 +127,18 @@ export default function FullWidthCarousel() {
     };
   }, [emblaApi, onSelect]);
 
+  // Client-side detection only
   useEffect(() => {
-    const handleResize = () => {
+    setIsMounted(true);
+    const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 768);
     };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
+  if (!isMounted) return null;
 
   const displayedImages = isSmallScreen ? smallImages : images;
 
@@ -146,22 +146,24 @@ export default function FullWidthCarousel() {
     <div className="relative mt-20 h-full">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex h-full">
-          {displayedImages.map((src, index) => (
+          {displayedImages.map((image, index) => (
             <div key={index} className="relative flex-[0_0_100%] group">
               {!loadedIndices.has(index) && (
                 <div className="absolute inset-0 bg-black/50 animate-pulse" />
               )}
               <Image
-                src={src}
+                src={image.src}
                 alt={`Slide ${index + 1}`}
-                width={1600}
-                height={100}
-                loading="lazy"
+                width={image.width}
+                height={image.height}
+                sizes="(max-width: 768px) 100vw, 1600px"
                 className="w-full md:h-full h-[390px] object-cover"
+                loading={index === 0 ? "eager" : "lazy"}
                 onLoadingComplete={() => {
                   setLoadedIndices((prev) => new Set([...prev, index]));
                 }}
               />
+
               {isSmallScreen && (
                 <div className="absolute h-[390px] inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-around items-start text-white pl-14 p-4">
                   <div>
