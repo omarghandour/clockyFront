@@ -159,7 +159,7 @@ export default function FullWidthCarousel() {
                 sizes="(max-width: 768px) 100vw, 1600px"
                 className="w-full md:h-full h-[390px] object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
-                onLoadingComplete={() => {
+                onLoad={() => {
                   setLoadedIndices((prev) => new Set([...prev, index]));
                 }}
               />
