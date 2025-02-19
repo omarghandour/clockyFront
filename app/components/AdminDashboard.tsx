@@ -7,6 +7,7 @@ import { Product, ProductFormData } from "@/types"; // Define types in a separat
 import Orders from "./Orders"; // Import the updated Orders component
 import { Query } from "node-appwrite";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const AdminDashboard = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -20,7 +21,7 @@ const AdminDashboard = () => {
   const [error, setError] = useState<string | null>(null);
   const [showAddProductForm, setShowAddProductForm] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for mobile sidebar toggle
-
+  const router: any = useRouter();
   // Check authentication
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -34,8 +35,12 @@ const AdminDashboard = () => {
 
     try {
       const response = await axiosInstance.get("products/dashboard");
+
       setProducts(response.data);
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.status === 401 || error?.status === 403) router.push("/");
+      // console.log(error.status);
+
       setError("Failed to fetch products. Please try again.");
       console.error("Failed to fetch products", error);
     } finally {
@@ -68,6 +73,7 @@ const AdminDashboard = () => {
       fetchProducts();
       fetchImages();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSection, isAuthenticated]);
 
   // Save or update product
