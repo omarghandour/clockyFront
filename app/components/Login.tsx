@@ -68,7 +68,7 @@ const Login = () => {
       if (url === "/login") {
         router.push("/");
       } else {
-        router.refresh();
+        window.location.reload();
       }
     } catch (error: any) {
       setError(error.response?.data?.message || "An error occurred");

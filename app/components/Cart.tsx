@@ -171,14 +171,9 @@ const Cart = () => {
   };
 
   const navigateToCheckout = () => {
-    const userId = localStorage.getItem("userId");
-    const token = localStorage.getItem("token");
-    if (userId && token) {
-      router.push("/checkout");
-    } else {
-      alert("Please login to checkout");
-      router.push("/login");
-    }
+    // const userId = localStorage.getItem("userId");
+    // const token = localStorage.getItem("token");
+    router.push("/checkout");
   };
 
   return (

@@ -44,11 +44,6 @@ const Checkout = () => {
       const userId =
         typeof window !== "undefined" ? localStorage.getItem("userId") : null;
 
-      if (!userId) {
-        alert("User ID not found. Please log in.");
-        return;
-      }
-
       axiosInstance
         .get(`/products/cart/${userId}`, {
           headers: { Authorization: `Bearer ${userToken}` },

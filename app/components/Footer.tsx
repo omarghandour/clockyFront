@@ -3,8 +3,7 @@ import { Button } from "@/components/ui/button";
 import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import PaymentIcons from "./PaymentIcons";
+import React, { useState } from "react";
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState("");

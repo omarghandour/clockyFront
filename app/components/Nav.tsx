@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import logo from "../../public/search-alt-1-svgrepo-com.svg";
-import DropdownMenu from "./DropdownMenu";
+// import DropdownMenu from "./DropdownMenu";
 import { AccessibleDropdown } from "@/components/accessible-dropdown";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
