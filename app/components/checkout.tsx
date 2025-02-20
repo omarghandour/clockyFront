@@ -19,7 +19,7 @@ const Checkout = () => {
   const [couponCode, setCouponCode] = useState<string>("");
   const [couponError, setCouponError] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [discountAmount, setDiscountAmount] = useState<number>();
+  const [discountAmount, setDiscountAmount] = useState<number>(0);
   const [checkoutError, setCheckoutError] = useState();
   const [userInfo, setUserInfo] = useState({
     fullName: "",
@@ -52,6 +52,7 @@ const Checkout = () => {
           const cart = response.data.products || [];
           setCartItems(cart);
           updateTotalPrice(cart);
+          console.log(cart);
         })
         .catch((error) => {
           console.error("Failed to fetch cart:", error);
@@ -66,11 +67,11 @@ const Checkout = () => {
 
   const updateTotalPrice = (cart: any[]) => {
     const total = cart?.reduce(
-      (sum, item) =>
-        sum + item?.product?.price * (item?.product?.quantity || 1),
+      (sum, item) => sum + (item?.product?.price || 0) * (item?.quantity || 1),
       0
     );
     setTotalPrice(total);
+    setDiscountedPrice(total); // Reset discounted price to total price initially
   };
 
   const handleInputChange = (
@@ -331,7 +332,7 @@ const Checkout = () => {
                   Apply
                 </button>
               </div>
-              {discountAmount && (
+              {discountAmount > 0 && (
                 <p className="text-main text-sm mt-1">
                   Discount applied: -${discountAmount.toFixed(2)}
                 </p>
@@ -344,11 +345,10 @@ const Checkout = () => {
             {/* Total Price */}
             <div className="mb-4">
               <h3 className="text-lg font-semibold">
-                Price: {(discountedPrice || totalPrice).toFixed(2)} LE + 100 LE
-                Shipping
+                Price: {discountedPrice || totalPrice} LE + 100 LE Shipping
               </h3>
               <p className="text-main text-sm mt-1">
-                Total {((discountedPrice || totalPrice) + 100).toFixed(2)} LE
+                Total {(discountedPrice || totalPrice) + 100} LE
               </p>
             </div>
             {checkoutError && (
