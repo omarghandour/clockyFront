@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/lib/axiosConfig";
+import Link from "next/link";
 
 type Order = {
   _id: string;
@@ -38,6 +39,8 @@ const Orders = () => {
 
     try {
       const response = await axiosInstance.get("/products/orders/all");
+      console.log(response.data);
+
       setOrders(response.data);
     } catch (error) {
       setError("Failed to fetch orders. Please try again.");
@@ -87,7 +90,7 @@ const Orders = () => {
       {loading && <div className="text-center text-gray-600">Loading...</div>}
       {error && <div className="text-center text-red-500">{error}</div>}
       {/* Scrollable Table Container */}
-      <div className="overflow-x-scroll max-h-[7  00px] overflow-y-auto border border-gray-200 rounded-lg">
+      <div className="overflow-x-scroll max-h-[700px] overflow-y-auto border border-gray-200 rounded-lg">
         <table className="w-full text-left border-collapse">
           <thead className="sticky top-0 bg-gray-100 z-10">
             <tr>
@@ -96,6 +99,7 @@ const Orders = () => {
               <th className="p-2 text-sm sm:text-base">Status</th>
               <th className="p-2 text-sm sm:text-base">Order ID</th>
               <th className="p-2 text-sm sm:text-base">Shipping Address</th>
+              <th className="p-2 text-sm sm:text-base">Products</th>
               <th className="p-2 text-sm sm:text-base">Actions</th>
             </tr>
           </thead>
@@ -103,10 +107,10 @@ const Orders = () => {
             {orders.map((order) => (
               <tr
                 key={order._id}
-                className="hover:bg-gray-50 transition-colors"
+                className="hover:bg-gray-50 transition-colors border"
               >
                 <td className="p-2 text-sm sm:text-base">
-                  ${order.totalPrice}
+                  ${order.totalPrice.toFixed(2)}
                 </td>
                 <td className="p-2 text-sm sm:text-base">
                   {order.paymentMethod}
@@ -128,13 +132,38 @@ const Orders = () => {
                 <td className="p-2 text-sm sm:text-base">{order._id}</td>
                 <td className="p-2 text-sm sm:text-base">
                   <div className="whitespace-normal">
-                    {order.shippingAddress.fullName},{" "}
-                    {order.shippingAddress.lastName},{" "}
+                    {order.shippingAddress.fullName}{" "}
+                    {order.shippingAddress.lastName}
+                    <br />
                     {order.shippingAddress.address},{" "}
                     {order.shippingAddress.city},{" "}
-                    {order.shippingAddress.country},{" "}
-                    {order.shippingAddress.phone}
+                    {order.shippingAddress.country}
+                    <br />
+                    Phone: {order.shippingAddress.phone}
                   </div>
+                </td>
+                <td className="p-2 text-sm sm:text-base">
+                  <ul className="list-disc pl-5">
+                    {order.products.map((product) => (
+                      <li
+                        key={product.productId}
+                        className="flex justify-between"
+                      >
+                        <Link
+                          href={`/product/${product.productId}`}
+                          className="border-b border-two p-2"
+                        >
+                          {" "}
+                          <span>
+                            {product.name} (x{product.quantity})
+                          </span>
+                          <span>
+                            ${(product.price * product.quantity).toFixed(2)}
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </td>
                 <td className="p-2 text-sm sm:text-base">
                   <button
