@@ -288,7 +288,7 @@ const Card = ({ product }: { product: Product }) => {
             onClick={() => addToCart(product)}
             className="rounded-sm transition-all duration-300 transform relative z-50 w-full bg-transparent text-main py-1 md:py-2 md:text-[14px] border-[0.5px] border-main hover:font-bold hover:text-two hover:bg-main"
           >
-            ADD TO CARD
+            ADD TO CART
           </button>
         </div>
       </div>
