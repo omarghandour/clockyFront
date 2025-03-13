@@ -31,7 +31,8 @@ export async function POST(request: Request) {
   try {
     // Configure your email transport
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: "smtp.hostinger.com",
+
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
