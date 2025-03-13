@@ -3,12 +3,7 @@ import { CheckCircle } from "lucide-react";
 import { UserIdDisplay } from "@/components/UserIdDisplay";
 
 interface PageProps {
-  searchParams: {
-    order?: string;
-    email?: string;
-    amount_cents?: string;
-    success?: boolean;
-  };
+  searchParams: any;
 }
 
 const Page = async ({ searchParams }: PageProps) => {
