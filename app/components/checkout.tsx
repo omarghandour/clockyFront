@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axiosConfig";
 import { useRouter } from "next/navigation";
 import Login from "./Login";
+import axios from "axios";
 
 type Product = {
   _id: string;
@@ -20,7 +21,7 @@ const Checkout = () => {
   const [couponError, setCouponError] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [discountAmount, setDiscountAmount] = useState<number>(0);
-  const [checkoutError, setCheckoutError] = useState();
+  const [checkoutError, setCheckoutError] = useState<string>();
   const [userInfo, setUserInfo] = useState({
     fullName: "",
     lastName: "",
@@ -30,6 +31,7 @@ const Checkout = () => {
     country: "Egypt",
     phoneNumber: "",
     paymentMethod: "",
+    email: "", // Add email field
   });
   const router = useRouter();
 
@@ -127,12 +129,89 @@ const Checkout = () => {
       setCouponError("Invalid coupon code.");
     }
   };
-
+  const validateCart = async (couponCode: string) => {
+    try {
+      // validate Cart without authorization
+      const response = await axiosInstance.post("/products/validate/cart", {
+        cart: cartItems,
+        couponCode,
+      });
+      console.log(response.data);
+      handlePayMobPayment(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Failed to validate cart:", error);
+      return false;
+    }
+  };
+  const handlePayMobPayment = async (prices: {
+    finalTotalPrice: number;
+    totalPrice: number;
+  }) => {
+    try {
+      const { data } = await axios.post(
+        "https://accept.paymob.com/v1/intention/",
+        {
+          amount: prices.finalTotalPrice
+            ? prices.finalTotalPrice * 100
+            : prices.totalPrice * 100,
+          currency: "EGP",
+          payment_methods: [4502568],
+          items: cartItems.map((item: any) => ({
+            name: item.product.name,
+            amount: item.product.price * 100,
+            description: item.product._id,
+            quantity: item.quantity,
+            image: item.product.img,
+          })),
+          billing_data: {
+            apartment: "NA",
+            first_name: userInfo.fullName,
+            last_name: userInfo.lastName,
+            street: userInfo.address,
+            building: "NA",
+            phone_number: userInfo.phoneNumber,
+            city: userInfo.city,
+            country: userInfo.country,
+            email: userInfo.email || "NA",
+            floor: "NA",
+            state: userInfo.governorate,
+          },
+          expiration: 3600,
+          redirection_url: `${window.location.origin}/success`,
+        },
+        {
+          headers: {
+            Authorization: process.env.PAYMOB_API_KEY || "",
+          },
+        }
+      );
+      console.log(data);
+      // save the order to the local storage
+      localStorage.setItem("order", JSON.stringify({ data }));
+      // REDIRECT TO PAYMOB
+      // EMPTY THE CART
+      // setCartItems([]);
+      // localStorage.removeItem("cart");
+      router.push(
+        `https://accept.paymob.com/unifiedcheckout/?publicKey=${process.env.PMPKEY}&clientSecret=${data.client_secret}`
+      );
+    } catch (error) {
+      console.error("PayMob payment error:", error);
+      setCheckoutError("Payment gateway error. Please try again.");
+    }
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (userInfo.paymentMethod === "Pay with Card") {
+      await validateCart(couponCode);
+      // await handlePayMobPayment();
+      return;
+    }
+
     try {
-      console.log(cartItems);
+      // console.log(cartItems);
 
       const checkoutPayload = {
         userId: localStorage.getItem("userId"),
@@ -142,6 +221,7 @@ const Checkout = () => {
           fullName: userInfo.fullName,
           lastName: userInfo.lastName,
           governorate: userInfo.governorate,
+          email: userInfo.email,
           address: userInfo.address,
           country: userInfo.country,
           city: userInfo.city,
@@ -301,6 +381,19 @@ const Checkout = () => {
             />
           </div>
 
+          {/* Email */}
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-1">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={userInfo.email}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
+
           {/* Payment Method */}
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">
@@ -314,7 +407,7 @@ const Checkout = () => {
               required
             >
               <option value="">Select Payment Method</option>
-              <option value="Pay with Card">Credit Card</option>
+              <option value="Pay with Card">Pay With Card</option>
               <option value="Cash on Delivery">Cash on Delivery</option>
             </select>
           </div>
