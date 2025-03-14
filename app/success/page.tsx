@@ -19,7 +19,9 @@ const Page = async ({ searchParams }: PageProps) => {
         <UserIdDisplay id={id} success={success} />
         {id && <p className="text-gray-600 mt-2">Order ID: {id}</p>}
         {amount_cents && (
-          <p className="text-gray-600 mt-2">Amount Paid: ${amount_cents}</p>
+          <p className="text-gray-600 mt-2">
+            Amount Paid: ${amount_cents / 100}
+          </p>
         )}
         <p className="text-gray-600 mt-2">
           Clocky has received your request and is preparing it for shipment.
