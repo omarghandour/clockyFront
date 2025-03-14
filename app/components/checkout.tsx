@@ -182,7 +182,7 @@ const Checkout = () => {
         },
         {
           headers: {
-            Authorization: process.env.PAYMOB_API_KEY || "",
+            Authorization: process.env.NEXT_PUBLIC_PAYMOB_API_KEY || "",
           },
         }
       );
@@ -194,7 +194,7 @@ const Checkout = () => {
       // setCartItems([]);
       // localStorage.removeItem("cart");
       router.push(
-        `https://accept.paymob.com/unifiedcheckout/?publicKey=${process.env.PMPKEY}&clientSecret=${data.client_secret}`
+        `https://accept.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PMPKEY}&clientSecret=${data.client_secret}`
       );
     } catch (error) {
       console.error("PayMob payment error:", error);
