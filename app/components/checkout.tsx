@@ -33,6 +33,7 @@ const Checkout = () => {
     paymentMethod: "",
     email: "", // Add email field
   });
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   // Fetch cart from backend using user ID or local storage if no token and userId
@@ -186,7 +187,6 @@ const Checkout = () => {
           },
         }
       );
-      console.log(data);
       // save the order to the local storage
       localStorage.setItem("order", JSON.stringify({ data }));
       // REDIRECT TO PAYMOB
@@ -203,15 +203,14 @@ const Checkout = () => {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (userInfo.paymentMethod === "Pay with Card") {
       await validateCart(couponCode);
-      // await handlePayMobPayment();
       return;
     }
-
     try {
-      // console.log(cartItems);
+      // ...existing checkout logic...
 
       const checkoutPayload = {
         userId: localStorage.getItem("userId"),
@@ -247,6 +246,8 @@ const Checkout = () => {
     } catch (error: any) {
       setCheckoutError(error.message);
       console.error("Checkout failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -458,9 +459,31 @@ const Checkout = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 bg-main text-two font-semibold rounded hover:bg-two hover:text-main"
+            disabled={isLoading}
+            className="w-full py-2 bg-main text-two font-semibold rounded hover:bg-two hover:text-main disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Proceed to Checkout
+            {isLoading ? (
+              <span className="flex items-center justify-center">
+                <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+                Processing...
+              </span>
+            ) : (
+              "Proceed to Checkout"
+            )}
           </button>
         </form>
       </div>
