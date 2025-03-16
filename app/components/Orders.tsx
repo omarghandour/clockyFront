@@ -158,7 +158,13 @@ const Orders = () => {
                             {product.name} (x{product.quantity})
                           </span>
                           <span>
-                            ${(product.price * product.quantity).toFixed(2)}
+                            $
+                            {order.paymentMethod === "Pay with Card"
+                              ? (
+                                  (product.price * product.quantity) /
+                                  100
+                                ).toFixed(2)
+                              : (product.price * product.quantity).toFixed(2)}
                           </span>
                         </Link>
                       </li>

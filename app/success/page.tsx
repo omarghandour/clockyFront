@@ -20,7 +20,7 @@ const Page = async ({ searchParams }: PageProps) => {
         {id && <p className="text-gray-600 mt-2">Order ID: {id}</p>}
         {amount_cents && (
           <p className="text-gray-600 mt-2">
-            Amount Paid: ${amount_cents / 100} LE
+            Amount Paid: {amount_cents / 100} LE
           </p>
         )}
         <p className="text-gray-600 mt-2">

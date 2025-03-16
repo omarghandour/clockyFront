@@ -157,7 +157,7 @@ const Checkout = () => {
             ? prices.finalTotalPrice * 100
             : prices.totalPrice * 100,
           currency: "EGP",
-          payment_methods: [4502568],
+          payment_methods: [5018300],
           items: cartItems.map((item: any) => ({
             name: item.product.name,
             amount: item.product.price * 100,
