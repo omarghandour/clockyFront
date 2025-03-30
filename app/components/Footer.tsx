@@ -56,20 +56,13 @@ const Footer: React.FC = () => {
         {/* Contact Information */}
         <div>
           <div className="border-l border-two pl-5">
-            {" "}
+
             <h3 className="text-lg font-bold mb-4 text-two">CALL US NOW</h3>
             <Link href={"tel:+201113283189"}>
               <p className="font-bold">
                 <span className="font-bold">+201113283189</span>
               </p>
             </Link>
-          </div>
-          <div className="border-l border-two pl-5">
-            {" "}
-            <h3 className="text-lg font-bold mb-4 text-two">ADDRESS</h3>
-            <p className="font-bold">
-              <span className="font-bold">ميت غمر دقهلية شارع نعيم</span>
-            </p>
           </div>
           <div className="border-l border-two pl-5">
             <h3 className="text-lg font-bold mt-6 mb-4 text-two">
